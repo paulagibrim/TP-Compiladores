@@ -44,10 +44,10 @@ var             "trem"                         /* variável */
 
 /* definições de operadores */
 
-plus            "ai ce junta"                  /* adição */
-minus           "ai ce diminui"                /* sub */
-times           "ai ce multiplica"             /* multiplicação */
-div             "ai ce divide"                 /* divisão */
+plus            "ai ce junta"                       /* adição */
+minus           "ai ce diminui"                     /* sub */
+times           "ai ce multiplica por"              /* multiplicação */
+div             "ai ce divide por"                  /* divisão */
 
 or_op           "so um serve"                  /* OR */
 and_op          "tudim"                        /* AND */
