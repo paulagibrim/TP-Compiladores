@@ -1,131 +1,122 @@
 %{ 
-
-/* código colocado aqui aparece no arquivo gerado pelo flex */ 
-
+/* O código colocado aqui aparece no arquivo gerado pelo flex */
 %} 
 
-/* This tells flex to read only one input file */ 
+/* Isso diz ao flex para ler apenas um arquivo de entrada */ 
 %option noyywrap 
 
-/* definições iniciais */ 
-delim           [ \t]                           /* espaços ou tabulações */
-line_break      [\n]                            /* quebra de linha */
-ws              {delim}+                        /* mais de um whitespace */
-comments        [-][>].*                        /* comentários */
-point           [.]                             /* ponto final */
-question        [?]                             /* ponto de interrogação */
-left_brace      [{]                             /* abre chaves */   
-right_brace     [}]                             /* fecha chaves */
-comma           [,]                             /* vírgula */
+/* Definições regulares */
 
-digit           [0-9]
-int             {digit}+                           /* dígitos numéricos */
-float           {int}[.]{int}             /* número decimal */
-string          \"(\\.|[^\\"])*\"                      /* string */
+delim       [ \t\n]
+ws          {delim}+
 
-upper_letter    [A-Z]                           /* letras maiúsculas */
-lower_letter    [a-z]                           /* letras minúsculas */
-letter          {upper_letter}|{lower_letter}               /* letras */
-underscore      [_]                                         /* underline */
-id              {letter}({letter}|{digit}|{underscore})*    /* identificador */
+comments    [-][>].*
+point       [.]
+question    [?]
+left_brace  [{]
+right_brace [}]
+comma       [,]
+underscore  [_]
+collon      [:]
 
-/* definições de tipos */
+digit       [0-9]
+int_type    "trem inteiro"
+int         {digit}+
+float_type  "trem picado"
+float       {int}[.]{int}
+string_type "trem escrito"
+string      \"(\\.|[^\\"])*\"
+bool_type   "trem bololo"
+bool_true   "de rocha"
+bool_false  "mintira"
+void_type   "nada nao"
 
-bool_true            "de rocha"                    
-bool_false           "mintira"                      
+return      "arreda"
+break       "pica a mula"
+assign      "vai ser"
 
-int_type             "trem inteiro"                      /* tipo de dado inteiro */
-float_type           "trem picado"                       /* float */
-string_type          "trem escrito"                       /* string */
-bool_type            "trem bololo"                      /* booleano */
-void_type            "nada nao"                     /* void */
-return               "arreda"                  /* return */
-break                "pica a mula"                        /* break */
+plus_op     "ai ce junta"
+minus_op    "ai ce diminui"
+times_op    "ce multiplica por"
+div_op      "ce divide por"
+or_op       "pelo menos um"
+and_op      "tudim"
+not_op      "num eh"
+equal_op    "engual"
+diff_op     "nada a ver com"
+greater_op  "maior que"
+less_op     "menor que"
 
-/* palavras-chave de controle de fluxo */
-if              "fraga"                        /*  if */
-else            "nao?"                    /* else */
-while           "vai fazeno ate"               /* while */
-for             "pra"                 /*  for */
+if          "fraga"
+else        "nao?"
+while       "vai fazeno ate"
+for         "pra"
 
-print           "anota"                        /* print */
+upper_letter    [A-Z]
+lower_letter    [a-z]
+letter          {upper_letter}|{lower_letter}
+id              {letter}({letter}|{digit}|{underscore})*
 
-/* definições de operadores */
-
-plus_op            "ai ce junta"                       /* adição */
-minus_op           "ai ce diminui"                     /* sub */
-times_op           "ce multiplica por"              /* multiplicação */
-div_op             "ce divide por"                  /* divisão */
-
-or_op           "pelo menos um"                  /* OR */
-and_op          "tudim"                        /* AND */
-not_op          "num eh"                          /* NOT */
-
-assign          "vai ser"                      /* atribuição */
-equal_op           "engual"                       /* igualdade */
-diff_op            "nada a ver com"               /* diferença */
-
-greater         "maior que"                        /* operador maior que */
-less            "menor que"                        /* operador menor que */
-
-/* definições auxiliares */
-end_command     "acabou, quer um cafezin?"          /* fim de comando */
-
+print_name  "anota"
+end_command "acabou, quer um cafezin?"
 
 %% 
+{ws} { /* Ignorar espaços em branco, tabulações e quebras de linha */ } 
+{comments} { /* Ignorar comentários */ }
 
-{ws}            {/* nenhuma ação e nenhum retorno */} 
-{comments}      {/* nenhuma ação e nenhum retorno */}
-{line_break}    {/* nenhuma ação e nenhum retorno */}
+{point} { printf("Token de ponto final.\n"); }
+{question} { printf("Token de ponto de interrogação.\n"); }
+{left_brace} { printf("Token de abre chaves.\n"); }
+{right_brace} { printf("Token de fecha chaves.\n"); }
+{comma} { printf("Token de vírgula.\n"); }
+{underscore} { printf("Token de underline.\n"); }
+{collon} { printf("Token de dois pontos.\n"); }
 
-{int_type}              { printf("TOKEN DE TIPO: %s\n", yytext); }
-{int}                   { printf("TOKEN INT: %s\n", yytext); }
-{float_type}            { printf("TOKEN DE TIPO: %s\n", yytext); }
-{float}                 { printf("TOKEN FLOAT: %s\n", yytext); }
-{string_type}           { printf("TOKEN DE TIPO: %s\n", yytext); }
-{string}                { printf("TOKEN STRING: %s\n", yytext); }
-{bool_type}             { printf("TOKEN DE TIPO: %s\n", yytext); }
-{bool_true}             { printf("TOKEN BOOL: %s\n", yytext); }
-{bool_false}            { printf("TOKEN BOOL: %s\n", yytext); }
-{void_type}             { printf("TOKEN DE TIPO: %s\n", yytext); }
+{int_type} { printf("Token de tipo int: %s\n", yytext); }
+{int} { printf("Token de número inteiro: %s\n", yytext); }
+{float_type} { printf("Token de tipo float: %s\n", yytext); }
+{float} { printf("Token de número decimal: %s\n", yytext); }
+{string_type} { printf("Token de tipo string: %s\n", yytext); }
+{string} { printf("Token de string: %s\n", yytext); }
+{bool_type} { printf("Token de tipo bool: %s\n", yytext); }
+{bool_true} { printf("Token TRUE\n"); }
+{bool_false} { printf("Token FALSE\n"); }
+{void_type} { printf("Token de tipo void: %s\n", yytext); }
 
-{plus_op}               { printf("TOKEN PLUS: %s\n", yytext); }
-{minus_op}              { printf("TOKEN MINUS: %s\n", yytext); }
-{times_op}              { printf("TOKEN TIMES: %s\n", yytext); }
-{div_op}                { printf("TOKEN DIV: %s\n", yytext); }
-{equal_op}              { printf("TOKEN EQUAL: %s\n", yytext); }
-{diff_op}               { printf("TOKEN DIFF: %s\n", yytext); }
-{greater}               { printf("TOKEN GREATER: %s\n", yytext); }
-{less}                  { printf("TOKEN LESS: %s\n", yytext); }
-{and_op}                { printf("TOKEN AND: %s\n", yytext); }
-{or_op}                 { printf("TOKEN OR: %s\n", yytext); }
-{not_op}                { printf("TOKEN NOT: %s\n", yytext); }
-{assign}                { printf("TOKEN ASSIGN: %s\n", yytext); }
+{return} { printf("Token retorn: %s\n", yytext); }
+{break} { printf("Token break: %s\n", yytext); }
+{assign} { printf("Token de atribuição: %s\n", yytext); }
 
-{print}                 { printf("TOKEN PRINT: %s\n", yytext); }
-{if}                    { printf("TOKEN IF: %s\n", yytext); }
-{else}                  { printf("TOKEN ELSE: %s\n", yytext); }
-{while}                 { printf("TOKEN WHILE: %s\n", yytext); }
-{for}                   { printf("TOKEN FOR: %s\n", yytext); }
-{break}                 { printf("TOKEN BREAK: %s\n", yytext); }
-{return}                { printf("TOKEN RETURN: %s\n", yytext); }   
+{plus_op} { printf("Token de soma: %s\n", yytext); }
+{minus_op} { printf("Token de subtração: %s\n", yytext); }
+{times_op} { printf("Token de multiplicação: %s\n", yytext); }
+{div_op} { printf("Token de divisão: %s\n", yytext); }
+{or_op} { printf("Token de OR: %s\n", yytext); }
+{and_op} { printf("Token de AND: %s\n", yytext); }
+{not_op} { printf("Token de NOT: %s\n", yytext); }
+{equal_op} { printf("Token de igualdade: %s\n", yytext); }
+{diff_op} { printf("Token de diferença: %s\n", yytext); }
+{greater_op} { printf("Token de maior que: %s\n", yytext); }
+{less_op} { printf("Token de menor que: %s\n", yytext); }
 
-{question}              { printf("TOKEN QUESTION: %s\n", yytext); }
-{point}                 { printf("TOKEN POINT: %s\n", yytext); }
-{left_brace}            { printf("TOKEN LEFT BRACE: %s\n", yytext); }
-{right_brace}           { printf("TOKEN RIGHT BRACE: %s\n", yytext); }
-{comma}                 { printf("TOKEN COMMA: %s\n", yytext); }
-{end_command}           { printf("TOKEN DE FIM DE COMANDO: %s\n", yytext); }
+{if} { printf("Token de if: %s\n", yytext); }
+{else} { printf("Token de else: %s\n", yytext); }
+{while} { printf("Token de while: %s\n", yytext); }
+{for} { printf("Token de for: %s\n", yytext); }
 
-{id}            { printf("TOKEN ID: %s\n", yytext); }
+{print_name} { printf("Token de print: %s\n", yytext); }
 
-.               { printf("UNKNOWN TOKEN: %s\n", yytext); }
+{id} { printf("Token de identificador: %s\n", yytext); }
+
+{end_command} { printf("Token de fim de comando.\n"); }
+
+. { printf("Token desconhecido: %s\n", yytext); }
 
 %% 
 
 int main(void) 
 { 
-    /* Call the lexer, then quit. */ 
+    /* Chama o lexer e depois sai. */ 
     yylex(); 
     return 0; 
 }
