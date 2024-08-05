@@ -1,0 +1,30 @@
+Token de for: pra
+Token de abre chaves.
+Token de identificador: x
+Token de atribuição: vai ser
+Token de número inteiro: 0
+Token de ponto final.
+Token de identificador: x
+Token de menor que: menor que
+Token de número inteiro: 5
+Token de ponto final.
+Token de identificador: x
+Token de atribuição: vai ser
+Token de identificador: x
+Token de soma: ai ce junta
+Token de número inteiro: 1
+Token de fecha chaves.
+Token de identificador: naquele
+Token de identificador: naipe
+Token de identificador: soma
+Token de abre chaves.
+Token de identificador: a
+Token de vírgula.
+Token de identificador: b
+Token de fecha chaves.
+Token de dois pontos.
+Token retorn: arreda
+Token de identificador: resultado
+Token de print: anota
+Token de dois pontos.
+Token de string: "ni mim"

@@ -1,0 +1,20 @@
+Token de if: fraga
+Token de identificador: x
+Token de igualdade: engual
+Token de número inteiro: 0
+Token de ponto de interrogação.
+Token de print: anota
+Token de dois pontos.
+Token de string: "x é 0"
+Token de ponto final.
+Token de fim de comando.
+Token de if: fraga
+Token de identificador: x
+Token de diferença: nada a ver com
+Token de número inteiro: 0
+Token de ponto de interrogação.
+Token de print: anota
+Token de dois pontos.
+Token de string: "x não é 0"
+Token de ponto final.
+Token de fim de comando.

@@ -1,0 +1,30 @@
+Token de tipo int: trem inteiro
+Token de identificador: soma
+Token de atribuição: vai ser
+Token de identificador: a
+Token de soma: ai ce junta
+Token de identificador: b
+Token de ponto final.
+Token de tipo bool: trem bololo
+Token de identificador: subtracao
+Token de atribuição: vai ser
+Token de identificador: a
+Token de soma: ai ce junta
+Token de identificador: com
+Token de identificador: b
+Token de ponto final.
+Token de tipo int: trem inteiro
+Token de identificador: produto
+Token de atribuição: vai ser
+Token de identificador: a
+Token de multiplicação: ce multiplica por
+Token de identificador: b
+Token de ponto final.
+Token de identificador: trem
+Token de identificador: picadin
+Token de identificador: quociente
+Token de atribuição: vai ser
+Token de identificador: a
+Token de divisão: ce divide por
+Token de identificador: b
+Token de ponto final.

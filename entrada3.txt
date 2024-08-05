@@ -1,0 +1,13 @@
+fraga x maior que 0 ?
+    anota: "x é positivo".
+acabou, quer um cafezin?
+
+fraga pelo menos um x y ?
+    anota: "pelo menos um é verdadeiro".
+acabou, quer um cafezin?
+
+fraga num eh x ?
+
+
+
+trem inteiro x vai ser 20.

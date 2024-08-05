@@ -7,7 +7,7 @@
 
 /* Definições regulares */
 
-delim       [ \t\n]
+delim       [ \t\n\r]
 ws          {delim}+
 
 comments    [-][>].*

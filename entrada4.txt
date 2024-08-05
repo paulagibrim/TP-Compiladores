@@ -1,0 +1,6 @@
+vai fazeno ate x maior que 10:
+    anota: x.
+    x vai ser x ai ce junta 1.
+    pica a mula.
+vai fazeno ate de rocha:
+    pica a mula.
