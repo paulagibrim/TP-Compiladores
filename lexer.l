@@ -52,6 +52,8 @@ else        "nao?"
 while       "vai fazeno ate"
 for         "pra"
 
+def        "naquele naipe"
+
 upper_letter    [A-Z]
 lower_letter    [a-z]
 letter          {upper_letter}|{lower_letter}
@@ -100,6 +102,8 @@ end_command "acabou, quer um cafezin?"
 {diff_op} { printf("%d: Token: NADA_A_VER_COM\n", lc); return NADA_A_VER_COM; }
 {greater_op} { printf("%d: Token: MAIOR_QUE\n", lc); return MAIOR_QUE; }
 {less_op} { printf("%d: Token: MENOR_QUE\n", lc); return MENOR_QUE; }
+
+{def} { printf("%d: Token: NAQUELE_NAIPE\n", lc); return NAQUELE_NAIPE; }
 
 {if} { printf("%d: Token: FRAGA\n", lc); return FRAGA; }
 {else} { printf("%d: Token: NAO\n", lc); return NAO; }

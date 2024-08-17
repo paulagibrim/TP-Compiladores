@@ -1318,7 +1318,7 @@ yyreduce:
   case 9: /* declaracao_funcao: NAQUELE_NAIPE IDENTIFICADOR LBRACE parametros RBRACE COLLON bloco  */
 #line 81 "parser.y"
                                                                       {
-        insert_symbol_to_table((yyvsp[-5].str), (yyvsp[-6].str));
+        insert_symbol_to_table((yyvsp[-5].str), "naquele naipe");
     }
 #line 1324 "y.tab.c"
     break;
