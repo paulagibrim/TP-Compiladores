@@ -120,12 +120,6 @@ end_command "acabou, quer um cafezin?"
 
 %%
 
-// int main(int argc, char **argv) {
-//     yylex();
-//     printf("Linhas: %d\n", lc);
-//     return 0;
-// }
-
 
 
 

@@ -2110,12 +2110,6 @@ void yyfree (void * ptr )
 #line 121 "lexer.l"
 
 
-// int main(int argc, char **argv) {
-//     yylex();
-//     printf("Linhas: %d\n", lc);
-//     return 0;
-// }
-
 
 
 
