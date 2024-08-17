@@ -1,6 +1,6 @@
 %{
 #include <stdio.h>
-int lc = 1;    
+int lc = 1;     
 %}
 
 %option noyywrap
