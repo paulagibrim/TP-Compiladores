@@ -81,38 +81,38 @@ Terminals, with rules where they appear
     IDENTIFICADOR <str> (258) 7 8 11 26
     TIPO <str> (259) 7
     NUMERO (260) 27
-    STRING (261) 28
-    BOOL (262) 29
-    CHAR (263) 30
-    VAI_SER (264) 7
+    STRING <str> (261) 28
+    BOOL <str> (262) 29
+    CHAR <str> (263) 30
+    VAI_SER <str> (264) 7
     NAQUELE_NAIPE <str> (265) 8
-    FRAGA (266) 18
-    NAO (267) 18
-    INTERROGACAO (268) 18
-    VAI_FAZENDO_ATE (269) 19
-    PRA (270) 20
-    PICA_MULA (271) 21
-    ARREDA (272) 22
-    ANOTA (273) 25
-    AI_CE_JUNTA (274) 31
-    AI_CE_DIMINUI (275) 32
-    CE_MULTIPLICA_POR (276) 33
-    CE_DIVIDE_POR (277) 34
-    ENGUAL (278) 35
-    NADA_A_VER_COM (279) 36
-    MAIOR_QUE (280) 37
-    MENOR_QUE (281) 38
-    LPAREN (282)
-    RPAREN (283)
-    LBRACE (284) 8 20
-    RBRACE (285) 8 20
-    COLLON (286) 8 19 20 25
-    COMMA (287) 10
-    DOT (288) 7
-    UNDERSCORE (289)
-    OR_OP (290)
-    AND_OP (291)
-    NOT_OP (292)
+    FRAGA <str> (266) 18
+    NAO <str> (267) 18
+    INTERROGACAO <str> (268) 18
+    VAI_FAZENDO_ATE <str> (269) 19
+    PRA <str> (270) 20
+    PICA_MULA <str> (271) 21
+    ARREDA <str> (272) 22
+    ANOTA <str> (273) 25
+    AI_CE_JUNTA <str> (274) 31
+    AI_CE_DIMINUI <str> (275) 32
+    CE_MULTIPLICA_POR <str> (276) 33
+    CE_DIVIDE_POR <str> (277) 34
+    ENGUAL <str> (278) 35
+    NADA_A_VER_COM <str> (279) 36
+    MAIOR_QUE <str> (280) 37
+    MENOR_QUE <str> (281) 38
+    LPAREN <str> (282)
+    RPAREN <str> (283)
+    LBRACE <str> (284) 8 20
+    RBRACE <str> (285) 8 20
+    COLLON <str> (286) 8 19 20 25
+    COMMA <str> (287) 10
+    DOT <str> (288) 7
+    UNDERSCORE <str> (289)
+    OR_OP <str> (290)
+    AND_OP <str> (291)
+    NOT_OP <str> (292)
     END_COMMAND <str> (293)
 
 

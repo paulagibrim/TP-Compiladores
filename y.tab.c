@@ -700,11 +700,11 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    59,    59,    63,    64,    68,    69,    70,    74,    80,
-      86,    87,    91,    97,    98,    99,   100,   101,   102,   106,
-     110,   114,   118,   122,   126,   127,   131,   135,   138,   139,
-     140,   141,   145,   146,   147,   148,   149,   150,   151,   152,
-     156
+       0,    60,    60,    64,    65,    69,    70,    71,    75,    81,
+      87,    88,    92,    98,    99,   100,   101,   102,   103,   107,
+     111,   115,   119,   123,   127,   128,   132,   136,   139,   140,
+     141,   142,   146,   147,   148,   149,   150,   151,   152,   153,
+     157
 };
 #endif
 
@@ -1308,7 +1308,7 @@ yyreduce:
   switch (yyn)
     {
   case 8: /* declaracao_variavel: TIPO IDENTIFICADOR VAI_SER expressao DOT  */
-#line 74 "parser.y"
+#line 75 "parser.y"
                                              {
         insert_symbol_to_table((yyvsp[-3].str), (yyvsp[-4].str));
     }
@@ -1316,7 +1316,7 @@ yyreduce:
     break;
 
   case 9: /* declaracao_funcao: NAQUELE_NAIPE IDENTIFICADOR LBRACE parametros RBRACE COLLON bloco  */
-#line 80 "parser.y"
+#line 81 "parser.y"
                                                                       {
         insert_symbol_to_table((yyvsp[-5].str), (yyvsp[-6].str));
     }
@@ -1324,7 +1324,7 @@ yyreduce:
     break;
 
   case 12: /* parametro: IDENTIFICADOR  */
-#line 91 "parser.y"
+#line 92 "parser.y"
                   {
         insert_symbol_to_table((yyvsp[0].str), "param");
     }
@@ -1332,7 +1332,7 @@ yyreduce:
     break;
 
   case 27: /* termo: IDENTIFICADOR  */
-#line 135 "parser.y"
+#line 136 "parser.y"
                   {
         lookup_symbol_in_table((yyvsp[0].str));  // Verifica se o identificador já foi declarado
     }
@@ -1533,7 +1533,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 159 "parser.y"
+#line 160 "parser.y"
 
 
 /* Função de erro */

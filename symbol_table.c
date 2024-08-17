@@ -1,5 +1,8 @@
 #include "symbol_table.h"
 
+// Declare externamente a função yyerror para evitar o warning
+extern void yyerror(const char *s);
+
 // Função de Hash: Transforma uma string em um índice da tabela
 unsigned int hash(const char *str) {
     unsigned int hash = 0;
@@ -38,13 +41,24 @@ void delete_table(SymbolTable* table) {
 
 // Inserir símbolo na tabela
 void insert_symbol(SymbolTable *table, const char *name, const char *type) {
+    if (name == NULL || type == NULL) {
+        yyerror("Nome ou tipo inválido ao inserir na Tabela de Símbolos");
+        yyerror(name);
+        yyerror(type);
+        return;
+    }
     unsigned int index = hash(name);
     SymbolNode *new_node = (SymbolNode*) malloc(sizeof(SymbolNode));
+    if (new_node == NULL) {
+        yyerror("Falha ao alocar memória para novo nó na Tabela de Símbolos");
+        return;
+    }
     new_node->symbol.name = strdup(name);
     new_node->symbol.type = strdup(type);
     new_node->next = table->table[index];
     table->table[index] = new_node;
 }
+
 
 // Procurar símbolo na tabela
 Symbol* lookup_symbol(SymbolTable *table, const char *name) {

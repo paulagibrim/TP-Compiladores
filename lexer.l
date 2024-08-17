@@ -11,19 +11,19 @@ delim       [ \t\r]
 ws          {delim}+
 
 comments    [-][>].*
-point       [.]
-question    [?]
-left_brace  [{]
-right_brace [}]
-comma       [,]
-underscore  [_]
-collon      [:]
+point       "."
+question    "?"
+left_brace  "{"
+right_brace "}"
+comma       ","
+underscore  "_"
+collon      ":"
 
 digit       [0-9]
 int_type    "trem inteiro"
 int         {digit}+
 float_type  "trem picado"
-float       {int}[.]{int}
+float       {int}point{int}
 string_type "trem escrito"
 string      \"(\\.|[^\\"])*\"
 bool_type   "trem bololo"
