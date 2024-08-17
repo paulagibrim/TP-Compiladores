@@ -1,0 +1,4 @@
+yacc -d -v parser.y
+flex lexer.l
+gcc y.tab.c lex.yy.c symbol_table.c -o exec -lfl
+./exec < input_output/entrada1.txt
