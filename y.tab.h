@@ -55,11 +55,11 @@ extern int yydebug;
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
     IDENTIFICADOR = 258,           /* IDENTIFICADOR  */
-    NUMERO = 259,                  /* NUMERO  */
-    STRING = 260,                  /* STRING  */
-    BOOL = 261,                    /* BOOL  */
-    CHAR = 262,                    /* CHAR  */
-    TIPO = 263,                    /* TIPO  */
+    TIPO = 259,                    /* TIPO  */
+    NUMERO = 260,                  /* NUMERO  */
+    STRING = 261,                  /* STRING  */
+    BOOL = 262,                    /* BOOL  */
+    CHAR = 263,                    /* CHAR  */
     VAI_SER = 264,                 /* VAI_SER  */
     NAQUELE_NAIPE = 265,           /* NAQUELE_NAIPE  */
     FRAGA = 266,                   /* FRAGA  */
@@ -84,7 +84,12 @@ extern int yydebug;
     RBRACE = 285,                  /* RBRACE  */
     COLLON = 286,                  /* COLLON  */
     COMMA = 287,                   /* COMMA  */
-    PERIOD = 288                   /* PERIOD  */
+    DOT = 288,                     /* DOT  */
+    UNDERSCORE = 289,              /* UNDERSCORE  */
+    OR_OP = 290,                   /* OR_OP  */
+    AND_OP = 291,                  /* AND_OP  */
+    NOT_OP = 292,                  /* NOT_OP  */
+    END_COMMAND = 293              /* END_COMMAND  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -94,11 +99,11 @@ extern int yydebug;
 #define YYerror 256
 #define YYUNDEF 257
 #define IDENTIFICADOR 258
-#define NUMERO 259
-#define STRING 260
-#define BOOL 261
-#define CHAR 262
-#define TIPO 263
+#define TIPO 259
+#define NUMERO 260
+#define STRING 261
+#define BOOL 262
+#define CHAR 263
 #define VAI_SER 264
 #define NAQUELE_NAIPE 265
 #define FRAGA 266
@@ -123,11 +128,25 @@ extern int yydebug;
 #define RBRACE 285
 #define COLLON 286
 #define COMMA 287
-#define PERIOD 288
+#define DOT 288
+#define UNDERSCORE 289
+#define OR_OP 290
+#define AND_OP 291
+#define NOT_OP 292
+#define END_COMMAND 293
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+union YYSTYPE
+{
+#line 35 "parser.y"
+
+    char *str;
+
+#line 147 "y.tab.h"
+
+};
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

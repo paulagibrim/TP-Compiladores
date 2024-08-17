@@ -1,15 +1,23 @@
 %{
+#define YYDEBUG 1
+
 #include <stdio.h>
 #include <stdlib.h>
+// #include "lexer.l" 
 #include "symbol_table.h"
 
-SybolTable *sym_table
+SymbolTable *sym_table;
+int yydebug = 1;
 
 void yyerror(const char *s);
 int yylex(void);
 
 void insert_symbol_to_table(const char *name, const char *type) {
-    insert_symbol(sym_table, name, type);
+    if (lookup_symbol(sym_table, name) != NULL) {
+        yyerror("Erro: Símbolo já declarado.");
+    } else {
+        insert_symbol(sym_table, name, type);
+    }
 }
 
 void lookup_symbol_in_table(const char *name) {
@@ -21,17 +29,25 @@ void lookup_symbol_in_table(const char *name) {
     }
 }
 
-
 %}
 
+/* Defina YYSTYPE como char* */
+%union {
+    char *str;
+}
+
 /* Definição de tokens */
-%token IDENTIFICADOR NUMERO STRING BOOL CHAR TIPO
+%token <str> IDENTIFICADOR TIPO
+%token NUMERO STRING BOOL CHAR 
 %token VAI_SER
-%token NAQUELE_NAIPE FRAGA NAO INTERROGACAO VAI_FAZENDO_ATE PRA PICA_MULA ARREDA
+%token <str> NAQUELE_NAIPE 
+%token FRAGA NAO INTERROGACAO VAI_FAZENDO_ATE PRA PICA_MULA ARREDA
 %token ANOTA
 %token AI_CE_JUNTA AI_CE_DIMINUI CE_MULTIPLICA_POR CE_DIVIDE_POR
 %token ENGUAL NADA_A_VER_COM MAIOR_QUE MENOR_QUE
-%token LPAREN RPAREN LBRACE RBRACE COLLON COMMA PERIOD
+%token LPAREN RPAREN LBRACE RBRACE COLLON COMMA DOT
+%token UNDERSCORE OR_OP AND_OP NOT_OP 
+%token <str> END_COMMAND
 
 %left AI_CE_JUNTA AI_CE_DIMINUI
 %left CE_MULTIPLICA_POR CE_DIVIDE_POR
@@ -55,11 +71,15 @@ declaracao:
     ;
 
 declaracao_variavel:
-    TIPO IDENTIFICADOR VAI_SER expressao PERIOD
+    TIPO IDENTIFICADOR VAI_SER expressao DOT {
+        insert_symbol_to_table($2, $1);
+    }
     ;
 
 declaracao_funcao:
-    NAQUELE_NAIPE IDENTIFICADOR LBRACE parametros RBRACE COLLON bloco
+    NAQUELE_NAIPE IDENTIFICADOR LBRACE parametros RBRACE COLLON bloco {
+        insert_symbol_to_table($2, $1);
+    }
     ;
 
 parametros:
@@ -68,7 +88,9 @@ parametros:
     ;
 
 parametro:
-    IDENTIFICADOR
+    IDENTIFICADOR {
+        insert_symbol_to_table($1, "param");
+    }
     ;
 
 declaracao_estrutura:
@@ -110,7 +132,9 @@ print:
     ;
 
 termo:
-    IDENTIFICADOR
+    IDENTIFICADOR {
+        lookup_symbol_in_table($1);  // Verifica se o identificador já foi declarado
+    }
     | NUMERO
     | STRING
     | BOOL
@@ -141,5 +165,10 @@ void yyerror(const char *s) {
 
 /* Função principal */
 int main(void) {
-    return yyparse();
+    sym_table = create_table();  // Cria a Tabela de Símbolos
+    int result = yyparse();  // Inicia a análise sintática
+    print_table(sym_table);  // Imprime a Tabela de Símbolos ao final
+    delete_table(sym_table);  // Deleta a Tabela de Símbolos e libera memória
+    // printf("Linhas: %d\n", lc);
+    return result;
 }

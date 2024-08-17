@@ -1,0 +1,3 @@
+trem bololo subtracao vai ser a ai ce junta com b.
+trem inteiro produto vai ser a ce multiplica por b. -> a * b
+trem picadin quociente vai ser a ce divide por b. -> a / b

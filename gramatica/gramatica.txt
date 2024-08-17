@@ -1,0 +1,40 @@
+<programa> ::= <declaracoes>
+
+<declaracoes> ::= <declaracao> | <declaracao> <declaracoes>
+
+<declaracao> ::= <declaracao_variavel> | <declaracao_funcao> | <declaracao_estrutura>
+
+<declaracao_variavel> ::= <tipo> <identificador> "vai_ser" <expressao> "."
+
+<declaracao_funcao> ::= "naquele_naipe" <identificador> "{" <parametros> "}" ":" <bloco>
+
+<parametros> ::= <parametro> | <parametro> "," <parametros>
+
+<parametro> ::= <identificador>
+
+<declaracao_estrutura> ::= <if> | <while> | <for> | <break> | <print> | <return>
+
+<if> ::= "fraga" <expressao> <bloco> "nao?" <bloco> "?"
+
+<while> ::= "vai_fazendo_ate" <expressao> ":" <bloco>
+
+<for> ::= "pra" "{" <expressao> "}" ":" <bloco>
+
+<break> ::= "pica_mula"
+
+<return> ::= "arreda" <expressao>
+
+<expressao> ::= <termo> | <termo> <operador> <expressao>
+
+<print> ::= "anota" ":" <expressao>
+
+<termo> ::= <identificador> | <numero> | <string> | <bool> | <char>
+
+<identificador> ::= [a-zA-Z_][a-zA-Z0-9_]*
+<numero> ::= [0-9]+
+<string> ::= <char>+
+<bool> ::= "de_rocha" | "mintira"
+<char> ::= [a-zA-Z]
+<tipo> ::= "trem_inteiro" | "trem_picado" | "trem_escrito" | "trem_bololo" | "nada_nao"
+<bloco> ::= <declaracoes>
+<operador> ::= "ai_ce_junta" | "ai_ce_diminui" | "ce_multiplica_por" | "ce_divide_por" | "engual" | "nada_a_ver_com" | "maior_que" | "menor_que"

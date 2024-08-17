@@ -1,13 +1,13 @@
 %{
-#include <stdio.h>
-int lc = 1;     
+   #include <stdio.h>
+   #include "y.tab.h"  // Certifique-se de incluir o arquivo correto para as definições do tokens
+   int lc = 1;     
 %}
 
 %option noyywrap
 
 /* Definições regulares */
-/*Tirei \n de delim*/
-delim       [ \t\r] 
+delim       [ \t\r]
 ws          {delim}+
 
 comments    [-][>].*
@@ -66,61 +66,62 @@ end_command "acabou, quer um cafezin?"
 {ws} { /* Ignorar espaços em branco, tabulações e quebras de linha */ } 
 {comments} { /* Ignorar comentários */ }
 
-{point} { printf("%d: Token de ponto final.\n", lc); }
-{question} { printf("%d: Token de ponto de interrogação.\n", lc); }
-{left_brace} { printf("%d: Token de abre chaves.\n", lc); }
-{right_brace} { printf("%d: Token de fecha chaves.\n", lc); }
-{comma} { printf("%d: Token de vírgula.\n", lc); }
-{underscore} { printf("%d: Token de underline.\n", lc); }
-{collon} { printf("%d: Token de dois pontos.\n", lc); }
+{point} { printf("%d: Token: DOT\n", lc); return DOT; }
+{question} { printf("%d: Token: INTERROGACAO\n", lc); return INTERROGACAO; }
+{left_brace} { printf("%d: Token: LBRACE\n", lc); return LBRACE; }
+{right_brace} { printf("%d: Token: RBRACE\n", lc); return RBRACE; }
+{comma} { printf("%d: Token: COMMA\n", lc); return COMMA; }
+{underscore} { printf("%d: Token: UNDERSCORE\n", lc); return UNDERSCORE; }
+{collon} { printf("%d: Token: COLLON\n", lc); return COLLON; }
 
-{int_type} { printf("%d: Token de tipo int: %s\n", lc, yytext); }
-{int} { printf("%d: Token de número inteiro: %s\n", lc, yytext); }
-{float_type} { printf("%d: Token de tipo float: %s\n", lc, yytext); }
-{float} { printf("%d: Token de número decimal: %s\n", lc, yytext); }
-{string_type} { printf("%d: Token de tipo string: %s\n", lc, yytext); }
-{string} { printf("%d: Token de string: %s\n", lc, yytext); }
-{bool_type} { printf("%d: Token de tipo bool: %s\n", lc, yytext); }
-{bool_true} { printf("%d: Token TRUE\n", lc); }
-{bool_false} { printf("%d: Token FALSE\n", lc); }
-{void_type} { printf("%d: Token de tipo void: %s\n", lc, yytext); }
+{int_type} { printf("%d: Token: TIPO (trem inteiro)\n", lc); return TIPO; }
+{int} { printf("%d: Token: NUMERO (%s)\n", lc, yytext); yylval.str = strdup(yytext); return NUMERO; }
+{float_type} { printf("%d: Token: TIPO (trem picado)\n", lc); return TIPO; }
+{float} { printf("%d: Token: NUMERO (%s)\n", lc, yytext); yylval.str = strdup(yytext); return NUMERO; }
+{string_type} { printf("%d: Token: TIPO (trem escrito)\n", lc); return TIPO; }
+{string} { printf("%d: Token: STRING (%s)\n", lc, yytext); yylval.str = strdup(yytext); return STRING; }
+{bool_type} { printf("%d: Token: TIPO (trem bololo)\n", lc); return TIPO; }
+{bool_true} { printf("%d: Token: BOOL (de rocha)\n", lc); return BOOL; }
+{bool_false} { printf("%d: Token: BOOL (mintira)\n", lc); return BOOL; }
+{void_type} { printf("%d: Token: TIPO (nada nao)\n", lc); return TIPO; }
 
-{return} { printf("%d: Token retorn: %s\n", lc, yytext); }
-{break} { printf("%d: Token break: %s\n", lc, yytext); }
-{assign} { printf("%d: Token de atribuição: %s\n", lc, yytext); }
+{return} { printf("%d: Token: ARREDA\n", lc); return ARREDA; }
+{break} { printf("%d: Token: PICA_MULA\n", lc); return PICA_MULA; }
+{assign} { printf("%d: Token: VAI_SER\n", lc); return VAI_SER; }
 
-{plus_op} { printf("%d: Token de soma: %s\n", lc, yytext); }
-{minus_op} { printf("%d: Token de subtração: %s\n", lc, yytext); }
-{times_op} { printf("%d: Token de multiplicação: %s\n", lc, yytext); }
-{div_op} { printf("%d: Token de divisão: %s\n", lc, yytext); }
-{or_op} { printf("%d: Token de OR: %s\n", lc, yytext); }
-{and_op} { printf("%d: Token de AND: %s\n", lc, yytext); }
-{not_op} { printf("%d: Token de NOT: %s\n", lc, yytext); }
-{equal_op} { printf("%d: Token de igualdade: %s\n", lc, yytext); }
-{diff_op} { printf("%d: Token de diferença: %s\n", lc, yytext); }
-{greater_op} { printf("%d: Token de maior que: %s\n", lc, yytext); }
-{less_op} { printf("%d: Token de menor que: %s\n", lc, yytext); }
+{plus_op} { printf("%d: Token: AI_CE_JUNTA\n", lc); return AI_CE_JUNTA; }
+{minus_op} { printf("%d: Token: AI_CE_DIMINUI\n", lc); return AI_CE_DIMINUI; }
+{times_op} { printf("%d: Token: CE_MULTIPLICA_POR\n", lc); return CE_MULTIPLICA_POR; }
+{div_op} { printf("%d: Token: CE_DIVIDE_POR\n", lc); return CE_DIVIDE_POR; }
+{or_op} { printf("%d: Token: OR_OP\n", lc); return OR_OP; }
+{and_op} { printf("%d: Token: AND_OP\n", lc); return AND_OP; }
+{not_op} { printf("%d: Token: NOT_OP\n", lc); return NOT_OP; }
+{equal_op} { printf("%d: Token: ENGUAL\n", lc); return ENGUAL; }
+{diff_op} { printf("%d: Token: NADA_A_VER_COM\n", lc); return NADA_A_VER_COM; }
+{greater_op} { printf("%d: Token: MAIOR_QUE\n", lc); return MAIOR_QUE; }
+{less_op} { printf("%d: Token: MENOR_QUE\n", lc); return MENOR_QUE; }
 
-{if} { printf("%d: Token de if: %s\n", lc, yytext); }
-{else} { printf("%d: Token de else: %s\n", lc, yytext); }
-{while} { printf("%d: Token de while: %s\n", lc, yytext); }
-{for} { printf("%d: Token de for: %s\n", lc, yytext); }
+{if} { printf("%d: Token: FRAGA\n", lc); return FRAGA; }
+{else} { printf("%d: Token: NAO\n", lc); return NAO; }
+{while} { printf("%d: Token: VAI_FAZENDO_ATE\n", lc); return VAI_FAZENDO_ATE; }
+{for} { printf("%d: Token: PRA\n", lc); return PRA; }
 
-{print_name} { printf("%d: Token de print: %s\n", lc, yytext); }
+{print_name} { printf("%d: Token: ANOTA\n", lc); return ANOTA; }
 
-{id} { printf("%d: Token de identificador: %s\n", lc, yytext); }
+{id} { printf("%d: Token: IDENTIFICADOR (%s)\n", lc, yytext); yylval.str = strdup(yytext); return IDENTIFICADOR; }
 
-{end_command} { printf("%d: Token de fim de comando.\n", lc); }
+{end_command} { printf("%d: Token: END_COMMAND\n", lc); return END_COMMAND; }
 
 . { printf("%d: Token desconhecido: %s\n", lc, yytext); }
 
 %%
 
-int main(int argc, char **argv) {
-    yylex();
-    printf("Linhas: %d\n", lc);
-    return 0;
-}
+// int main(int argc, char **argv) {
+//     yylex();
+//     printf("Linhas: %d\n", lc);
+//     return 0;
+// }
+
 
 
 
