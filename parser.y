@@ -97,7 +97,7 @@ declaracao_estrutura:
     ;
 
 if:
-    FRAGA expressao INTERROGACAO bloco END_COMMAND
+    FRAGA expressao bloco 
     ;
 
 while:
@@ -122,7 +122,7 @@ expressao:
     ;
 
 print:
-    ANOTA COLLON expressao
+    ANOTA COLLON expressao DOT
     ;
 
 termo:
@@ -148,7 +148,9 @@ operador:
     ;
 
 bloco:
-    LBRACE declaracoes RBRACE
+    // declaracoes
+	LBRACE declaracoes RBRACE
+	| INTERROGACAO declaracoes END_COMMAND
     | declaracao
     ;
 
