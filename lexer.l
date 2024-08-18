@@ -105,6 +105,8 @@ end_command "acabou, quer um cafezin?"
 
 {def} { printf("%d: Token: NAQUELE_NAIPE\n", lc); return NAQUELE_NAIPE; }
 
+{end_command} { printf("%d: Token: END_COMMAND\n", lc); return END_COMMAND; }
+
 {if} { printf("%d: Token: FRAGA\n", lc); return FRAGA; }
 {else} { printf("%d: Token: NAO\n", lc); return NAO; }
 {while} { printf("%d: Token: VAI_FAZENDO_ATE\n", lc); return VAI_FAZENDO_ATE; }
@@ -113,8 +115,6 @@ end_command "acabou, quer um cafezin?"
 {print_name} { printf("%d: Token: ANOTA\n", lc); return ANOTA; }
 
 {id} { printf("%d: Token: IDENTIFICADOR (%s)\n", lc, yytext); yylval.str = strdup(yytext); return IDENTIFICADOR; }
-
-{end_command} { printf("%d: Token: END_COMMAND\n", lc); return END_COMMAND; }
 
 . { printf("%d: Token desconhecido: %s\n", lc, yytext); }
 
