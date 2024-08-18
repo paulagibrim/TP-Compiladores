@@ -26,7 +26,6 @@
     extern int lc;  // Linha do lexer
 %}
 
-/* Definição de tokens */
 %token IDENTIFICADOR TIPO
 %token NUMERO 
 %token STRING BOOL CHAR 
@@ -52,7 +51,6 @@
 
 %%
 
-/* Regras de produção */
 programa:
     declaracoes
     ;
@@ -100,14 +98,7 @@ declaracao_estrutura:
 
 if:
     FRAGA expressao INTERROGACAO bloco END_COMMAND
-	//| FRAGA expressao INTERROGACAO
-	//	bloco 
-	//else
     ;
-
-//else:
-	//| NAO INTERROGACAO bloco END_COMMAND
-	//| NAO if
 
 while:
     VAI_FAZENDO_ATE expressao COLLON bloco
@@ -151,13 +142,14 @@ operador:
     | NADA_A_VER_COM
     | MAIOR_QUE
     | MENOR_QUE
-	| OR_OP 
-	| AND_OP 
-	| NOT_OP
+    | OR_OP 
+    | AND_OP 
+    | NOT_OP
     ;
 
 bloco:
-    declaracoes
+    LBRACE declaracoes RBRACE
+    | declaracao
     ;
 
 %%
