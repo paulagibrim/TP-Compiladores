@@ -46,6 +46,7 @@ equal_op    "engual"
 diff_op     "nada a ver com"
 greater_op  "maior que"
 less_op     "menor que"
+power_op    "elevado a"
 
 if          "fraga"
 else        "nao?"
@@ -102,6 +103,7 @@ end_command "acabou, quer um cafezin?"
 {diff_op} { printf("%d: Token: NADA_A_VER_COM\n", lc); return NADA_A_VER_COM; }
 {greater_op} { printf("%d: Token: MAIOR_QUE\n", lc); return MAIOR_QUE; }
 {less_op} { printf("%d: Token: MENOR_QUE\n", lc); return MENOR_QUE; }
+{power_op} { printf("%d: Token: ELEVADO_A\n", lc); return ELEVADO_A; }
 
 {def} { printf("%d: Token: NAQUELE_NAIPE\n", lc); return NAQUELE_NAIPE; }
 
