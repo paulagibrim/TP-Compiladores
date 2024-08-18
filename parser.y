@@ -111,7 +111,11 @@ while:
     ;
 
 for:
-    PRA LBRACE expressao RBRACE COLLON bloco
+    PRA LBRACE declaracao_variavel DOT 
+			expressao DOT 
+			expressao RBRACE COLLON 
+			declaracoes 
+			END_COMMAND
     ;
 
 break:
