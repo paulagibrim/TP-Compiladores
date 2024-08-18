@@ -97,7 +97,9 @@ declaracao_estrutura:
     ;
 
 if:
-    FRAGA expressao bloco 
+    FRAGA expressao INTERROGACAO declaracoes END_COMMAND
+	| FRAGA expressao INTERROGACAO declaracoes NAO if
+	| FRAGA expressao INTERROGACAO declaracoes NAO INTERROGACAO declaracoes END_COMMAND
     ;
 
 while:
@@ -150,7 +152,7 @@ operador:
 bloco:
     // declaracoes
 	LBRACE declaracoes RBRACE
-	| INTERROGACAO declaracoes END_COMMAND
+	// | INTERROGACAO declaracoes END_COMMAND
     | declaracao
     ;
 
