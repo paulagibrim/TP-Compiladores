@@ -366,22 +366,22 @@ struct yy_trans_info
 static const flex_int16_t yy_accept[264] =
     {   0,
         0,    0,   45,   43,    2,    1,   43,    8,   43,    4,
-       12,   10,    5,   41,    9,   41,   41,   41,   41,   41,
-       41,   41,   41,   41,   41,    6,    7,    2,    0,   16,
-        0,    3,   12,    0,   41,   41,   41,   41,   41,   41,
-       41,   41,   41,   41,   41,   41,   41,   41,   41,   41,
-       41,   41,   41,   41,    3,    0,   41,    0,   41,   41,
-        0,    0,   41,   41,   41,   41,   41,   41,   41,   41,
-       41,   41,   41,   39,   41,   41,   41,    0,   41,    0,
-       41,   41,    0,    0,    0,   41,   41,   41,   41,   41,
-       41,   37,   41,    0,   41,   41,   41,   41,    0,    0,
+       12,   10,    5,   42,    9,   42,   42,   42,   42,   42,
+       42,   42,   42,   42,   42,    6,    7,    2,    0,   16,
+        0,    3,   12,    0,   42,   42,   42,   42,   42,   42,
+       42,   42,   42,   42,   42,   42,   42,   42,   42,   42,
+       42,   42,   42,   42,    3,    0,   42,    0,   42,   42,
+        0,    0,   42,   42,   42,   42,   42,   42,   42,   42,
+       42,   42,   42,   40,   42,   42,   42,    0,   42,    0,
+       42,   42,    0,    0,    0,   42,   42,   42,   42,   42,
+       42,   38,   42,    0,   42,   42,   42,   42,    0,    0,
 
-       41,    0,   40,   41,    0,    0,    0,   41,   36,   41,
-       41,   41,    0,   41,    0,    0,    0,    0,   29,    0,
-        0,    0,   41,    0,   21,    0,    0,    0,   31,    0,
-        0,   41,    0,    0,   41,   30,    0,    0,    0,    0,
+       42,    0,   41,   42,    0,    0,    0,   42,   37,   42,
+       42,   42,    0,   42,    0,    0,    0,    0,   29,    0,
+        0,    0,   42,    0,   21,    0,    0,    0,   31,    0,
+        0,   42,    0,    0,   42,   30,    0,    0,    0,    0,
         0,    0,    0,    0,   14,    0,    0,    0,    0,    0,
-        0,    0,    0,   19,    0,    0,   41,    0,    0,    0,
+        0,    0,    0,   19,    0,    0,   42,    0,    0,    0,
         0,    0,    0,    0,   23,    0,    0,    0,    0,    0,
        18,    0,    0,    0,   20,    0,    0,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,   33,   34,
@@ -391,9 +391,9 @@ static const flex_int16_t yy_accept[264] =
         0,    0,    0,    0,    0,   24,    0,    0,    0,    0,
         0,   22,   17,    0,    0,   13,    0,    0,    0,    0,
         0,    0,    0,    0,   15,   11,    0,    0,   25,   27,
-        0,    0,   35,   28,    0,    0,    0,   32,   38,    0,
+        0,    0,   35,   28,    0,    0,    0,   32,   39,    0,
         0,    0,    0,    0,   26,    0,    0,    0,    0,    0,
-        0,   42,    0
+        0,   36,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -1060,37 +1060,37 @@ YY_RULE_SETUP
 case 36:
 YY_RULE_SETUP
 #line 108 "lexer.l"
-{ printf("%d: Token: FRAGA\n", lc); return FRAGA; }
+{ printf("%d: Token: END_COMMAND\n", lc); return END_COMMAND; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 109 "lexer.l"
-{ printf("%d: Token: NAO\n", lc); return NAO; }
+#line 110 "lexer.l"
+{ printf("%d: Token: FRAGA\n", lc); return FRAGA; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 110 "lexer.l"
-{ printf("%d: Token: VAI_FAZENDO_ATE\n", lc); return VAI_FAZENDO_ATE; }
+#line 111 "lexer.l"
+{ printf("%d: Token: NAO\n", lc); return NAO; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 111 "lexer.l"
-{ printf("%d: Token: PRA\n", lc); return PRA; }
+#line 112 "lexer.l"
+{ printf("%d: Token: VAI_FAZENDO_ATE\n", lc); return VAI_FAZENDO_ATE; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
 #line 113 "lexer.l"
-{ printf("%d: Token: ANOTA\n", lc); return ANOTA; }
+{ printf("%d: Token: PRA\n", lc); return PRA; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
 #line 115 "lexer.l"
-{ printf("%d: Token: IDENTIFICADOR (%s)\n", lc, yytext); yylval.str = strdup(yytext); return IDENTIFICADOR; }
+{ printf("%d: Token: ANOTA\n", lc); return ANOTA; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
 #line 117 "lexer.l"
-{ printf("%d: Token: END_COMMAND\n", lc); return END_COMMAND; }
+{ printf("%d: Token: IDENTIFICADOR (%s)\n", lc, yytext); yylval.str = strdup(yytext); return IDENTIFICADOR; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP

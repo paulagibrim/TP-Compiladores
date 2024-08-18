@@ -36,7 +36,7 @@
 %token ANOTA
 %token AI_CE_JUNTA AI_CE_DIMINUI CE_MULTIPLICA_POR CE_DIVIDE_POR
 %token ENGUAL NADA_A_VER_COM MAIOR_QUE MENOR_QUE
-%token LPAREN RPAREN LBRACE RBRACE COLLON COMMA DOT
+%token LBRACE RBRACE COLLON COMMA DOT
 %token UNDERSCORE OR_OP AND_OP NOT_OP 
 %token END_COMMAND
 
@@ -69,9 +69,7 @@ declaracao:
     ;
 
 declaracao_variavel:
-    TIPO IDENTIFICADOR VAI_SER expressao DOT {
-        add('V');
-    }
+    TIPO{add('K');} IDENTIFICADOR{add('V');} VAI_SER{add('K');} expressao DOT {add('K');}
     ;
 
 declaracao_funcao:
@@ -101,8 +99,17 @@ declaracao_estrutura:
     ;
 
 if:
-    FRAGA expressao bloco NAO bloco INTERROGACAO
+    FRAGA expressao INTERROGACAO
+		bloco 
+	END_COMMAND
+	| FRAGA expressao INTERROGACAO
+		bloco 
+	else
     ;
+
+else:
+	| NAO INTERROGACAO bloco END_COMMAND
+	| NAO if
 
 while:
     VAI_FAZENDO_ATE expressao COLLON bloco
@@ -146,6 +153,9 @@ operador:
     | NADA_A_VER_COM
     | MAIOR_QUE
     | MENOR_QUE
+	| OR_OP 
+	| AND_OP 
+	| NOT_OP
     ;
 
 bloco:

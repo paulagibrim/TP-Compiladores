@@ -1,8 +1,6 @@
 
 fraga x engual 0 ?
     anota: "x é 0".
-acabou, quer um cafezin?
-
-fraga x nada a ver com 0 ?
-    anota: "x não é 0".
+nao? ?
+    anota: "a".
 acabou, quer um cafezin?
