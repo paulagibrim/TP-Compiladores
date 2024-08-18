@@ -78,18 +78,16 @@ extern int yydebug;
     NADA_A_VER_COM = 279,          /* NADA_A_VER_COM  */
     MAIOR_QUE = 280,               /* MAIOR_QUE  */
     MENOR_QUE = 281,               /* MENOR_QUE  */
-    LPAREN = 282,                  /* LPAREN  */
-    RPAREN = 283,                  /* RPAREN  */
-    LBRACE = 284,                  /* LBRACE  */
-    RBRACE = 285,                  /* RBRACE  */
-    COLLON = 286,                  /* COLLON  */
-    COMMA = 287,                   /* COMMA  */
-    DOT = 288,                     /* DOT  */
-    UNDERSCORE = 289,              /* UNDERSCORE  */
-    OR_OP = 290,                   /* OR_OP  */
-    AND_OP = 291,                  /* AND_OP  */
-    NOT_OP = 292,                  /* NOT_OP  */
-    END_COMMAND = 293              /* END_COMMAND  */
+    LBRACE = 282,                  /* LBRACE  */
+    RBRACE = 283,                  /* RBRACE  */
+    COLLON = 284,                  /* COLLON  */
+    COMMA = 285,                   /* COMMA  */
+    DOT = 286,                     /* DOT  */
+    UNDERSCORE = 287,              /* UNDERSCORE  */
+    OR_OP = 288,                   /* OR_OP  */
+    AND_OP = 289,                  /* AND_OP  */
+    NOT_OP = 290,                  /* NOT_OP  */
+    END_COMMAND = 291              /* END_COMMAND  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -122,18 +120,16 @@ extern int yydebug;
 #define NADA_A_VER_COM 279
 #define MAIOR_QUE 280
 #define MENOR_QUE 281
-#define LPAREN 282
-#define RPAREN 283
-#define LBRACE 284
-#define RBRACE 285
-#define COLLON 286
-#define COMMA 287
-#define DOT 288
-#define UNDERSCORE 289
-#define OR_OP 290
-#define AND_OP 291
-#define NOT_OP 292
-#define END_COMMAND 293
+#define LBRACE 282
+#define RBRACE 283
+#define COLLON 284
+#define COMMA 285
+#define DOT 286
+#define UNDERSCORE 287
+#define OR_OP 288
+#define AND_OP 289
+#define NOT_OP 290
+#define END_COMMAND 291
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -144,7 +140,7 @@ union YYSTYPE
     char *str;
     int num;
 
-#line 148 "y.tab.h"
+#line 144 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

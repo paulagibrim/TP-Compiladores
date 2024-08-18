@@ -69,7 +69,7 @@ declaracao:
     ;
 
 declaracao_variavel:
-    TIPO{add('K');} IDENTIFICADOR{add('V');} VAI_SER{add('K');} expressao DOT {add('K');}
+    TIPO{add('K');} IDENTIFICADOR{add('V');} VAI_SER{add('K');} expressao DOT{add('K');}
     ;
 
 declaracao_funcao:
@@ -99,17 +99,15 @@ declaracao_estrutura:
     ;
 
 if:
-    FRAGA expressao INTERROGACAO
-		bloco 
-	END_COMMAND
-	| FRAGA expressao INTERROGACAO
-		bloco 
-	else
+    FRAGA expressao INTERROGACAO bloco END_COMMAND
+	//| FRAGA expressao INTERROGACAO
+	//	bloco 
+	//else
     ;
 
-else:
-	| NAO INTERROGACAO bloco END_COMMAND
-	| NAO if
+//else:
+	//| NAO INTERROGACAO bloco END_COMMAND
+	//| NAO if
 
 while:
     VAI_FAZENDO_ATE expressao COLLON bloco

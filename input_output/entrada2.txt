@@ -1,6 +1,4 @@
 
 fraga x engual 0 ?
     anota: "x é 0".
-nao? ?
-    anota: "a".
 acabou, quer um cafezin?
