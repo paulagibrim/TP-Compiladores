@@ -94,7 +94,7 @@ parametro:
 declaracao_estrutura:
     if
     | while
-    | for
+//    | for
     | break
     | print
     | return
@@ -110,13 +110,14 @@ while:
     VAI_FAZENDO_ATE expressao COLLON declaracoes END_COMMAND
     ;
 
-for:
-    PRA LBRACE declaracao_variavel DOT 
-			expressao DOT 
-			expressao RBRACE COLLON 
-			declaracoes 
-			END_COMMAND
-    ;
+//for:
+    //PRA LBRACE declaracao_variavel DOT 
+			//expressao DOT 
+			//expressao RBRACE COLLON 
+			//declaracoes 
+			//END_COMMAND
+   // ;
+
 
 break:
     PICA_MULA DOT

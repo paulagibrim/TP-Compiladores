@@ -1,5 +1,5 @@
 
-fraga x engual 0 ?
+fraga x maior que 5 ?
     anota: "x é 0".
     trem inteiro a vai ser 2.
 acabou, quer um cafezin?

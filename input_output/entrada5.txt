@@ -1,13 +1,9 @@
 
 x vai ser x ai ce junta 2.
 
-pra {trem inteiro x vai ser 0. x menor que 5. x vai ser x ai ce junta 1}:
-    trem picado soma vai ser 2 ai ce junta 3.
-    anota: "soma é 5!".
-acabou, quer um cafezin?
 
 naquele naipe soma{a,b}:
     arreda resultado
 
 -> viaja
-anota: "ni mim"
+anota: "ni mim".
