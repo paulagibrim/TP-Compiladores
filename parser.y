@@ -11,7 +11,6 @@
     void add(char c);
     void insert_type();
     int search(char *);
-    void insert_type();
 
     struct dataType {
         char * id_name;
@@ -26,63 +25,139 @@
     extern int lc;  // Linha do lexer
 %}
 
-%token VOID_TYPE BOOL_TYPE STRING_TYPE INT_TYPE FLOAT_TYPE
-%token TIPO BOOL STRING NUMERO IDENTIFICADOR
-%token FRAGA NAO VAI_FAZENDO_ATE PRA ARREDA PICA_MULA VAI_SER
+/* Definição de tokens */
+%token IDENTIFICADOR TIPO
+%token NUMERO 
+%token STRING BOOL CHAR 
+%token VAI_SER
+%token NAQUELE_NAIPE 
+%token FRAGA NAO INTERROGACAO VAI_FAZENDO_ATE PRA PICA_MULA ARREDA
+%token ANOTA
 %token AI_CE_JUNTA AI_CE_DIMINUI CE_MULTIPLICA_POR CE_DIVIDE_POR
-%token OR_OP AND_OP NOT_OP ENGUAL NADA_A_VER_COM MAIOR_QUE MENOR_QUE
-%token NAQUELE_NAIPE ANOTA END_COMMAND
-%token DOT INTERROGACAO LBRACE RBRACE COMMA UNDERSCORE COLLON 
+%token ENGUAL NADA_A_VER_COM MAIOR_QUE MENOR_QUE
+%token LPAREN RPAREN LBRACE RBRACE COLLON COMMA DOT
+%token UNDERSCORE OR_OP AND_OP NOT_OP 
+%token END_COMMAND
+
+%left AI_CE_JUNTA AI_CE_DIMINUI
+%left CE_MULTIPLICA_POR CE_DIVIDE_POR
+%nonassoc ENGUAL NADA_A_VER_COM
+%nonassoc MAIOR_QUE MENOR_QUE
 
 %union {
     char *str;
     int num;
 }
 
-
 %%
 
-program: main_body END_COMMAND
-;
+/* Regras de produção */
+programa:
+    declaracoes
+    ;
 
-main_body: headers main_func body ARREDA NUMERO ';'
-;
+declaracoes:
+    declaracao
+    | declaracao declaracoes
+    ;
 
-headers: headers NAQUELE_NAIPE { add('H'); }
-| /* Vazio */
-;
+declaracao:
+    declaracao_variavel
+    | declaracao_funcao
+    | declaracao_estrutura
+    ;
 
-main_func: TIPO IDENTIFICADOR { add('F'); }
-;
+declaracao_variavel:
+    TIPO IDENTIFICADOR VAI_SER expressao DOT {
+        add('V');
+    }
+    ;
 
-body: body statement
-| /* Vazio */
-;
+declaracao_funcao:
+    NAQUELE_NAIPE IDENTIFICADOR LBRACE parametros RBRACE COLLON bloco {
+        add('F');
+    }
+    ;
 
-statement: VAI_SER expression ';'
-| IDENTIFICADOR '=' expression ';' { add('V'); }
-| PRINT_CMD
-| flow_control
-;
+parametros:
+    parametro
+    | parametro COMMA parametros
+    ;
 
-expression: IDENTIFICADOR AI_CE_JUNTA IDENTIFICADOR { add('E'); }
-| IDENTIFICADOR CE_MULTIPLICA_POR IDENTIFICADOR { add('E'); }
-| NUMERO { add('C'); }
-| STRING { add('C'); }
-| BOOL { add('C'); }
-;
+parametro:
+    IDENTIFICADOR {
+        add('V');
+    }
+    ;
 
-PRINT_CMD: ANOTA '(' STRING ')' ';' { add('P'); }
-;
+declaracao_estrutura:
+    if
+    | while
+    | for
+    | break
+    | print
+    | return
+    ;
 
-flow_control: FRAGA '(' condition ')' '{' body '}' NAO { add('K'); }
-| VAI_FAZENDO_ATE '(' condition ')' '{' body '}' { add('K'); }
-;
+if:
+    FRAGA expressao bloco NAO bloco INTERROGACAO
+    {add('K');}
+    ;
 
-condition: IDENTIFICADOR ENGUAL IDENTIFICADOR
-| IDENTIFICADOR MAIOR_QUE IDENTIFICADOR
-| BOOL
-;
+while:
+    VAI_FAZENDO_ATE expressao COLLON bloco
+    {add('K');}
+    ;
+
+for:
+    PRA LBRACE expressao RBRACE COLLON bloco
+    {add('K');}
+    ;
+
+break:
+    PICA_MULA
+    {add('K');}
+    ;
+
+return:
+    ARREDA expressao
+    {add('K');}
+    ;
+
+expressao:
+    termo
+    | termo operador expressao
+    ;
+
+print:
+    ANOTA COLLON expressao
+    {add('K');}
+    ;
+
+termo:
+    IDENTIFICADOR 
+    | NUMERO {insert_type();}
+    | STRING  {insert_type();}
+    | BOOL  {insert_type();}
+    | CHAR  {insert_type();}
+    ;
+
+
+
+operador:
+    AI_CE_JUNTA
+    | AI_CE_DIMINUI
+    | CE_MULTIPLICA_POR
+    | CE_DIVIDE_POR
+    | ENGUAL
+    | NADA_A_VER_COM
+    | MAIOR_QUE
+    | MENOR_QUE
+    ;
+
+bloco:
+    declaracoes
+    ;
 
 %%
 
@@ -117,13 +192,7 @@ int search(char *type) {
 void add(char c) {
   q = search(yytext);
   if (!q) {
-    if (c == 'H') {
-      symbol_table[count].id_name = strdup(yytext);
-      symbol_table[count].data_type = strdup("N/A");
-      symbol_table[count].line_no = lc;
-      symbol_table[count].type = strdup("Header");
-      count++;
-    } else if (c == 'K') {
+    if (c == 'K') {
       symbol_table[count].id_name = strdup(yytext);
       symbol_table[count].data_type = strdup("N/A");
       symbol_table[count].line_no = lc;
