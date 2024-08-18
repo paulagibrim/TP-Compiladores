@@ -64,7 +64,11 @@ declaracao:
     declaracao_variavel
     | declaracao_funcao
     | declaracao_estrutura
+	| redefinicao_variavel
     ;
+
+redefinicao_variavel:
+	IDENTIFICADOR VAI_SER expressao DOT;
 
 declaracao_variavel:
     TIPO{add('K');} IDENTIFICADOR{add('V');} VAI_SER{add('K');} expressao DOT{add('K');}
@@ -103,7 +107,7 @@ if:
     ;
 
 while:
-    VAI_FAZENDO_ATE expressao COLLON bloco
+    VAI_FAZENDO_ATE expressao COLLON declaracoes END_COMMAND
     ;
 
 for:
@@ -111,7 +115,7 @@ for:
     ;
 
 break:
-    PICA_MULA
+    PICA_MULA DOT
     ;
 
 return:
@@ -121,6 +125,7 @@ return:
 expressao:
     termo
     | termo operador expressao
+	| operadores_pos termo termo
     ;
 
 print:
@@ -144,7 +149,9 @@ operador:
     | NADA_A_VER_COM
     | MAIOR_QUE
     | MENOR_QUE
-    | OR_OP 
+	
+operadores_pos:
+	 OR_OP 
     | AND_OP 
     | NOT_OP
     ;

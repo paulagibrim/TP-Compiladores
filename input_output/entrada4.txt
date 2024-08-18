@@ -1,6 +1,9 @@
 vai fazeno ate x maior que 10:
     anota: x.
-    x vai ser x ai ce junta 1.
+    trem picado x vai ser x ai ce junta 1.
     pica a mula.
+acabou, quer um cafezin?
+
 vai fazeno ate de rocha:
     pica a mula.
+acabou, quer um cafezin?

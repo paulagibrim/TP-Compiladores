@@ -6,8 +6,12 @@ fraga pelo menos um x y ?
     anota: "pelo menos um é verdadeiro".
 acabou, quer um cafezin?
 
-fraga num eh x ?
-
-
-
+fraga x menor que 1 ?
+    fraga pelo menos um x y?
+        anota: "hahahahaha".
+    nao? fraga x maior que 0 ?
+        anota: "nao".
+    acabou, quer um cafezin?
+acabou, quer um cafezin?
+ 
 trem inteiro x vai ser 20.
