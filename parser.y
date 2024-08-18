@@ -26,63 +26,131 @@
     extern int lc;  // Linha do lexer
 %}
 
-%token VOID_TYPE BOOL_TYPE STRING_TYPE INT_TYPE FLOAT_TYPE
-%token TIPO BOOL STRING NUMERO IDENTIFICADOR
-%token FRAGA NAO VAI_FAZENDO_ATE PRA ARREDA PICA_MULA VAI_SER
+/* Definição de tokens */
+%token IDENTIFICADOR TIPO
+%token NUMERO 
+%token STRING BOOL CHAR 
+%token VAI_SER
+%token NAQUELE_NAIPE 
+%token FRAGA NAO INTERROGACAO VAI_FAZENDO_ATE PRA PICA_MULA ARREDA
+%token ANOTA
 %token AI_CE_JUNTA AI_CE_DIMINUI CE_MULTIPLICA_POR CE_DIVIDE_POR
-%token OR_OP AND_OP NOT_OP ENGUAL NADA_A_VER_COM MAIOR_QUE MENOR_QUE
-%token NAQUELE_NAIPE ANOTA END_COMMAND
-%token DOT INTERROGACAO LBRACE RBRACE COMMA UNDERSCORE COLLON 
+%token ENGUAL NADA_A_VER_COM MAIOR_QUE MENOR_QUE
+%token LPAREN RPAREN LBRACE RBRACE COLLON COMMA DOT
+%token UNDERSCORE OR_OP AND_OP NOT_OP 
+%token END_COMMAND
+
+%left AI_CE_JUNTA AI_CE_DIMINUI
+%left CE_MULTIPLICA_POR CE_DIVIDE_POR
+%nonassoc ENGUAL NADA_A_VER_COM
+%nonassoc MAIOR_QUE MENOR_QUE
 
 %union {
     char *str;
     int num;
 }
 
-
 %%
 
-program: main_body END_COMMAND
-;
+/* Regras de produção */
+programa:
+    declaracoes
+    ;
 
-main_body: headers main_func body ARREDA NUMERO ';'
-;
+declaracoes:
+    declaracao
+    | declaracao declaracoes
+    ;
 
-headers: headers NAQUELE_NAIPE { add('H'); }
-| /* Vazio */
-;
+declaracao:
+    declaracao_variavel
+    | declaracao_funcao
+    | declaracao_estrutura
+    ;
 
-main_func: TIPO IDENTIFICADOR { add('F'); }
-;
+declaracao_variavel:
+    TIPO IDENTIFICADOR VAI_SER expressao DOT {
+        add('V');
+    }
+    ;
 
-body: body statement
-| /* Vazio */
-;
+declaracao_funcao:
+    NAQUELE_NAIPE IDENTIFICADOR LBRACE parametros RBRACE COLLON bloco {
+        add('F');
+    }
+    ;
 
-statement: VAI_SER expression ';'
-| IDENTIFICADOR '=' expression ';' { add('V'); }
-| PRINT_CMD
-| flow_control
-;
+parametros:
+    parametro
+    | parametro COMMA parametros
+    ;
 
-expression: IDENTIFICADOR AI_CE_JUNTA IDENTIFICADOR { add('E'); }
-| IDENTIFICADOR CE_MULTIPLICA_POR IDENTIFICADOR { add('E'); }
-| NUMERO { add('C'); }
-| STRING { add('C'); }
-| BOOL { add('C'); }
-;
+parametro:
+    IDENTIFICADOR {
+        add('V');
+    }
+    ;
 
-PRINT_CMD: ANOTA '(' STRING ')' ';' { add('P'); }
-;
+declaracao_estrutura:
+    if
+    | while
+    | for
+    | break
+    | print
+    | return
+    ;
 
-flow_control: FRAGA '(' condition ')' '{' body '}' NAO { add('K'); }
-| VAI_FAZENDO_ATE '(' condition ')' '{' body '}' { add('K'); }
-;
+if:
+    FRAGA expressao bloco NAO bloco INTERROGACAO
+    ;
 
-condition: IDENTIFICADOR ENGUAL IDENTIFICADOR
-| IDENTIFICADOR MAIOR_QUE IDENTIFICADOR
-| BOOL
-;
+while:
+    VAI_FAZENDO_ATE expressao COLLON bloco
+    ;
+
+for:
+    PRA LBRACE expressao RBRACE COLLON bloco
+    ;
+
+break:
+    PICA_MULA
+    ;
+
+return:
+    ARREDA expressao
+    ;
+
+expressao:
+    termo
+    | termo operador expressao
+    ;
+
+print:
+    ANOTA COLLON expressao
+    ;
+
+termo:
+    IDENTIFICADOR 
+    | NUMERO
+    | STRING
+    | BOOL
+    | CHAR
+    ;
+
+operador:
+    AI_CE_JUNTA
+    | AI_CE_DIMINUI
+    | CE_MULTIPLICA_POR
+    | CE_DIVIDE_POR
+    | ENGUAL
+    | NADA_A_VER_COM
+    | MAIOR_QUE
+    | MENOR_QUE
+    ;
+
+bloco:
+    declaracoes
+    ;
 
 %%
 

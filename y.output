@@ -1,616 +1,886 @@
 Terminals unused in grammar
 
-    VOID_TYPE
-    BOOL_TYPE
-    STRING_TYPE
-    INT_TYPE
-    FLOAT_TYPE
-    PRA
-    PICA_MULA
-    AI_CE_DIMINUI
-    CE_DIVIDE_POR
+    LPAREN
+    RPAREN
+    UNDERSCORE
     OR_OP
     AND_OP
     NOT_OP
-    NADA_A_VER_COM
-    MENOR_QUE
-    DOT
-    INTERROGACAO
-    LBRACE
-    RBRACE
-    COMMA
-    UNDERSCORE
-    COLLON
+    END_COMMAND
+
+
+State 11 conflicts: 8 shift/reduce
 
 
 Grammar
 
-    0 $accept: program $end
+    0 $accept: programa $end
 
-    1 program: main_body END_COMMAND
+    1 programa: declaracoes
 
-    2 main_body: headers main_func body ARREDA NUMERO ';'
+    2 declaracoes: declaracao
+    3            | declaracao declaracoes
 
-    3 headers: headers NAQUELE_NAIPE
-    4        | ε
+    4 declaracao: declaracao_variavel
+    5           | declaracao_funcao
+    6           | declaracao_estrutura
 
-    5 main_func: TIPO IDENTIFICADOR
+    7 declaracao_variavel: TIPO IDENTIFICADOR VAI_SER expressao DOT
 
-    6 body: body statement
-    7     | ε
+    8 declaracao_funcao: NAQUELE_NAIPE IDENTIFICADOR LBRACE parametros RBRACE COLLON bloco
 
-    8 statement: VAI_SER expression ';'
-    9          | IDENTIFICADOR '=' expression ';'
-   10          | PRINT_CMD
-   11          | flow_control
+    9 parametros: parametro
+   10           | parametro COMMA parametros
 
-   12 expression: IDENTIFICADOR AI_CE_JUNTA IDENTIFICADOR
-   13           | IDENTIFICADOR CE_MULTIPLICA_POR IDENTIFICADOR
-   14           | NUMERO
-   15           | STRING
-   16           | BOOL
+   11 parametro: IDENTIFICADOR
 
-   17 PRINT_CMD: ANOTA '(' STRING ')' ';'
+   12 declaracao_estrutura: if
+   13                     | while
+   14                     | for
+   15                     | break
+   16                     | print
+   17                     | return
 
-   18 flow_control: FRAGA '(' condition ')' '{' body '}' NAO
-   19             | VAI_FAZENDO_ATE '(' condition ')' '{' body '}'
+   18 if: FRAGA expressao bloco NAO bloco INTERROGACAO
 
-   20 condition: IDENTIFICADOR ENGUAL IDENTIFICADOR
-   21          | IDENTIFICADOR MAIOR_QUE IDENTIFICADOR
-   22          | BOOL
+   19 while: VAI_FAZENDO_ATE expressao COLLON bloco
+
+   20 for: PRA LBRACE expressao RBRACE COLLON bloco
+
+   21 break: PICA_MULA
+
+   22 return: ARREDA expressao
+
+   23 expressao: termo
+   24          | termo operador expressao
+
+   25 print: ANOTA COLLON expressao
+
+   26 termo: IDENTIFICADOR
+   27      | NUMERO
+   28      | STRING
+   29      | BOOL
+   30      | CHAR
+
+   31 operador: AI_CE_JUNTA
+   32         | AI_CE_DIMINUI
+   33         | CE_MULTIPLICA_POR
+   34         | CE_DIVIDE_POR
+   35         | ENGUAL
+   36         | NADA_A_VER_COM
+   37         | MAIOR_QUE
+   38         | MENOR_QUE
+
+   39 bloco: declaracoes
 
 
 Terminals, with rules where they appear
 
     $end (0) 0
-    '(' (40) 17 18 19
-    ')' (41) 17 18 19
-    ';' (59) 2 8 9 17
-    '=' (61) 9
-    '{' (123) 18 19
-    '}' (125) 18 19
     error (256)
-    VOID_TYPE (258)
-    BOOL_TYPE (259)
-    STRING_TYPE (260)
-    INT_TYPE (261)
-    FLOAT_TYPE (262)
-    TIPO (263) 5
-    BOOL (264) 16 22
-    STRING (265) 15 17
-    NUMERO (266) 2 14
-    IDENTIFICADOR (267) 5 9 12 13 20 21
-    FRAGA (268) 18
-    NAO (269) 18
-    VAI_FAZENDO_ATE (270) 19
-    PRA (271)
-    ARREDA (272) 2
-    PICA_MULA (273)
-    VAI_SER (274) 8
-    AI_CE_JUNTA (275) 12
-    AI_CE_DIMINUI (276)
-    CE_MULTIPLICA_POR (277) 13
-    CE_DIVIDE_POR (278)
-    OR_OP (279)
-    AND_OP (280)
-    NOT_OP (281)
-    ENGUAL (282) 20
-    NADA_A_VER_COM (283)
-    MAIOR_QUE (284) 21
-    MENOR_QUE (285)
-    NAQUELE_NAIPE (286) 3
-    ANOTA (287) 17
-    END_COMMAND (288) 1
-    DOT (289)
-    INTERROGACAO (290)
-    LBRACE (291)
-    RBRACE (292)
-    COMMA (293)
-    UNDERSCORE (294)
-    COLLON (295)
+    IDENTIFICADOR (258) 7 8 11 26
+    TIPO (259) 7
+    NUMERO (260) 27
+    STRING (261) 28
+    BOOL (262) 29
+    CHAR (263) 30
+    VAI_SER (264) 7
+    NAQUELE_NAIPE (265) 8
+    FRAGA (266) 18
+    NAO (267) 18
+    INTERROGACAO (268) 18
+    VAI_FAZENDO_ATE (269) 19
+    PRA (270) 20
+    PICA_MULA (271) 21
+    ARREDA (272) 22
+    ANOTA (273) 25
+    AI_CE_JUNTA (274) 31
+    AI_CE_DIMINUI (275) 32
+    CE_MULTIPLICA_POR (276) 33
+    CE_DIVIDE_POR (277) 34
+    ENGUAL (278) 35
+    NADA_A_VER_COM (279) 36
+    MAIOR_QUE (280) 37
+    MENOR_QUE (281) 38
+    LPAREN (282)
+    RPAREN (283)
+    LBRACE (284) 8 20
+    RBRACE (285) 8 20
+    COLLON (286) 8 19 20 25
+    COMMA (287) 10
+    DOT (288) 7
+    UNDERSCORE (289)
+    OR_OP (290)
+    AND_OP (291)
+    NOT_OP (292)
+    END_COMMAND (293)
 
 
 Nonterminals, with rules where they appear
 
-    $accept (47)
+    $accept (39)
         on left: 0
-    program (48)
+    programa (40)
         on left: 1
         on right: 0
-    main_body (49)
-        on left: 2
-        on right: 1
-    headers (50)
-        on left: 3 4
+    declaracoes (41)
+        on left: 2 3
+        on right: 1 3 39
+    declaracao (42)
+        on left: 4 5 6
         on right: 2 3
-    main_func (51)
-        on left: 5
-        on right: 2
-    body (52)
-        on left: 6 7
-        on right: 2 6 18 19
-    statement (53)
-        on left: 8 9 10 11
+    declaracao_variavel (43)
+        on left: 7
+        on right: 4
+    declaracao_funcao (44)
+        on left: 8
+        on right: 5
+    parametros (45)
+        on left: 9 10
+        on right: 8 10
+    parametro (46)
+        on left: 11
+        on right: 9 10
+    declaracao_estrutura (47)
+        on left: 12 13 14 15 16 17
         on right: 6
-    expression (54)
-        on left: 12 13 14 15 16
-        on right: 8 9
-    PRINT_CMD (55)
-        on left: 17
-        on right: 10
-    flow_control (56)
-        on left: 18 19
-        on right: 11
-    condition (57)
-        on left: 20 21 22
-        on right: 18 19
+    if (48)
+        on left: 18
+        on right: 12
+    while (49)
+        on left: 19
+        on right: 13
+    for (50)
+        on left: 20
+        on right: 14
+    break (51)
+        on left: 21
+        on right: 15
+    return (52)
+        on left: 22
+        on right: 17
+    expressao (53)
+        on left: 23 24
+        on right: 7 18 19 20 22 24 25
+    print (54)
+        on left: 25
+        on right: 16
+    termo (55)
+        on left: 26 27 28 29 30
+        on right: 23 24
+    operador (56)
+        on left: 31 32 33 34 35 36 37 38
+        on right: 24
+    bloco (57)
+        on left: 39
+        on right: 8 18 19 20
 
 
 State 0
 
-    0 $accept: • program $end
+    0 $accept: • programa $end
 
-    $default  reduce using rule 4 (headers)
+    TIPO             shift, and go to state 1
+    NAQUELE_NAIPE    shift, and go to state 2
+    FRAGA            shift, and go to state 3
+    VAI_FAZENDO_ATE  shift, and go to state 4
+    PRA              shift, and go to state 5
+    PICA_MULA        shift, and go to state 6
+    ARREDA           shift, and go to state 7
+    ANOTA            shift, and go to state 8
 
-    program    go to state 1
-    main_body  go to state 2
-    headers    go to state 3
+    programa              go to state 9
+    declaracoes           go to state 10
+    declaracao            go to state 11
+    declaracao_variavel   go to state 12
+    declaracao_funcao     go to state 13
+    declaracao_estrutura  go to state 14
+    if                    go to state 15
+    while                 go to state 16
+    for                   go to state 17
+    break                 go to state 18
+    return                go to state 19
+    print                 go to state 20
 
 
 State 1
 
-    0 $accept: program • $end
+    7 declaracao_variavel: TIPO • IDENTIFICADOR VAI_SER expressao DOT
 
-    $end  shift, and go to state 4
+    IDENTIFICADOR  shift, and go to state 21
 
 
 State 2
 
-    1 program: main_body • END_COMMAND
+    8 declaracao_funcao: NAQUELE_NAIPE • IDENTIFICADOR LBRACE parametros RBRACE COLLON bloco
 
-    END_COMMAND  shift, and go to state 5
+    IDENTIFICADOR  shift, and go to state 22
 
 
 State 3
 
-    2 main_body: headers • main_func body ARREDA NUMERO ';'
-    3 headers: headers • NAQUELE_NAIPE
+   18 if: FRAGA • expressao bloco NAO bloco INTERROGACAO
 
-    TIPO           shift, and go to state 6
-    NAQUELE_NAIPE  shift, and go to state 7
+    IDENTIFICADOR  shift, and go to state 23
+    NUMERO         shift, and go to state 24
+    STRING         shift, and go to state 25
+    BOOL           shift, and go to state 26
+    CHAR           shift, and go to state 27
 
-    main_func  go to state 8
+    expressao  go to state 28
+    termo      go to state 29
 
 
 State 4
 
-    0 $accept: program $end •
+   19 while: VAI_FAZENDO_ATE • expressao COLLON bloco
 
-    $default  accept
+    IDENTIFICADOR  shift, and go to state 23
+    NUMERO         shift, and go to state 24
+    STRING         shift, and go to state 25
+    BOOL           shift, and go to state 26
+    CHAR           shift, and go to state 27
+
+    expressao  go to state 30
+    termo      go to state 29
 
 
 State 5
 
-    1 program: main_body END_COMMAND •
+   20 for: PRA • LBRACE expressao RBRACE COLLON bloco
 
-    $default  reduce using rule 1 (program)
+    LBRACE  shift, and go to state 31
 
 
 State 6
 
-    5 main_func: TIPO • IDENTIFICADOR
+   21 break: PICA_MULA •
 
-    IDENTIFICADOR  shift, and go to state 9
+    $default  reduce using rule 21 (break)
 
 
 State 7
 
-    3 headers: headers NAQUELE_NAIPE •
+   22 return: ARREDA • expressao
 
-    $default  reduce using rule 3 (headers)
+    IDENTIFICADOR  shift, and go to state 23
+    NUMERO         shift, and go to state 24
+    STRING         shift, and go to state 25
+    BOOL           shift, and go to state 26
+    CHAR           shift, and go to state 27
+
+    expressao  go to state 32
+    termo      go to state 29
 
 
 State 8
 
-    2 main_body: headers main_func • body ARREDA NUMERO ';'
+   25 print: ANOTA • COLLON expressao
 
-    $default  reduce using rule 7 (body)
-
-    body  go to state 10
+    COLLON  shift, and go to state 33
 
 
 State 9
 
-    5 main_func: TIPO IDENTIFICADOR •
+    0 $accept: programa • $end
 
-    $default  reduce using rule 5 (main_func)
+    $end  shift, and go to state 34
 
 
 State 10
 
-    2 main_body: headers main_func body • ARREDA NUMERO ';'
-    6 body: body • statement
+    1 programa: declaracoes •
 
-    IDENTIFICADOR    shift, and go to state 11
-    FRAGA            shift, and go to state 12
-    VAI_FAZENDO_ATE  shift, and go to state 13
-    ARREDA           shift, and go to state 14
-    VAI_SER          shift, and go to state 15
-    ANOTA            shift, and go to state 16
-
-    statement     go to state 17
-    PRINT_CMD     go to state 18
-    flow_control  go to state 19
+    $default  reduce using rule 1 (programa)
 
 
 State 11
 
-    9 statement: IDENTIFICADOR • '=' expression ';'
+    2 declaracoes: declaracao •
+    3            | declaracao • declaracoes
 
-    '='  shift, and go to state 20
+    TIPO             shift, and go to state 1
+    NAQUELE_NAIPE    shift, and go to state 2
+    FRAGA            shift, and go to state 3
+    VAI_FAZENDO_ATE  shift, and go to state 4
+    PRA              shift, and go to state 5
+    PICA_MULA        shift, and go to state 6
+    ARREDA           shift, and go to state 7
+    ANOTA            shift, and go to state 8
+
+    TIPO             [reduce using rule 2 (declaracoes)]
+    NAQUELE_NAIPE    [reduce using rule 2 (declaracoes)]
+    FRAGA            [reduce using rule 2 (declaracoes)]
+    VAI_FAZENDO_ATE  [reduce using rule 2 (declaracoes)]
+    PRA              [reduce using rule 2 (declaracoes)]
+    PICA_MULA        [reduce using rule 2 (declaracoes)]
+    ARREDA           [reduce using rule 2 (declaracoes)]
+    ANOTA            [reduce using rule 2 (declaracoes)]
+    $default         reduce using rule 2 (declaracoes)
+
+    declaracoes           go to state 35
+    declaracao            go to state 11
+    declaracao_variavel   go to state 12
+    declaracao_funcao     go to state 13
+    declaracao_estrutura  go to state 14
+    if                    go to state 15
+    while                 go to state 16
+    for                   go to state 17
+    break                 go to state 18
+    return                go to state 19
+    print                 go to state 20
 
 
 State 12
 
-   18 flow_control: FRAGA • '(' condition ')' '{' body '}' NAO
+    4 declaracao: declaracao_variavel •
 
-    '('  shift, and go to state 21
+    $default  reduce using rule 4 (declaracao)
 
 
 State 13
 
-   19 flow_control: VAI_FAZENDO_ATE • '(' condition ')' '{' body '}'
+    5 declaracao: declaracao_funcao •
 
-    '('  shift, and go to state 22
+    $default  reduce using rule 5 (declaracao)
 
 
 State 14
 
-    2 main_body: headers main_func body ARREDA • NUMERO ';'
+    6 declaracao: declaracao_estrutura •
 
-    NUMERO  shift, and go to state 23
+    $default  reduce using rule 6 (declaracao)
 
 
 State 15
 
-    8 statement: VAI_SER • expression ';'
+   12 declaracao_estrutura: if •
 
-    BOOL           shift, and go to state 24
-    STRING         shift, and go to state 25
-    NUMERO         shift, and go to state 26
-    IDENTIFICADOR  shift, and go to state 27
-
-    expression  go to state 28
+    $default  reduce using rule 12 (declaracao_estrutura)
 
 
 State 16
 
-   17 PRINT_CMD: ANOTA • '(' STRING ')' ';'
+   13 declaracao_estrutura: while •
 
-    '('  shift, and go to state 29
+    $default  reduce using rule 13 (declaracao_estrutura)
 
 
 State 17
 
-    6 body: body statement •
+   14 declaracao_estrutura: for •
 
-    $default  reduce using rule 6 (body)
+    $default  reduce using rule 14 (declaracao_estrutura)
 
 
 State 18
 
-   10 statement: PRINT_CMD •
+   15 declaracao_estrutura: break •
 
-    $default  reduce using rule 10 (statement)
+    $default  reduce using rule 15 (declaracao_estrutura)
 
 
 State 19
 
-   11 statement: flow_control •
+   17 declaracao_estrutura: return •
 
-    $default  reduce using rule 11 (statement)
+    $default  reduce using rule 17 (declaracao_estrutura)
 
 
 State 20
 
-    9 statement: IDENTIFICADOR '=' • expression ';'
+   16 declaracao_estrutura: print •
 
-    BOOL           shift, and go to state 24
-    STRING         shift, and go to state 25
-    NUMERO         shift, and go to state 26
-    IDENTIFICADOR  shift, and go to state 27
-
-    expression  go to state 30
+    $default  reduce using rule 16 (declaracao_estrutura)
 
 
 State 21
 
-   18 flow_control: FRAGA '(' • condition ')' '{' body '}' NAO
+    7 declaracao_variavel: TIPO IDENTIFICADOR • VAI_SER expressao DOT
 
-    BOOL           shift, and go to state 31
-    IDENTIFICADOR  shift, and go to state 32
-
-    condition  go to state 33
+    VAI_SER  shift, and go to state 36
 
 
 State 22
 
-   19 flow_control: VAI_FAZENDO_ATE '(' • condition ')' '{' body '}'
+    8 declaracao_funcao: NAQUELE_NAIPE IDENTIFICADOR • LBRACE parametros RBRACE COLLON bloco
 
-    BOOL           shift, and go to state 31
-    IDENTIFICADOR  shift, and go to state 32
-
-    condition  go to state 34
+    LBRACE  shift, and go to state 37
 
 
 State 23
 
-    2 main_body: headers main_func body ARREDA NUMERO • ';'
+   26 termo: IDENTIFICADOR •
 
-    ';'  shift, and go to state 35
+    $default  reduce using rule 26 (termo)
 
 
 State 24
 
-   16 expression: BOOL •
+   27 termo: NUMERO •
 
-    $default  reduce using rule 16 (expression)
+    $default  reduce using rule 27 (termo)
 
 
 State 25
 
-   15 expression: STRING •
+   28 termo: STRING •
 
-    $default  reduce using rule 15 (expression)
+    $default  reduce using rule 28 (termo)
 
 
 State 26
 
-   14 expression: NUMERO •
+   29 termo: BOOL •
 
-    $default  reduce using rule 14 (expression)
+    $default  reduce using rule 29 (termo)
 
 
 State 27
 
-   12 expression: IDENTIFICADOR • AI_CE_JUNTA IDENTIFICADOR
-   13           | IDENTIFICADOR • CE_MULTIPLICA_POR IDENTIFICADOR
+   30 termo: CHAR •
 
-    AI_CE_JUNTA        shift, and go to state 36
-    CE_MULTIPLICA_POR  shift, and go to state 37
+    $default  reduce using rule 30 (termo)
 
 
 State 28
 
-    8 statement: VAI_SER expression • ';'
+   18 if: FRAGA expressao • bloco NAO bloco INTERROGACAO
 
-    ';'  shift, and go to state 38
+    TIPO             shift, and go to state 1
+    NAQUELE_NAIPE    shift, and go to state 2
+    FRAGA            shift, and go to state 3
+    VAI_FAZENDO_ATE  shift, and go to state 4
+    PRA              shift, and go to state 5
+    PICA_MULA        shift, and go to state 6
+    ARREDA           shift, and go to state 7
+    ANOTA            shift, and go to state 8
+
+    declaracoes           go to state 38
+    declaracao            go to state 11
+    declaracao_variavel   go to state 12
+    declaracao_funcao     go to state 13
+    declaracao_estrutura  go to state 14
+    if                    go to state 15
+    while                 go to state 16
+    for                   go to state 17
+    break                 go to state 18
+    return                go to state 19
+    print                 go to state 20
+    bloco                 go to state 39
 
 
 State 29
 
-   17 PRINT_CMD: ANOTA '(' • STRING ')' ';'
+   23 expressao: termo •
+   24          | termo • operador expressao
 
-    STRING  shift, and go to state 39
+    AI_CE_JUNTA        shift, and go to state 40
+    AI_CE_DIMINUI      shift, and go to state 41
+    CE_MULTIPLICA_POR  shift, and go to state 42
+    CE_DIVIDE_POR      shift, and go to state 43
+    ENGUAL             shift, and go to state 44
+    NADA_A_VER_COM     shift, and go to state 45
+    MAIOR_QUE          shift, and go to state 46
+    MENOR_QUE          shift, and go to state 47
+
+    $default  reduce using rule 23 (expressao)
+
+    operador  go to state 48
 
 
 State 30
 
-    9 statement: IDENTIFICADOR '=' expression • ';'
+   19 while: VAI_FAZENDO_ATE expressao • COLLON bloco
 
-    ';'  shift, and go to state 40
+    COLLON  shift, and go to state 49
 
 
 State 31
 
-   22 condition: BOOL •
+   20 for: PRA LBRACE • expressao RBRACE COLLON bloco
 
-    $default  reduce using rule 22 (condition)
+    IDENTIFICADOR  shift, and go to state 23
+    NUMERO         shift, and go to state 24
+    STRING         shift, and go to state 25
+    BOOL           shift, and go to state 26
+    CHAR           shift, and go to state 27
+
+    expressao  go to state 50
+    termo      go to state 29
 
 
 State 32
 
-   20 condition: IDENTIFICADOR • ENGUAL IDENTIFICADOR
-   21          | IDENTIFICADOR • MAIOR_QUE IDENTIFICADOR
+   22 return: ARREDA expressao •
 
-    ENGUAL     shift, and go to state 41
-    MAIOR_QUE  shift, and go to state 42
+    $default  reduce using rule 22 (return)
 
 
 State 33
 
-   18 flow_control: FRAGA '(' condition • ')' '{' body '}' NAO
+   25 print: ANOTA COLLON • expressao
 
-    ')'  shift, and go to state 43
+    IDENTIFICADOR  shift, and go to state 23
+    NUMERO         shift, and go to state 24
+    STRING         shift, and go to state 25
+    BOOL           shift, and go to state 26
+    CHAR           shift, and go to state 27
+
+    expressao  go to state 51
+    termo      go to state 29
 
 
 State 34
 
-   19 flow_control: VAI_FAZENDO_ATE '(' condition • ')' '{' body '}'
+    0 $accept: programa $end •
 
-    ')'  shift, and go to state 44
+    $default  accept
 
 
 State 35
 
-    2 main_body: headers main_func body ARREDA NUMERO ';' •
+    3 declaracoes: declaracao declaracoes •
 
-    $default  reduce using rule 2 (main_body)
+    $default  reduce using rule 3 (declaracoes)
 
 
 State 36
 
-   12 expression: IDENTIFICADOR AI_CE_JUNTA • IDENTIFICADOR
+    7 declaracao_variavel: TIPO IDENTIFICADOR VAI_SER • expressao DOT
 
-    IDENTIFICADOR  shift, and go to state 45
+    IDENTIFICADOR  shift, and go to state 23
+    NUMERO         shift, and go to state 24
+    STRING         shift, and go to state 25
+    BOOL           shift, and go to state 26
+    CHAR           shift, and go to state 27
+
+    expressao  go to state 52
+    termo      go to state 29
 
 
 State 37
 
-   13 expression: IDENTIFICADOR CE_MULTIPLICA_POR • IDENTIFICADOR
+    8 declaracao_funcao: NAQUELE_NAIPE IDENTIFICADOR LBRACE • parametros RBRACE COLLON bloco
 
-    IDENTIFICADOR  shift, and go to state 46
+    IDENTIFICADOR  shift, and go to state 53
+
+    parametros  go to state 54
+    parametro   go to state 55
 
 
 State 38
 
-    8 statement: VAI_SER expression ';' •
+   39 bloco: declaracoes •
 
-    $default  reduce using rule 8 (statement)
+    $default  reduce using rule 39 (bloco)
 
 
 State 39
 
-   17 PRINT_CMD: ANOTA '(' STRING • ')' ';'
+   18 if: FRAGA expressao bloco • NAO bloco INTERROGACAO
 
-    ')'  shift, and go to state 47
+    NAO  shift, and go to state 56
 
 
 State 40
 
-    9 statement: IDENTIFICADOR '=' expression ';' •
+   31 operador: AI_CE_JUNTA •
 
-    $default  reduce using rule 9 (statement)
+    $default  reduce using rule 31 (operador)
 
 
 State 41
 
-   20 condition: IDENTIFICADOR ENGUAL • IDENTIFICADOR
+   32 operador: AI_CE_DIMINUI •
 
-    IDENTIFICADOR  shift, and go to state 48
+    $default  reduce using rule 32 (operador)
 
 
 State 42
 
-   21 condition: IDENTIFICADOR MAIOR_QUE • IDENTIFICADOR
+   33 operador: CE_MULTIPLICA_POR •
 
-    IDENTIFICADOR  shift, and go to state 49
+    $default  reduce using rule 33 (operador)
 
 
 State 43
 
-   18 flow_control: FRAGA '(' condition ')' • '{' body '}' NAO
+   34 operador: CE_DIVIDE_POR •
 
-    '{'  shift, and go to state 50
+    $default  reduce using rule 34 (operador)
 
 
 State 44
 
-   19 flow_control: VAI_FAZENDO_ATE '(' condition ')' • '{' body '}'
+   35 operador: ENGUAL •
 
-    '{'  shift, and go to state 51
+    $default  reduce using rule 35 (operador)
 
 
 State 45
 
-   12 expression: IDENTIFICADOR AI_CE_JUNTA IDENTIFICADOR •
+   36 operador: NADA_A_VER_COM •
 
-    $default  reduce using rule 12 (expression)
+    $default  reduce using rule 36 (operador)
 
 
 State 46
 
-   13 expression: IDENTIFICADOR CE_MULTIPLICA_POR IDENTIFICADOR •
+   37 operador: MAIOR_QUE •
 
-    $default  reduce using rule 13 (expression)
+    $default  reduce using rule 37 (operador)
 
 
 State 47
 
-   17 PRINT_CMD: ANOTA '(' STRING ')' • ';'
+   38 operador: MENOR_QUE •
 
-    ';'  shift, and go to state 52
+    $default  reduce using rule 38 (operador)
 
 
 State 48
 
-   20 condition: IDENTIFICADOR ENGUAL IDENTIFICADOR •
+   24 expressao: termo operador • expressao
 
-    $default  reduce using rule 20 (condition)
+    IDENTIFICADOR  shift, and go to state 23
+    NUMERO         shift, and go to state 24
+    STRING         shift, and go to state 25
+    BOOL           shift, and go to state 26
+    CHAR           shift, and go to state 27
+
+    expressao  go to state 57
+    termo      go to state 29
 
 
 State 49
 
-   21 condition: IDENTIFICADOR MAIOR_QUE IDENTIFICADOR •
+   19 while: VAI_FAZENDO_ATE expressao COLLON • bloco
 
-    $default  reduce using rule 21 (condition)
+    TIPO             shift, and go to state 1
+    NAQUELE_NAIPE    shift, and go to state 2
+    FRAGA            shift, and go to state 3
+    VAI_FAZENDO_ATE  shift, and go to state 4
+    PRA              shift, and go to state 5
+    PICA_MULA        shift, and go to state 6
+    ARREDA           shift, and go to state 7
+    ANOTA            shift, and go to state 8
+
+    declaracoes           go to state 38
+    declaracao            go to state 11
+    declaracao_variavel   go to state 12
+    declaracao_funcao     go to state 13
+    declaracao_estrutura  go to state 14
+    if                    go to state 15
+    while                 go to state 16
+    for                   go to state 17
+    break                 go to state 18
+    return                go to state 19
+    print                 go to state 20
+    bloco                 go to state 58
 
 
 State 50
 
-   18 flow_control: FRAGA '(' condition ')' '{' • body '}' NAO
+   20 for: PRA LBRACE expressao • RBRACE COLLON bloco
 
-    $default  reduce using rule 7 (body)
-
-    body  go to state 53
+    RBRACE  shift, and go to state 59
 
 
 State 51
 
-   19 flow_control: VAI_FAZENDO_ATE '(' condition ')' '{' • body '}'
+   25 print: ANOTA COLLON expressao •
 
-    $default  reduce using rule 7 (body)
-
-    body  go to state 54
+    $default  reduce using rule 25 (print)
 
 
 State 52
 
-   17 PRINT_CMD: ANOTA '(' STRING ')' ';' •
+    7 declaracao_variavel: TIPO IDENTIFICADOR VAI_SER expressao • DOT
 
-    $default  reduce using rule 17 (PRINT_CMD)
+    DOT  shift, and go to state 60
 
 
 State 53
 
-    6 body: body • statement
-   18 flow_control: FRAGA '(' condition ')' '{' body • '}' NAO
+   11 parametro: IDENTIFICADOR •
 
-    IDENTIFICADOR    shift, and go to state 11
-    FRAGA            shift, and go to state 12
-    VAI_FAZENDO_ATE  shift, and go to state 13
-    VAI_SER          shift, and go to state 15
-    ANOTA            shift, and go to state 16
-    '}'              shift, and go to state 55
-
-    statement     go to state 17
-    PRINT_CMD     go to state 18
-    flow_control  go to state 19
+    $default  reduce using rule 11 (parametro)
 
 
 State 54
 
-    6 body: body • statement
-   19 flow_control: VAI_FAZENDO_ATE '(' condition ')' '{' body • '}'
+    8 declaracao_funcao: NAQUELE_NAIPE IDENTIFICADOR LBRACE parametros • RBRACE COLLON bloco
 
-    IDENTIFICADOR    shift, and go to state 11
-    FRAGA            shift, and go to state 12
-    VAI_FAZENDO_ATE  shift, and go to state 13
-    VAI_SER          shift, and go to state 15
-    ANOTA            shift, and go to state 16
-    '}'              shift, and go to state 56
-
-    statement     go to state 17
-    PRINT_CMD     go to state 18
-    flow_control  go to state 19
+    RBRACE  shift, and go to state 61
 
 
 State 55
 
-   18 flow_control: FRAGA '(' condition ')' '{' body '}' • NAO
+    9 parametros: parametro •
+   10           | parametro • COMMA parametros
 
-    NAO  shift, and go to state 57
+    COMMA  shift, and go to state 62
+
+    $default  reduce using rule 9 (parametros)
 
 
 State 56
 
-   19 flow_control: VAI_FAZENDO_ATE '(' condition ')' '{' body '}' •
+   18 if: FRAGA expressao bloco NAO • bloco INTERROGACAO
 
-    $default  reduce using rule 19 (flow_control)
+    TIPO             shift, and go to state 1
+    NAQUELE_NAIPE    shift, and go to state 2
+    FRAGA            shift, and go to state 3
+    VAI_FAZENDO_ATE  shift, and go to state 4
+    PRA              shift, and go to state 5
+    PICA_MULA        shift, and go to state 6
+    ARREDA           shift, and go to state 7
+    ANOTA            shift, and go to state 8
+
+    declaracoes           go to state 38
+    declaracao            go to state 11
+    declaracao_variavel   go to state 12
+    declaracao_funcao     go to state 13
+    declaracao_estrutura  go to state 14
+    if                    go to state 15
+    while                 go to state 16
+    for                   go to state 17
+    break                 go to state 18
+    return                go to state 19
+    print                 go to state 20
+    bloco                 go to state 63
 
 
 State 57
 
-   18 flow_control: FRAGA '(' condition ')' '{' body '}' NAO •
+   24 expressao: termo operador expressao •
 
-    $default  reduce using rule 18 (flow_control)
+    $default  reduce using rule 24 (expressao)
+
+
+State 58
+
+   19 while: VAI_FAZENDO_ATE expressao COLLON bloco •
+
+    $default  reduce using rule 19 (while)
+
+
+State 59
+
+   20 for: PRA LBRACE expressao RBRACE • COLLON bloco
+
+    COLLON  shift, and go to state 64
+
+
+State 60
+
+    7 declaracao_variavel: TIPO IDENTIFICADOR VAI_SER expressao DOT •
+
+    $default  reduce using rule 7 (declaracao_variavel)
+
+
+State 61
+
+    8 declaracao_funcao: NAQUELE_NAIPE IDENTIFICADOR LBRACE parametros RBRACE • COLLON bloco
+
+    COLLON  shift, and go to state 65
+
+
+State 62
+
+   10 parametros: parametro COMMA • parametros
+
+    IDENTIFICADOR  shift, and go to state 53
+
+    parametros  go to state 66
+    parametro   go to state 55
+
+
+State 63
+
+   18 if: FRAGA expressao bloco NAO bloco • INTERROGACAO
+
+    INTERROGACAO  shift, and go to state 67
+
+
+State 64
+
+   20 for: PRA LBRACE expressao RBRACE COLLON • bloco
+
+    TIPO             shift, and go to state 1
+    NAQUELE_NAIPE    shift, and go to state 2
+    FRAGA            shift, and go to state 3
+    VAI_FAZENDO_ATE  shift, and go to state 4
+    PRA              shift, and go to state 5
+    PICA_MULA        shift, and go to state 6
+    ARREDA           shift, and go to state 7
+    ANOTA            shift, and go to state 8
+
+    declaracoes           go to state 38
+    declaracao            go to state 11
+    declaracao_variavel   go to state 12
+    declaracao_funcao     go to state 13
+    declaracao_estrutura  go to state 14
+    if                    go to state 15
+    while                 go to state 16
+    for                   go to state 17
+    break                 go to state 18
+    return                go to state 19
+    print                 go to state 20
+    bloco                 go to state 68
+
+
+State 65
+
+    8 declaracao_funcao: NAQUELE_NAIPE IDENTIFICADOR LBRACE parametros RBRACE COLLON • bloco
+
+    TIPO             shift, and go to state 1
+    NAQUELE_NAIPE    shift, and go to state 2
+    FRAGA            shift, and go to state 3
+    VAI_FAZENDO_ATE  shift, and go to state 4
+    PRA              shift, and go to state 5
+    PICA_MULA        shift, and go to state 6
+    ARREDA           shift, and go to state 7
+    ANOTA            shift, and go to state 8
+
+    declaracoes           go to state 38
+    declaracao            go to state 11
+    declaracao_variavel   go to state 12
+    declaracao_funcao     go to state 13
+    declaracao_estrutura  go to state 14
+    if                    go to state 15
+    while                 go to state 16
+    for                   go to state 17
+    break                 go to state 18
+    return                go to state 19
+    print                 go to state 20
+    bloco                 go to state 69
+
+
+State 66
+
+   10 parametros: parametro COMMA parametros •
+
+    $default  reduce using rule 10 (parametros)
+
+
+State 67
+
+   18 if: FRAGA expressao bloco NAO bloco INTERROGACAO •
+
+    $default  reduce using rule 18 (if)
+
+
+State 68
+
+   20 for: PRA LBRACE expressao RBRACE COLLON bloco •
+
+    $default  reduce using rule 20 (for)
+
+
+State 69
+
+    8 declaracao_funcao: NAQUELE_NAIPE IDENTIFICADOR LBRACE parametros RBRACE COLLON bloco •
+
+    $default  reduce using rule 8 (declaracao_funcao)
