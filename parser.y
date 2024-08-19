@@ -25,7 +25,6 @@
     extern int lc;  // Linha do lexer
 %}
 
-/* Definição de tokens */
 %token IDENTIFICADOR TIPO
 %token NUMERO 
 %token STRING BOOL CHAR 
@@ -34,8 +33,8 @@
 %token FRAGA NAO INTERROGACAO VAI_FAZENDO_ATE PRA PICA_MULA ARREDA
 %token ANOTA
 %token AI_CE_JUNTA AI_CE_DIMINUI CE_MULTIPLICA_POR CE_DIVIDE_POR
-%token ENGUAL NADA_A_VER_COM MAIOR_QUE MENOR_QUE
-%token LPAREN RPAREN LBRACE RBRACE COLLON COMMA DOT
+%token ENGUAL NADA_A_VER_COM MAIOR_QUE MENOR_QUE ELEVADO_A
+%token LBRACE RBRACE COLLON COMMA DOT
 %token UNDERSCORE OR_OP AND_OP NOT_OP 
 %token END_COMMAND
 
@@ -51,7 +50,6 @@
 
 %%
 
-/* Regras de produção */
 programa:
     declaracoes
     ;
@@ -65,12 +63,14 @@ declaracao:
     declaracao_variavel
     | declaracao_funcao
     | declaracao_estrutura
+	| redefinicao_variavel
     ;
 
+redefinicao_variavel:
+	IDENTIFICADOR VAI_SER expressao DOT;
+
 declaracao_variavel:
-    TIPO IDENTIFICADOR VAI_SER expressao DOT {
-        add('V');
-    }
+    TIPO IDENTIFICADOR{add('V');} VAI_SER expressao DOT
     ;
 
 declaracao_funcao:
@@ -93,70 +93,79 @@ parametro:
 declaracao_estrutura:
     if
     | while
-    | for
+//    | for
     | break
     | print
     | return
     ;
 
 if:
-    FRAGA expressao bloco NAO bloco INTERROGACAO
-    {add('K');}
+    FRAGA expressao INTERROGACAO declaracoes END_COMMAND
+	| FRAGA expressao INTERROGACAO declaracoes NAO if
+	| FRAGA expressao INTERROGACAO declaracoes NAO INTERROGACAO declaracoes END_COMMAND
     ;
 
 while:
-    VAI_FAZENDO_ATE expressao COLLON bloco
-    {add('K');}
+    VAI_FAZENDO_ATE expressao COLLON declaracoes END_COMMAND
     ;
 
-for:
-    PRA LBRACE expressao RBRACE COLLON bloco
-    {add('K');}
-    ;
+//for:
+    //PRA LBRACE declaracao_variavel DOT 
+			//expressao DOT 
+			//expressao RBRACE COLLON 
+			//declaracoes 
+			//END_COMMAND
+   // ;
+
 
 break:
-    PICA_MULA
-    {add('K');}
+    PICA_MULA DOT
     ;
 
 return:
     ARREDA expressao
-    {add('K');}
     ;
 
 expressao:
     termo
     | termo operador expressao
+	| operadores_pos termo termo
     ;
 
 print:
-    ANOTA COLLON expressao
-    {add('K');}
+    ANOTA COLLON expressao DOT
     ;
 
 termo:
     IDENTIFICADOR 
-    | NUMERO {insert_type();}
-    | STRING  {insert_type();}
-    | BOOL  {insert_type();}
-    | CHAR  {insert_type();}
+    | NUMERO { insert_type();}
+    | STRING 
+    | BOOL { insert_type();}
+    | CHAR { insert_type();}
     ;
-
-
 
 operador:
     AI_CE_JUNTA
     | AI_CE_DIMINUI
     | CE_MULTIPLICA_POR
     | CE_DIVIDE_POR
+	| ELEVADO_A
     | ENGUAL
     | NADA_A_VER_COM
     | MAIOR_QUE
     | MENOR_QUE
+	
+operadores_pos:
+	 OR_OP 
+    | AND_OP 
+    | NOT_OP
     ;
 
 bloco:
-    declaracoes
+    // declaracoes
+	LBRACE declaracoes RBRACE
+	// | INTERROGACAO declaracoes END_COMMAND
+    | declaracao
     ;
 
 %%
@@ -164,12 +173,12 @@ bloco:
 int main() {
   yyparse();
   printf("\n\n");
-  printf("\t\t\t\t\t\t\t\t PHASE 1: LEXICAL ANALYSIS \n\n");
-  printf("\nSYMBOL   DATATYPE   TYPE   LINE NUMBER \n");
+  printf("\t\t\t\t\t\t\t\t Análise Léxica \n\n");
+  printf("\n[SÍMBOLO]   [TIPO DE DADO]   [TIPO TOKEN]   [LINHA] \n");
   printf("_______________________________________\n\n");
   int i = 0;
   for (i = 0; i < count; i++) {
-    printf("%s\t%s\t%s\t%d\t\n", symbol_table[i].id_name, symbol_table[i].data_type, symbol_table[i].type, symbol_table[i].line_no);
+    printf("[%s], [%s], [%s], [%d]\n", symbol_table[i].id_name, symbol_table[i].data_type, symbol_table[i].type, symbol_table[i].line_no);
   }
   for (i = 0; i < count; i++) {
     free(symbol_table[i].id_name);
@@ -221,9 +230,14 @@ void add(char c) {
 }
 
 void insert_type() {
+  printf("\nXaleibs: %s\n", yytext);
   strcpy(type, yytext);
 }
 
+void insert_type_manual(char * string){
+  strcpy(type, string);
+}
+
 void yyerror(const char* msg) {
-  fprintf(stderr, "%s\n", msg);
+  fprintf(stderr, "Erro próximo a linha %i: %s\n", lc, msg);
 }
