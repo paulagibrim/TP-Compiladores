@@ -1,7 +1,7 @@
 trem inteiro soma vai ser a ai ce junta b.
-trem bololo subtracao vai ser a ai ce junta com b.
+trem bololo subtracao vai ser a ai ce junta b.
 trem inteiro produto vai ser a ce multiplica por b. -> a * b
-trem picadin quociente vai ser a ce divide por b. -> a / b
+trem picado quociente vai ser a ce divide por b. -> a / b
 
 fraga x engual 0 ?
     anota: "x é 0".
