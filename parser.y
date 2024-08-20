@@ -11,7 +11,6 @@
     void add(char c);
     void insert_type();
     int search(char *);
-    void insert_type();
 
     struct dataType {
         char * id_name;
@@ -24,6 +23,7 @@
     int q;
     char type[10];
     extern int lc;  // Linha do lexer
+
 %}
 
 %token IDENTIFICADOR TIPO
@@ -68,27 +68,23 @@ declaracao:
     ;
 
 redefinicao_variavel:
-	IDENTIFICADOR VAI_SER expressao DOT;
+	IDENTIFICADOR{add('V');} VAI_SER{add('K');} expressao DOT{add('K');};
 
 declaracao_variavel:
     TIPO{add('K');} IDENTIFICADOR{add('V');} VAI_SER{add('K');} expressao DOT{add('K');}
     ;
 
 declaracao_funcao:
-    NAQUELE_NAIPE IDENTIFICADOR LBRACE parametros RBRACE COLLON bloco {
-        add('F');
-    }
+    NAQUELE_NAIPE{add('K');} IDENTIFICADOR{add('F');} LBRACE{add('K');} parametros RBRACE{add('K');} COLLON{add('K');} bloco 
     ;
 
 parametros:
     parametro
-    | parametro COMMA parametros
+    | parametro COMMA{add('K');} parametros
     ;
 
 parametro:
-    IDENTIFICADOR {
-        add('V');
-    }
+    IDENTIFICADOR {add('V');}
     ;
 
 declaracao_estrutura:
@@ -100,6 +96,7 @@ declaracao_estrutura:
     | return
     ;
 
+// @FIXME: SE ADD {add('K');} NO FRAGA OU EM ALGUM TERMINAL AQUI, DÁ ERRO DE SHIFT-REDUCE
 if:
     FRAGA expressao INTERROGACAO declaracoes END_COMMAND
 	| FRAGA expressao INTERROGACAO declaracoes NAO if
@@ -107,7 +104,7 @@ if:
     ;
 
 while:
-    VAI_FAZENDO_ATE expressao COLLON declaracoes END_COMMAND
+    VAI_FAZENDO_ATE{add('K');} expressao COLLON{add('K');} declaracoes END_COMMAND{add('K');}
     ;
 
 //for:
@@ -120,11 +117,11 @@ while:
 
 
 break:
-    PICA_MULA DOT
+    PICA_MULA{add('K');} DOT{add('K');}
     ;
 
 return:
-    ARREDA expressao
+    ARREDA{add('K');} expressao
     ;
 
 expressao:
@@ -134,37 +131,37 @@ expressao:
     ;
 
 print:
-    ANOTA COLLON expressao DOT
+    ANOTA{add('K');} COLLON{add('K');} expressao DOT{add('K');}
     ;
 
 termo:
-    IDENTIFICADOR 
-    | NUMERO
-    | STRING
-    | BOOL
-    | CHAR
+    IDENTIFICADOR // { insert_type(); }
+    | NUMERO{ insert_type(); }
+    | STRING{ insert_type(); }
+    | BOOL{ insert_type(); }
+    | CHAR{ insert_type(); }
     ;
 
 operador:
-    AI_CE_JUNTA
-    | AI_CE_DIMINUI
-    | CE_MULTIPLICA_POR
-    | CE_DIVIDE_POR
-	| ELEVADO_A
-    | ENGUAL
-    | NADA_A_VER_COM
-    | MAIOR_QUE
-    | MENOR_QUE
+    AI_CE_JUNTA{add('K');}
+    | AI_CE_DIMINUI{add('K');}
+    | CE_MULTIPLICA_POR{add('K');}
+    | CE_DIVIDE_POR{add('K');}
+	| ELEVADO_A{add('K');}
+    | ENGUAL{add('K');}
+    | NADA_A_VER_COM{add('K');}
+    | MAIOR_QUE{add('K');}
+    | MENOR_QUE{add('K');}
 	
 operadores_pos:
-	 OR_OP 
-    | AND_OP 
-    | NOT_OP
+	 OR_OP {add('K');}
+    | AND_OP {add('K');}
+    | NOT_OP {add('K');}
     ;
 
 bloco:
     // declaracoes
-	LBRACE declaracoes RBRACE
+	LBRACE{add('K');} declaracoes RBRACE{add('K');}
 	// | INTERROGACAO declaracoes END_COMMAND
     | declaracao
     ;
@@ -173,19 +170,21 @@ bloco:
 
 int main() {
   yyparse();
-  printf("\n\n");
-  printf("\t\t\t\t\t\t\t\t PHASE 1: LEXICAL ANALYSIS \n\n");
-  printf("\nSYMBOL   DATATYPE   TYPE   LINE NUMBER \n");
-  printf("_______________________________________\n\n");
-  int i = 0;
-  for (i = 0; i < count; i++) {
-    printf("%s\t%s\t%s\t%d\t\n", symbol_table[i].id_name, symbol_table[i].data_type, symbol_table[i].type, symbol_table[i].line_no);
-  }
-  for (i = 0; i < count; i++) {
+printf("\n\n");
+printf("\t\t Análise Léxica \n\n");
+printf("\n%-20s %-15s %-15s %-10s\n", "[SÍMBOLO]", "[TIPO DE DADO]", "[TIPO TOKEN]", "[LINHA]");
+printf("__________________________________________________________\n\n");
+
+for (int i = 0; i < count; i++) {
+    printf("%-20s %-15s %-15s %-10d\n", symbol_table[i].id_name, symbol_table[i].data_type, symbol_table[i].type, symbol_table[i].line_no);
+}
+
+for (int i = 0; i < count; i++) {
     free(symbol_table[i].id_name);
     free(symbol_table[i].type);
-  }
-  printf("\n\n");
+}
+
+printf("\n\n");
   return 0;
 }
 
@@ -202,13 +201,7 @@ int search(char *type) {
 void add(char c) {
   q = search(yytext);
   if (!q) {
-    if (c == 'H') {
-      symbol_table[count].id_name = strdup(yytext);
-      symbol_table[count].data_type = strdup("N/A");
-      symbol_table[count].line_no = lc;
-      symbol_table[count].type = strdup("Header");
-      count++;
-    } else if (c == 'K') {
+    if (c == 'K') {
       symbol_table[count].id_name = strdup(yytext);
       symbol_table[count].data_type = strdup("N/A");
       symbol_table[count].line_no = lc;
@@ -237,9 +230,14 @@ void add(char c) {
 }
 
 void insert_type() {
+  // printf("\nXaleibs: %s\n", yytext);
   strcpy(type, yytext);
 }
 
+void insert_type_manual(char * string){
+  strcpy(type, string);
+}
+
 void yyerror(const char* msg) {
-  fprintf(stderr, "%s\n", msg);
+  fprintf(stderr, "Identificado um erro na linha %i: %s. \nO último token identificado não era o esperado.\n", lc, msg);
 }

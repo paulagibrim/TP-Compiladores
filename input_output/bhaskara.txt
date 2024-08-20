@@ -17,3 +17,5 @@ trem picado x1 vai ser x1_cima ce divide por x_baixo.
 
 trem picado x2_cima vai ser 0 ai ce diminui b ai ce diminui trem_elevado.
 trem picado x2 vai ser x2_cima ce divide por x_baixo.
+
+

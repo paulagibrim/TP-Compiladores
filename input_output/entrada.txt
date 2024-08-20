@@ -1,19 +1,10 @@
--> ax^2 + bx + c = 0
+pra { trem inteiro x vai ser 0. x menor que 5. x vai ser x ai ce junta 1 }:
+    anota: x.
+acabou, quer um cafezin?
 
-trem inteiro a vai ser 1.
-trem inteiro b vai ser 2.
-trem inteiro c vai ser 3.
+pra { trem inteiro x vai ser 0. x menor que 5. x vai ser x ai ce junta 1 }:
+    anota: "uai, zé!".
+    fraga x engual 3?
+        pica a mula.
+acabou, quer um cafezin?
 
--> calcular delta = b*b + 4*a*c
-trem picado delta vai ser b ce multiplica por b ai ce junta 4 ce multiplica por a ce multiplica por c.
-
--> calcula valores de x
-trem picado elevado vai ser 1 ce divide por 2.
-trem picado trem_elevado vai ser delta elevado a elevado.
-trem picado x_baixo vai ser 2 ce multiplica por a.
-
-trem picado x1_cima vai ser 0 ai ce diminui b ai ce junta trem_elevado.
-trem picado x1 vai ser x1_cima ce divide por x_baixo.
-
-trem picado x2_cima vai ser 0 ai ce diminui b ai ce diminui trem_elevado.
-trem picado x2 vai ser x2_cima ce divide por x_baixo.
