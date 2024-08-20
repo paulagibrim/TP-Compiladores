@@ -23,6 +23,7 @@
     int q;
     char type[10];
     extern int lc;  // Linha do lexer
+    char *temp = strdup(yytext);
 %}
 
 %token IDENTIFICADOR TIPO
@@ -66,11 +67,19 @@ declaracao:
 	| redefinicao_variavel
     ;
 
+termo:
+    IDENTIFICADOR 
+    | NUMERO {insert_type_manual("ksdnogsdgna");}
+    | STRING {insert_type();}
+    | BOOL {insert_type();}
+    | CHAR {insert_type();}
+    ;
+
 redefinicao_variavel:
 	IDENTIFICADOR VAI_SER expressao DOT;
 
 declaracao_variavel:
-    TIPO IDENTIFICADOR{add('V');} VAI_SER expressao DOT
+    TIPO IDENTIFICADOR {add('V');} VAI_SER expressao DOT
     ;
 
 declaracao_funcao:
@@ -134,14 +143,6 @@ expressao:
 
 print:
     ANOTA COLLON expressao DOT
-    ;
-
-termo:
-    IDENTIFICADOR 
-    | NUMERO { insert_type();}
-    | STRING 
-    | BOOL { insert_type();}
-    | CHAR { insert_type();}
     ;
 
 operador:
