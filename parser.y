@@ -23,10 +23,10 @@
     int q;
     char type[10];
     extern int lc;  // Linha do lexer
-    char *temp = strdup(yytext);
+    char name[20];
 %}
 
-%token IDENTIFICADOR TIPO
+%token <str> IDENTIFICADOR TIPO
 %token NUMERO 
 %token STRING BOOL CHAR 
 %token VAI_SER
@@ -69,7 +69,7 @@ declaracao:
 
 termo:
     IDENTIFICADOR 
-    | NUMERO {insert_type_manual("ksdnogsdgna");}
+    | NUMERO {insert_type();}
     | STRING {insert_type();}
     | BOOL {insert_type();}
     | CHAR {insert_type();}
@@ -79,7 +79,7 @@ redefinicao_variavel:
 	IDENTIFICADOR VAI_SER expressao DOT;
 
 declaracao_variavel:
-    TIPO IDENTIFICADOR {add('V');} VAI_SER expressao DOT
+    TIPO IDENTIFICADOR {strcpy(name, $2);} VAI_SER expressao {printf("[%s %s %s]\n",name,$2,type); add('V'); } DOT
     ;
 
 declaracao_funcao:
@@ -209,7 +209,7 @@ void add(char c) {
       symbol_table[count].type = strdup("Keyword");
       count++;
     } else if (c == 'V') {
-      symbol_table[count].id_name = strdup(yytext);
+      symbol_table[count].id_name = strdup(name);
       symbol_table[count].data_type = strdup(type);
       symbol_table[count].line_no = lc;
       symbol_table[count].type = strdup("Variable");
