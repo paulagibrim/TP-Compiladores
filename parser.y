@@ -10,20 +10,23 @@
     //int yywrap();
     void add(char c);
     void insert_type();
+    void insert_content();
     int search(char *);
 
     struct dataType {
         char * id_name;
         char * data_type;
         char * type;
+        char * content;
         int line_no;
-    } symbol_table[40];
+    } symbol_table[1000];
 
     int count = 0;
     int q;
-    char type[10];
+    char type[20];
     extern int lc;  // Linha do lexer
-    char name[20];
+    char name[50];
+    char content[50];
 %}
 
 %token <str> IDENTIFICADOR TIPO
@@ -69,17 +72,17 @@ declaracao:
 
 termo:
     IDENTIFICADOR
-    | NUMERO {insert_type();}
-    | STRING {insert_type();}
-    | BOOL {insert_type();}
-    | CHAR {insert_type();}
+    | NUMERO {insert_content();}
+    | STRING {insert_content();}
+    | BOOL {insert_content();}
+    | CHAR {insert_content();}
     ;
 
 redefinicao_variavel:
 	IDENTIFICADOR{strcpy(name, $1);} VAI_SER{add('K');} expressao {add('V');} DOT;
 
 declaracao_variavel:
-    TIPO{add('K');} IDENTIFICADOR {strcpy(name, $3);} VAI_SER{add('K');} expressao{add('V'); } DOT
+    TIPO{insert_type(type, $1);} IDENTIFICADOR {strcpy(name, $3);} VAI_SER{add('K');} expressao{add('V'); } DOT
     ;
 
 declaracao_funcao:
@@ -135,8 +138,12 @@ return:
 
 expressao:
     termo
-    | termo operador expressao
+    | termo AI_CE_JUNTA expressao //{$$ = $1 + $2}
+    | termo AI_CE_DIMINUI expressao //{$$ = $1 - $2}
+    | termo CE_MULTIPLICA_POR expressao //{$$ = $1 * $2}
+    | termo CE_DIVIDE_POR expressao //{$$ = $1 / $2}
 	| operadores_pos termo termo
+    | termo operador expressao
     ;
 
 print:
@@ -144,11 +151,7 @@ print:
     ;
 
 operador:
-    AI_CE_JUNTA
-    | AI_CE_DIMINUI
-    | CE_MULTIPLICA_POR
-    | CE_DIVIDE_POR
-	| ELEVADO_A
+	ELEVADO_A
     | ENGUAL
     | NADA_A_VER_COM
     | MAIOR_QUE
@@ -173,11 +176,11 @@ int main() {
   yyparse();
 printf("\n\n");
 printf("\t\t\t\t\t\t\t\t Análise Léxica \n\n");
-printf("\n%-20s %-15s %-15s %-10s\n", "[SÍMBOLO]", "[TIPO DE DADO]", "[TIPO TOKEN]", "[LINHA]");
-printf("__________________________________________________________\n\n");
+printf("\n%-20s %-15s %-15s %-15s %-10s\n", "[SÍMBOLO]", "[TIPO DE DADO]", "[TIPO TOKEN]", "[CONTEÚDO]", "[LINHA]");
+printf("________________________________________________________________________________\n\n");
 
 for (int i = 0; i < count; i++) {
-    printf("%-20s %-15s %-15s %-10d\n", symbol_table[i].id_name, symbol_table[i].data_type, symbol_table[i].type, symbol_table[i].line_no);
+    printf("%-20s %-15s %-15s %-15s %-10d\n", symbol_table[i].id_name, symbol_table[i].data_type, symbol_table[i].type, symbol_table[i].content, symbol_table[i].line_no);
 }
 
 for (int i = 0; i < count; i++) {
@@ -206,24 +209,28 @@ void add(char c) {
     if (c == 'K') {
       symbol_table[count].id_name = strdup(yytext);
       symbol_table[count].data_type = strdup("N/A");
+      symbol_table[count].content = strdup("N/A");
       symbol_table[count].line_no = lc;
       symbol_table[count].type = strdup("Keyword");
       count++;
     } else if (c == 'V') {
       symbol_table[count].id_name = strdup(name);
       symbol_table[count].data_type = strdup(type);
+      symbol_table[count].content = strdup(content);
       symbol_table[count].line_no = lc;
       symbol_table[count].type = strdup("Variable");
       count++;
     } else if (c == 'C') {
       symbol_table[count].id_name = strdup(yytext);
-      symbol_table[count].data_type = strdup("CONST");
+      symbol_table[count].data_type = strdup(type);
+      symbol_table[count].content = strdup(content);
       symbol_table[count].line_no = lc;
       symbol_table[count].type = strdup("Constant");
       count++;
     } else if (c == 'F') {
       symbol_table[count].id_name = strdup(yytext);
-      symbol_table[count].data_type = strdup(type);
+      symbol_table[count].data_type = strdup("N/A");
+      symbol_table[count].content = strdup(content);
       symbol_table[count].line_no = lc;
       symbol_table[count].type = strdup("Function");
       count++;
@@ -231,9 +238,13 @@ void add(char c) {
   }
 }
 
+void insert_content() {
+  //printf("\nXaleibs: %s\n", yytext);
+  strcpy(content, yytext);
+}
+
 void insert_type() {
-  printf("\nXaleibs: %s\n", yytext);
-  strcpy(type, yytext);
+    strcpy(type, yytext);
 }
 
 void insert_type_manual(char * string){

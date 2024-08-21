@@ -23,7 +23,7 @@ digit       [0-9]
 int_type    "trem inteiro"
 int         {digit}+
 float_type  "trem picado"
-float       {int}point{int}
+float       {int}","{int}
 string_type "trem escrito"
 string      \"(\\.|[^\\"])*\"
 bool_type   "trem bololo"

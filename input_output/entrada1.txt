@@ -1,4 +1,9 @@
-trem inteiro soma vai ser a ai ce junta b.
-trem bololo subtracao vai ser a ai ce junta b.
+trem inteiro a vai ser 2.
+trem picado b vai ser 2,3.
+trem bololo c vai ser de rocha.
+
+
+trem inteiro soma vai ser a ai ce junta b. -> a + b
+trem bololo subtracao vai ser a ai ce junta b. -> a - b
 trem inteiro produto vai ser a ce multiplica por b. -> a * b
 trem picado quociente vai ser a ce divide por b. -> a / b
