@@ -68,7 +68,7 @@ declaracao:
     ;
 
 termo:
-    IDENTIFICADOR 
+    IDENTIFICADOR
     | NUMERO {insert_type();}
     | STRING {insert_type();}
     | BOOL {insert_type();}
@@ -76,16 +76,14 @@ termo:
     ;
 
 redefinicao_variavel:
-	IDENTIFICADOR VAI_SER expressao DOT;
+	IDENTIFICADOR{strcpy(name, $1);} VAI_SER{add('K');} expressao {add('V');} DOT;
 
 declaracao_variavel:
-    TIPO IDENTIFICADOR {strcpy(name, $2);} VAI_SER expressao {printf("[%s %s %s]\n",name,$2,type); add('V'); } DOT
+    TIPO{add('K');} IDENTIFICADOR {strcpy(name, $3);} VAI_SER{add('K');} expressao{add('V'); } DOT
     ;
 
 declaracao_funcao:
-    NAQUELE_NAIPE IDENTIFICADOR LBRACE parametros RBRACE COLLON bloco {
-        add('F');
-    }
+    NAQUELE_NAIPE IDENTIFICADOR LBRACE parametros RBRACE COLLON bloco
     ;
 
 parametros:

@@ -1,11 +1,13 @@
 -> ax^2 + bx + c = 0
 
-trem inteiro a vai ser 1.
-trem inteiro b vai ser 2.
-trem inteiro c vai ser 3.
+trem inteiro a vai ser 2 ai ce junta 1.
+trem inteiro b vai ser 42.
+trem inteiro c vai ser 7.
 
--> calcular delta = b*b + 4*a*c
-trem picado delta vai ser b ce multiplica por b ai ce junta 4 ce multiplica por a ce multiplica por c.
+-> trem inteiro b vai ser 12.  -> tá add de novo um novo item, nao atualizando o que tinha
+
+-> calcular delta = b*b - 4*a*c
+trem picado delta vai ser b ce multiplica por b ai ce diminui 4 ce multiplica por a ce multiplica por c.
 
 -> calcula valores de x
 trem picado elevado vai ser 1 ce divide por 2.
