@@ -1630,7 +1630,7 @@ void add(char c) {
 }
 
 void insert_type() {
-  //printf("\nXaleibs: %s\n", yytext);
+  printf("\nXaleibs: %s\n", yytext);
   strcpy(type, yytext);
 }
 
@@ -1639,5 +1639,5 @@ void insert_type_manual(char * string){
 }
 
 void yyerror(const char* msg) {
-  fprintf(stderr, "Erro próximo a linha %i: %s\n", lc, msg);
+  fprintf(stderr, "Identificado um erro na linha %i: %s. \nO último token identificado não era o esperado.\n", lc, msg);
 }

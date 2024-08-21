@@ -76,10 +76,10 @@ termo:
     ;
 
 redefinicao_variavel:
-	IDENTIFICADOR{add('V');} VAI_SER{add('K');} expressao DOT{add('K');};
+	IDENTIFICADOR VAI_SER expressao DOT;
 
 declaracao_variavel:
-    TIPO{add('K');} IDENTIFICADOR {strcpy(name, $2);} VAI_SER{add('K');} expressao {add('V'); } DOT{add('K');}
+    TIPO IDENTIFICADOR {strcpy(name, $2);} VAI_SER expressao {printf("[%s %s %s]\n",name,$2,type); add('V'); } DOT
     ;
 
 declaracao_funcao:
@@ -234,7 +234,7 @@ void add(char c) {
 }
 
 void insert_type() {
-  //printf("\nXaleibs: %s\n", yytext);
+  printf("\nXaleibs: %s\n", yytext);
   strcpy(type, yytext);
 }
 
