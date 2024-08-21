@@ -1,6 +1,6 @@
 %{
    #include <stdio.h>
-   #include "y.tab.h"  // Certifique-se de incluir o arquivo correto para as definições do tokens
+   #include "y.tab.h"  
    int lc = 1;     
 %}
 
