@@ -1,1 +1,6 @@
+trem inteiro a vai ser 2.
+trem inteiro b vai ser 3.
 trem inteiro soma vai ser a ai ce junta b.
+trem inteiro subtracao vai ser a ai ce diminui b.
+trem inteiro produto vai ser a ce multiplica por b. -> a * b
+trem picado quociente vai ser a ce divide por b. -> a / b

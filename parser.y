@@ -11,6 +11,7 @@
     void add(char c);
     void insert_type();
     void insert_content();
+    void get_operation(char *);
     int search(char *);
 
     struct dataType {
@@ -28,6 +29,7 @@
     char name[50];
     char content[50];
     char last_int[50];
+    char operacao[50];
 %}
 
 %token <str> IDENTIFICADOR TIPO
@@ -139,10 +141,10 @@ return:
 
 expressao:
     termo
-    | termo AI_CE_JUNTA expressao {strcpy(content,strcat(content,last_int));}
-    | termo AI_CE_DIMINUI expressao //{$$ = $1 - $2}
-    | termo CE_MULTIPLICA_POR expressao //{$$ = $1 * $2}
-    | termo CE_DIVIDE_POR expressao //{$$ = $1 / $2}
+    | termo AI_CE_JUNTA expressao {get_operation("AI_CE_JUNTA");}
+    | termo AI_CE_DIMINUI expressao {get_operation("AI_CE_DIMINUI");}
+    | termo CE_MULTIPLICA_POR expressao {get_operation("CE_MULTIPLICA_POR");}
+    | termo CE_DIVIDE_POR expressao {get_operation("CE_DIVIDE_POR");}
 	| operadores_pos termo termo
     | termo operador expressao
     ;
@@ -255,4 +257,20 @@ void insert_type_manual(char * string){
 
 void yyerror(const char* msg) {
   fprintf(stderr, "Identificado um erro na linha %i: %s. \nO último token identificado não era o esperado.\n", lc, msg);
+}
+
+void get_operation(char *operator){
+    if (operator == "AI_CE_JUNTA"){
+        sprintf(operacao, "%d", atoi(last_int) + atoi(content));
+    }
+    else if (operator == "AI_CE_DIMINUI"){
+        sprintf(operacao, "%d", atoi(last_int) - atoi(content));
+    }
+    else if (operator == "CE_MULTIPLICA_POR"){
+        sprintf(operacao, "%d", atoi(last_int) * atoi(content));
+    }
+    else if (operator == "CE_DIVIDE_POR"){
+        sprintf(operacao, "%d", atoi(last_int) / atoi(content));
+    }
+    strcpy(content, operacao);
 }
