@@ -10,20 +10,24 @@
     //int yywrap();
     void add(char c);
     void insert_type();
+    void insert_content();
     int search(char *);
 
     struct dataType {
         char * id_name;
         char * data_type;
         char * type;
+        char * content;
         int line_no;
-    } symbol_table[40];
+    } symbol_table[1000];
 
     int count = 0;
     int q;
-    char type[10];
+    char type[20];
     extern int lc;  // Linha do lexer
-    char name[20];
+    char name[50];
+    char content[50];
+    char last_int[50];
 %}
 
 %token <str> IDENTIFICADOR TIPO
@@ -68,24 +72,22 @@ declaracao:
     ;
 
 termo:
-    IDENTIFICADOR 
-    | NUMERO {insert_type();}
-    | STRING {insert_type();}
-    | BOOL {insert_type();}
-    | CHAR {insert_type();}
+    IDENTIFICADOR
+    | NUMERO {insert_content();}
+    | STRING {insert_content();}
+    | BOOL {insert_content();}
+    | CHAR {insert_content();}
     ;
 
 redefinicao_variavel:
-	IDENTIFICADOR VAI_SER expressao DOT;
+	IDENTIFICADOR{strcpy(name, $1);} VAI_SER{add('K');} expressao {add('V');} DOT;
 
 declaracao_variavel:
-    TIPO IDENTIFICADOR {strcpy(name, $2);} VAI_SER expressao {printf("[%s %s %s]\n",name,$2,type); add('V'); } DOT
+    TIPO {insert_type();} IDENTIFICADOR {strcpy(name, $3);} VAI_SER{add('K');} expressao{add('V'); } DOT
     ;
 
 declaracao_funcao:
-    NAQUELE_NAIPE IDENTIFICADOR LBRACE parametros RBRACE COLLON bloco {
-        add('F');
-    }
+    NAQUELE_NAIPE IDENTIFICADOR LBRACE parametros RBRACE COLLON bloco
     ;
 
 parametros:
@@ -137,8 +139,12 @@ return:
 
 expressao:
     termo
-    | termo operador expressao
+    | termo AI_CE_JUNTA expressao {strcpy(content,strcat(content,last_int));}
+    | termo AI_CE_DIMINUI expressao //{$$ = $1 - $2}
+    | termo CE_MULTIPLICA_POR expressao //{$$ = $1 * $2}
+    | termo CE_DIVIDE_POR expressao //{$$ = $1 / $2}
 	| operadores_pos termo termo
+    | termo operador expressao
     ;
 
 print:
@@ -146,11 +152,7 @@ print:
     ;
 
 operador:
-    AI_CE_JUNTA
-    | AI_CE_DIMINUI
-    | CE_MULTIPLICA_POR
-    | CE_DIVIDE_POR
-	| ELEVADO_A
+	ELEVADO_A
     | ENGUAL
     | NADA_A_VER_COM
     | MAIOR_QUE
@@ -173,19 +175,22 @@ bloco:
 
 int main() {
   yyparse();
-  printf("\n\n");
-  printf("\t\t\t\t\t\t\t\t Análise Léxica \n\n");
-  printf("\n[SÍMBOLO]   [TIPO DE DADO]   [TIPO TOKEN]   [LINHA] \n");
-  printf("_______________________________________\n\n");
-  int i = 0;
-  for (i = 0; i < count; i++) {
-    printf("[%s], [%s], [%s], [%d]\n", symbol_table[i].id_name, symbol_table[i].data_type, symbol_table[i].type, symbol_table[i].line_no);
-  }
-  for (i = 0; i < count; i++) {
+printf("\n\n");
+printf("\t\t\t\t\t\t\t\t Análise Léxica \n\n");
+printf("\n%-20s %-15s %-15s %-15s %-10s\n", "[SÍMBOLO]", "[TIPO DE DADO]", "[TIPO TOKEN]", "[CONTEÚDO]", "[LINHA]");
+printf("________________________________________________________________________________\n\n");
+
+for (int i = 0; i < count; i++) {
+    printf("%-20s %-15s %-15s %-15s %-10d\n", symbol_table[i].id_name, symbol_table[i].data_type, symbol_table[i].type, symbol_table[i].content, symbol_table[i].line_no);
+}
+
+for (int i = 0; i < count; i++) {
     free(symbol_table[i].id_name);
     free(symbol_table[i].type);
-  }
-  printf("\n\n");
+}
+
+printf("\n\n");
+
   return 0;
 }
 
@@ -205,24 +210,28 @@ void add(char c) {
     if (c == 'K') {
       symbol_table[count].id_name = strdup(yytext);
       symbol_table[count].data_type = strdup("N/A");
+      symbol_table[count].content = strdup("N/A");
       symbol_table[count].line_no = lc;
       symbol_table[count].type = strdup("Keyword");
       count++;
     } else if (c == 'V') {
       symbol_table[count].id_name = strdup(name);
       symbol_table[count].data_type = strdup(type);
+      symbol_table[count].content = strdup(content);
       symbol_table[count].line_no = lc;
       symbol_table[count].type = strdup("Variable");
       count++;
     } else if (c == 'C') {
       symbol_table[count].id_name = strdup(yytext);
-      symbol_table[count].data_type = strdup("CONST");
+      symbol_table[count].data_type = strdup(type);
+      symbol_table[count].content = strdup(content);
       symbol_table[count].line_no = lc;
       symbol_table[count].type = strdup("Constant");
       count++;
     } else if (c == 'F') {
       symbol_table[count].id_name = strdup(yytext);
-      symbol_table[count].data_type = strdup(type);
+      symbol_table[count].data_type = strdup("N/A");
+      symbol_table[count].content = strdup(content);
       symbol_table[count].line_no = lc;
       symbol_table[count].type = strdup("Function");
       count++;
@@ -230,9 +239,14 @@ void add(char c) {
   }
 }
 
+void insert_content() {
+  //printf("\nXaleibs: %s\n", yytext);
+  strcpy(last_int, content);
+  strcpy(content, yytext);
+}
+
 void insert_type() {
-  printf("\nXaleibs: %s\n", yytext);
-  strcpy(type, yytext);
+    strcpy(type, yytext);
 }
 
 void insert_type_manual(char * string){
@@ -240,5 +254,5 @@ void insert_type_manual(char * string){
 }
 
 void yyerror(const char* msg) {
-  fprintf(stderr, "Erro próximo a linha %i: %s\n", lc, msg);
+  fprintf(stderr, "Identificado um erro na linha %i: %s. \nO último token identificado não era o esperado.\n", lc, msg);
 }
