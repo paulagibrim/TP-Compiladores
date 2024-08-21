@@ -11,7 +11,9 @@
     void add(char c);
     void insert_type();
     void insert_content();
+    void get_operation(char *);
     int search(char *);
+    void replaceChar(char *, char, char);
 
     struct dataType {
         char * id_name;
@@ -27,6 +29,8 @@
     extern int lc;  // Linha do lexer
     char name[50];
     char content[50];
+    char last_int[50];
+    char operacao[50];
 %}
 
 %token <str> IDENTIFICADOR TIPO
@@ -82,7 +86,7 @@ redefinicao_variavel:
 	IDENTIFICADOR{strcpy(name, $1);} VAI_SER{add('K');} expressao {add('V');} DOT;
 
 declaracao_variavel:
-    TIPO{insert_type(type, $1);} IDENTIFICADOR {strcpy(name, $3);} VAI_SER{add('K');} expressao{add('V'); } DOT
+    TIPO {insert_type();} IDENTIFICADOR {strcpy(name, $3);} VAI_SER{add('K');} expressao{add('V'); } DOT
     ;
 
 declaracao_funcao:
@@ -138,10 +142,10 @@ return:
 
 expressao:
     termo
-    | termo AI_CE_JUNTA expressao //{$$ = $1 + $2}
-    | termo AI_CE_DIMINUI expressao //{$$ = $1 - $2}
-    | termo CE_MULTIPLICA_POR expressao //{$$ = $1 * $2}
-    | termo CE_DIVIDE_POR expressao //{$$ = $1 / $2}
+    | termo AI_CE_JUNTA expressao {get_operation("AI_CE_JUNTA");}
+    | termo AI_CE_DIMINUI expressao {get_operation("AI_CE_DIMINUI");}
+    | termo CE_MULTIPLICA_POR expressao {get_operation("CE_MULTIPLICA_POR");}
+    | termo CE_DIVIDE_POR expressao {get_operation("CE_DIVIDE_POR");}
 	| operadores_pos termo termo
     | termo operador expressao
     ;
@@ -240,6 +244,7 @@ void add(char c) {
 
 void insert_content() {
   //printf("\nXaleibs: %s\n", yytext);
+  strcpy(last_int, content);
   strcpy(content, yytext);
 }
 
@@ -253,4 +258,38 @@ void insert_type_manual(char * string){
 
 void yyerror(const char* msg) {
   fprintf(stderr, "Identificado um erro na linha %i: %s. \nO último token identificado não era o esperado.\n", lc, msg);
+}
+
+void get_operation(char *operator){
+    replaceChar(last_int, ',', '.');
+    replaceChar(content, ',', '.');
+    double final = 0;
+
+    if (operator == "AI_CE_JUNTA"){
+        // conta = atof(last_int) + atof(content)
+        final = atof(last_int) + atof(content);
+    }
+    else if (operator == "AI_CE_DIMINUI"){
+        final = atof(last_int) - atof(content);
+    }
+    else if (operator == "CE_MULTIPLICA_POR"){
+        final = atof(last_int) * atof(content);
+    }
+    else if (operator == "CE_DIVIDE_POR"){
+        final = atof(last_int) / atof(content);
+    }
+
+    sprintf(operacao, "%f", final);
+    replaceChar(operacao, '.', ',');
+
+    strcpy(content, operacao);
+}
+
+void replaceChar(char *str, char oldChar, char newChar) {
+    while (*str != '\0') {  // Percorre a string até o terminador nulo
+        if (*str == oldChar) {
+            *str = newChar;  // Substitui o caractere
+        }
+        str++;  // Avança para o próximo caractere
+    }
 }

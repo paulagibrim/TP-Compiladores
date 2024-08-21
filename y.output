@@ -1,10 +1,10 @@
-Terminais sem uso na gramática
+Terminals unused in grammar
 
     PRA
     UNDERSCORE
 
 
-Gramática
+Grammar
 
     0 $accept: programa $end
 
@@ -89,7 +89,7 @@ Gramática
    54      | declaracao
 
 
-Terminais, com as regras onde eles aparecem
+Terminals, with rules where they appear
 
     $end (0) 0
     error (256)
@@ -130,396 +130,396 @@ Terminais, com as regras onde eles aparecem
     END_COMMAND (292) 31 33 34
 
 
-Não terminais com as regras onde eles aparecem
+Nonterminals, with rules where they appear
 
     $accept (38)
-        à esquerda: 0
+        on left: 0
     programa (39)
-        à esquerda: 1
-        à direita: 0
+        on left: 1
+        on right: 0
     declaracoes (40)
-        à esquerda: 2 3
-        à direita: 1 3 31 32 33 34 53
+        on left: 2 3
+        on right: 1 3 31 32 33 34 53
     declaracao (41)
-        à esquerda: 4 5 6 7
-        à direita: 2 3 54
+        on left: 4 5 6 7
+        on right: 2 3 54
     termo (42)
-        à esquerda: 8 9 10 11 12
-        à direita: 37 38 39 40 41 42 43
+        on left: 8 9 10 11 12
+        on right: 37 38 39 40 41 42 43
     redefinicao_variavel (43)
-        à esquerda: 16
-        à direita: 7
+        on left: 16
+        on right: 7
     $@1 (44)
-        à esquerda: 13
-        à direita: 16
+        on left: 13
+        on right: 16
     $@2 (45)
-        à esquerda: 14
-        à direita: 16
+        on left: 14
+        on right: 16
     $@3 (46)
-        à esquerda: 15
-        à direita: 16
+        on left: 15
+        on right: 16
     declaracao_variavel (47)
-        à esquerda: 21
-        à direita: 4
+        on left: 21
+        on right: 4
     $@4 (48)
-        à esquerda: 17
-        à direita: 21
+        on left: 17
+        on right: 21
     $@5 (49)
-        à esquerda: 18
-        à direita: 21
+        on left: 18
+        on right: 21
     $@6 (50)
-        à esquerda: 19
-        à direita: 21
+        on left: 19
+        on right: 21
     $@7 (51)
-        à esquerda: 20
-        à direita: 21
+        on left: 20
+        on right: 21
     declaracao_funcao (52)
-        à esquerda: 22
-        à direita: 5
+        on left: 22
+        on right: 5
     parametros (53)
-        à esquerda: 23 24
-        à direita: 22 24
+        on left: 23 24
+        on right: 22 24
     parametro (54)
-        à esquerda: 25
-        à direita: 23 24
+        on left: 25
+        on right: 23 24
     declaracao_estrutura (55)
-        à esquerda: 26 27 28 29 30
-        à direita: 6
+        on left: 26 27 28 29 30
+        on right: 6
     if (56)
-        à esquerda: 31 32 33
-        à direita: 26 32
+        on left: 31 32 33
+        on right: 26 32
     while (57)
-        à esquerda: 34
-        à direita: 27
+        on left: 34
+        on right: 27
     break (58)
-        à esquerda: 35
-        à direita: 28
+        on left: 35
+        on right: 28
     return (59)
-        à esquerda: 36
-        à direita: 30
+        on left: 36
+        on right: 30
     expressao (60)
-        à esquerda: 37 38 39 40 41 42 43
-        à direita: 16 21 31 32 33 34 36 38 39 40 41 43 44
+        on left: 37 38 39 40 41 42 43
+        on right: 16 21 31 32 33 34 36 38 39 40 41 43 44
     print (61)
-        à esquerda: 44
-        à direita: 29
+        on left: 44
+        on right: 29
     operador (62)
-        à esquerda: 45 46 47 48 49
-        à direita: 43
+        on left: 45 46 47 48 49
+        on right: 43
     operadores_pos (63)
-        à esquerda: 50 51 52
-        à direita: 42
+        on left: 50 51 52
+        on right: 42
     bloco (64)
-        à esquerda: 53 54
-        à direita: 22
+        on left: 53 54
+        on right: 22
 
 
-Estado 0
+State 0
 
     0 $accept: • programa $end
 
-    IDENTIFICADOR    deslocar, e ir ao estado 1
-    TIPO             deslocar, e ir ao estado 2
-    NAQUELE_NAIPE    deslocar, e ir ao estado 3
-    FRAGA            deslocar, e ir ao estado 4
-    VAI_FAZENDO_ATE  deslocar, e ir ao estado 5
-    PICA_MULA        deslocar, e ir ao estado 6
-    ARREDA           deslocar, e ir ao estado 7
-    ANOTA            deslocar, e ir ao estado 8
+    IDENTIFICADOR    shift, and go to state 1
+    TIPO             shift, and go to state 2
+    NAQUELE_NAIPE    shift, and go to state 3
+    FRAGA            shift, and go to state 4
+    VAI_FAZENDO_ATE  shift, and go to state 5
+    PICA_MULA        shift, and go to state 6
+    ARREDA           shift, and go to state 7
+    ANOTA            shift, and go to state 8
 
-    programa              ir ao estado 9
-    declaracoes           ir ao estado 10
-    declaracao            ir ao estado 11
-    redefinicao_variavel  ir ao estado 12
-    declaracao_variavel   ir ao estado 13
-    declaracao_funcao     ir ao estado 14
-    declaracao_estrutura  ir ao estado 15
-    if                    ir ao estado 16
-    while                 ir ao estado 17
-    break                 ir ao estado 18
-    return                ir ao estado 19
-    print                 ir ao estado 20
+    programa              go to state 9
+    declaracoes           go to state 10
+    declaracao            go to state 11
+    redefinicao_variavel  go to state 12
+    declaracao_variavel   go to state 13
+    declaracao_funcao     go to state 14
+    declaracao_estrutura  go to state 15
+    if                    go to state 16
+    while                 go to state 17
+    break                 go to state 18
+    return                go to state 19
+    print                 go to state 20
 
 
-Estado 1
+State 1
 
    16 redefinicao_variavel: IDENTIFICADOR • $@1 VAI_SER $@2 expressao $@3 DOT
 
-    $padrão  reduzir usando a regra 13 ($@1)
+    $default  reduce using rule 13 ($@1)
 
-    $@1  ir ao estado 21
+    $@1  go to state 21
 
 
-Estado 2
+State 2
 
    21 declaracao_variavel: TIPO • $@4 IDENTIFICADOR $@5 VAI_SER $@6 expressao $@7 DOT
 
-    $padrão  reduzir usando a regra 17 ($@4)
+    $default  reduce using rule 17 ($@4)
 
-    $@4  ir ao estado 22
+    $@4  go to state 22
 
 
-Estado 3
+State 3
 
    22 declaracao_funcao: NAQUELE_NAIPE • IDENTIFICADOR LBRACE parametros RBRACE COLLON bloco
 
-    IDENTIFICADOR  deslocar, e ir ao estado 23
+    IDENTIFICADOR  shift, and go to state 23
 
 
-Estado 4
+State 4
 
    31 if: FRAGA • expressao INTERROGACAO declaracoes END_COMMAND
    32   | FRAGA • expressao INTERROGACAO declaracoes NAO if
    33   | FRAGA • expressao INTERROGACAO declaracoes NAO INTERROGACAO declaracoes END_COMMAND
 
-    IDENTIFICADOR  deslocar, e ir ao estado 24
-    NUMERO         deslocar, e ir ao estado 25
-    STRING         deslocar, e ir ao estado 26
-    BOOL           deslocar, e ir ao estado 27
-    CHAR           deslocar, e ir ao estado 28
-    OR_OP          deslocar, e ir ao estado 29
-    AND_OP         deslocar, e ir ao estado 30
-    NOT_OP         deslocar, e ir ao estado 31
+    IDENTIFICADOR  shift, and go to state 24
+    NUMERO         shift, and go to state 25
+    STRING         shift, and go to state 26
+    BOOL           shift, and go to state 27
+    CHAR           shift, and go to state 28
+    OR_OP          shift, and go to state 29
+    AND_OP         shift, and go to state 30
+    NOT_OP         shift, and go to state 31
 
-    termo           ir ao estado 32
-    expressao       ir ao estado 33
-    operadores_pos  ir ao estado 34
+    termo           go to state 32
+    expressao       go to state 33
+    operadores_pos  go to state 34
 
 
-Estado 5
+State 5
 
    34 while: VAI_FAZENDO_ATE • expressao COLLON declaracoes END_COMMAND
 
-    IDENTIFICADOR  deslocar, e ir ao estado 24
-    NUMERO         deslocar, e ir ao estado 25
-    STRING         deslocar, e ir ao estado 26
-    BOOL           deslocar, e ir ao estado 27
-    CHAR           deslocar, e ir ao estado 28
-    OR_OP          deslocar, e ir ao estado 29
-    AND_OP         deslocar, e ir ao estado 30
-    NOT_OP         deslocar, e ir ao estado 31
+    IDENTIFICADOR  shift, and go to state 24
+    NUMERO         shift, and go to state 25
+    STRING         shift, and go to state 26
+    BOOL           shift, and go to state 27
+    CHAR           shift, and go to state 28
+    OR_OP          shift, and go to state 29
+    AND_OP         shift, and go to state 30
+    NOT_OP         shift, and go to state 31
 
-    termo           ir ao estado 32
-    expressao       ir ao estado 35
-    operadores_pos  ir ao estado 34
+    termo           go to state 32
+    expressao       go to state 35
+    operadores_pos  go to state 34
 
 
-Estado 6
+State 6
 
    35 break: PICA_MULA • DOT
 
-    DOT  deslocar, e ir ao estado 36
+    DOT  shift, and go to state 36
 
 
-Estado 7
+State 7
 
    36 return: ARREDA • expressao
 
-    IDENTIFICADOR  deslocar, e ir ao estado 24
-    NUMERO         deslocar, e ir ao estado 25
-    STRING         deslocar, e ir ao estado 26
-    BOOL           deslocar, e ir ao estado 27
-    CHAR           deslocar, e ir ao estado 28
-    OR_OP          deslocar, e ir ao estado 29
-    AND_OP         deslocar, e ir ao estado 30
-    NOT_OP         deslocar, e ir ao estado 31
+    IDENTIFICADOR  shift, and go to state 24
+    NUMERO         shift, and go to state 25
+    STRING         shift, and go to state 26
+    BOOL           shift, and go to state 27
+    CHAR           shift, and go to state 28
+    OR_OP          shift, and go to state 29
+    AND_OP         shift, and go to state 30
+    NOT_OP         shift, and go to state 31
 
-    termo           ir ao estado 32
-    expressao       ir ao estado 37
-    operadores_pos  ir ao estado 34
+    termo           go to state 32
+    expressao       go to state 37
+    operadores_pos  go to state 34
 
 
-Estado 8
+State 8
 
    44 print: ANOTA • COLLON expressao DOT
 
-    COLLON  deslocar, e ir ao estado 38
+    COLLON  shift, and go to state 38
 
 
-Estado 9
+State 9
 
     0 $accept: programa • $end
 
-    $end  deslocar, e ir ao estado 39
+    $end  shift, and go to state 39
 
 
-Estado 10
+State 10
 
     1 programa: declaracoes •
 
-    $padrão  reduzir usando a regra 1 (programa)
+    $default  reduce using rule 1 (programa)
 
 
-Estado 11
+State 11
 
     2 declaracoes: declaracao •
     3            | declaracao • declaracoes
 
-    IDENTIFICADOR    deslocar, e ir ao estado 1
-    TIPO             deslocar, e ir ao estado 2
-    NAQUELE_NAIPE    deslocar, e ir ao estado 3
-    FRAGA            deslocar, e ir ao estado 4
-    VAI_FAZENDO_ATE  deslocar, e ir ao estado 5
-    PICA_MULA        deslocar, e ir ao estado 6
-    ARREDA           deslocar, e ir ao estado 7
-    ANOTA            deslocar, e ir ao estado 8
+    IDENTIFICADOR    shift, and go to state 1
+    TIPO             shift, and go to state 2
+    NAQUELE_NAIPE    shift, and go to state 3
+    FRAGA            shift, and go to state 4
+    VAI_FAZENDO_ATE  shift, and go to state 5
+    PICA_MULA        shift, and go to state 6
+    ARREDA           shift, and go to state 7
+    ANOTA            shift, and go to state 8
 
-    $padrão  reduzir usando a regra 2 (declaracoes)
+    $default  reduce using rule 2 (declaracoes)
 
-    declaracoes           ir ao estado 40
-    declaracao            ir ao estado 11
-    redefinicao_variavel  ir ao estado 12
-    declaracao_variavel   ir ao estado 13
-    declaracao_funcao     ir ao estado 14
-    declaracao_estrutura  ir ao estado 15
-    if                    ir ao estado 16
-    while                 ir ao estado 17
-    break                 ir ao estado 18
-    return                ir ao estado 19
-    print                 ir ao estado 20
+    declaracoes           go to state 40
+    declaracao            go to state 11
+    redefinicao_variavel  go to state 12
+    declaracao_variavel   go to state 13
+    declaracao_funcao     go to state 14
+    declaracao_estrutura  go to state 15
+    if                    go to state 16
+    while                 go to state 17
+    break                 go to state 18
+    return                go to state 19
+    print                 go to state 20
 
 
-Estado 12
+State 12
 
     7 declaracao: redefinicao_variavel •
 
-    $padrão  reduzir usando a regra 7 (declaracao)
+    $default  reduce using rule 7 (declaracao)
 
 
-Estado 13
+State 13
 
     4 declaracao: declaracao_variavel •
 
-    $padrão  reduzir usando a regra 4 (declaracao)
+    $default  reduce using rule 4 (declaracao)
 
 
-Estado 14
+State 14
 
     5 declaracao: declaracao_funcao •
 
-    $padrão  reduzir usando a regra 5 (declaracao)
+    $default  reduce using rule 5 (declaracao)
 
 
-Estado 15
+State 15
 
     6 declaracao: declaracao_estrutura •
 
-    $padrão  reduzir usando a regra 6 (declaracao)
+    $default  reduce using rule 6 (declaracao)
 
 
-Estado 16
+State 16
 
    26 declaracao_estrutura: if •
 
-    $padrão  reduzir usando a regra 26 (declaracao_estrutura)
+    $default  reduce using rule 26 (declaracao_estrutura)
 
 
-Estado 17
+State 17
 
    27 declaracao_estrutura: while •
 
-    $padrão  reduzir usando a regra 27 (declaracao_estrutura)
+    $default  reduce using rule 27 (declaracao_estrutura)
 
 
-Estado 18
+State 18
 
    28 declaracao_estrutura: break •
 
-    $padrão  reduzir usando a regra 28 (declaracao_estrutura)
+    $default  reduce using rule 28 (declaracao_estrutura)
 
 
-Estado 19
+State 19
 
    30 declaracao_estrutura: return •
 
-    $padrão  reduzir usando a regra 30 (declaracao_estrutura)
+    $default  reduce using rule 30 (declaracao_estrutura)
 
 
-Estado 20
+State 20
 
    29 declaracao_estrutura: print •
 
-    $padrão  reduzir usando a regra 29 (declaracao_estrutura)
+    $default  reduce using rule 29 (declaracao_estrutura)
 
 
-Estado 21
+State 21
 
    16 redefinicao_variavel: IDENTIFICADOR $@1 • VAI_SER $@2 expressao $@3 DOT
 
-    VAI_SER  deslocar, e ir ao estado 41
+    VAI_SER  shift, and go to state 41
 
 
-Estado 22
+State 22
 
    21 declaracao_variavel: TIPO $@4 • IDENTIFICADOR $@5 VAI_SER $@6 expressao $@7 DOT
 
-    IDENTIFICADOR  deslocar, e ir ao estado 42
+    IDENTIFICADOR  shift, and go to state 42
 
 
-Estado 23
+State 23
 
    22 declaracao_funcao: NAQUELE_NAIPE IDENTIFICADOR • LBRACE parametros RBRACE COLLON bloco
 
-    LBRACE  deslocar, e ir ao estado 43
+    LBRACE  shift, and go to state 43
 
 
-Estado 24
+State 24
 
     8 termo: IDENTIFICADOR •
 
-    $padrão  reduzir usando a regra 8 (termo)
+    $default  reduce using rule 8 (termo)
 
 
-Estado 25
+State 25
 
     9 termo: NUMERO •
 
-    $padrão  reduzir usando a regra 9 (termo)
+    $default  reduce using rule 9 (termo)
 
 
-Estado 26
+State 26
 
    10 termo: STRING •
 
-    $padrão  reduzir usando a regra 10 (termo)
+    $default  reduce using rule 10 (termo)
 
 
-Estado 27
+State 27
 
    11 termo: BOOL •
 
-    $padrão  reduzir usando a regra 11 (termo)
+    $default  reduce using rule 11 (termo)
 
 
-Estado 28
+State 28
 
    12 termo: CHAR •
 
-    $padrão  reduzir usando a regra 12 (termo)
+    $default  reduce using rule 12 (termo)
 
 
-Estado 29
+State 29
 
    50 operadores_pos: OR_OP •
 
-    $padrão  reduzir usando a regra 50 (operadores_pos)
+    $default  reduce using rule 50 (operadores_pos)
 
 
-Estado 30
+State 30
 
    51 operadores_pos: AND_OP •
 
-    $padrão  reduzir usando a regra 51 (operadores_pos)
+    $default  reduce using rule 51 (operadores_pos)
 
 
-Estado 31
+State 31
 
    52 operadores_pos: NOT_OP •
 
-    $padrão  reduzir usando a regra 52 (operadores_pos)
+    $default  reduce using rule 52 (operadores_pos)
 
 
-Estado 32
+State 32
 
    37 expressao: termo •
    38          | termo • AI_CE_JUNTA expressao
@@ -528,683 +528,683 @@ Estado 32
    41          | termo • CE_DIVIDE_POR expressao
    43          | termo • operador expressao
 
-    AI_CE_JUNTA        deslocar, e ir ao estado 44
-    AI_CE_DIMINUI      deslocar, e ir ao estado 45
-    CE_MULTIPLICA_POR  deslocar, e ir ao estado 46
-    CE_DIVIDE_POR      deslocar, e ir ao estado 47
-    ENGUAL             deslocar, e ir ao estado 48
-    NADA_A_VER_COM     deslocar, e ir ao estado 49
-    MAIOR_QUE          deslocar, e ir ao estado 50
-    MENOR_QUE          deslocar, e ir ao estado 51
-    ELEVADO_A          deslocar, e ir ao estado 52
+    AI_CE_JUNTA        shift, and go to state 44
+    AI_CE_DIMINUI      shift, and go to state 45
+    CE_MULTIPLICA_POR  shift, and go to state 46
+    CE_DIVIDE_POR      shift, and go to state 47
+    ENGUAL             shift, and go to state 48
+    NADA_A_VER_COM     shift, and go to state 49
+    MAIOR_QUE          shift, and go to state 50
+    MENOR_QUE          shift, and go to state 51
+    ELEVADO_A          shift, and go to state 52
 
-    $padrão  reduzir usando a regra 37 (expressao)
+    $default  reduce using rule 37 (expressao)
 
-    operador  ir ao estado 53
+    operador  go to state 53
 
 
-Estado 33
+State 33
 
    31 if: FRAGA expressao • INTERROGACAO declaracoes END_COMMAND
    32   | FRAGA expressao • INTERROGACAO declaracoes NAO if
    33   | FRAGA expressao • INTERROGACAO declaracoes NAO INTERROGACAO declaracoes END_COMMAND
 
-    INTERROGACAO  deslocar, e ir ao estado 54
+    INTERROGACAO  shift, and go to state 54
 
 
-Estado 34
+State 34
 
    42 expressao: operadores_pos • termo termo
 
-    IDENTIFICADOR  deslocar, e ir ao estado 24
-    NUMERO         deslocar, e ir ao estado 25
-    STRING         deslocar, e ir ao estado 26
-    BOOL           deslocar, e ir ao estado 27
-    CHAR           deslocar, e ir ao estado 28
+    IDENTIFICADOR  shift, and go to state 24
+    NUMERO         shift, and go to state 25
+    STRING         shift, and go to state 26
+    BOOL           shift, and go to state 27
+    CHAR           shift, and go to state 28
 
-    termo  ir ao estado 55
+    termo  go to state 55
 
 
-Estado 35
+State 35
 
    34 while: VAI_FAZENDO_ATE expressao • COLLON declaracoes END_COMMAND
 
-    COLLON  deslocar, e ir ao estado 56
+    COLLON  shift, and go to state 56
 
 
-Estado 36
+State 36
 
    35 break: PICA_MULA DOT •
 
-    $padrão  reduzir usando a regra 35 (break)
+    $default  reduce using rule 35 (break)
 
 
-Estado 37
+State 37
 
    36 return: ARREDA expressao •
 
-    $padrão  reduzir usando a regra 36 (return)
+    $default  reduce using rule 36 (return)
 
 
-Estado 38
+State 38
 
    44 print: ANOTA COLLON • expressao DOT
 
-    IDENTIFICADOR  deslocar, e ir ao estado 24
-    NUMERO         deslocar, e ir ao estado 25
-    STRING         deslocar, e ir ao estado 26
-    BOOL           deslocar, e ir ao estado 27
-    CHAR           deslocar, e ir ao estado 28
-    OR_OP          deslocar, e ir ao estado 29
-    AND_OP         deslocar, e ir ao estado 30
-    NOT_OP         deslocar, e ir ao estado 31
+    IDENTIFICADOR  shift, and go to state 24
+    NUMERO         shift, and go to state 25
+    STRING         shift, and go to state 26
+    BOOL           shift, and go to state 27
+    CHAR           shift, and go to state 28
+    OR_OP          shift, and go to state 29
+    AND_OP         shift, and go to state 30
+    NOT_OP         shift, and go to state 31
 
-    termo           ir ao estado 32
-    expressao       ir ao estado 57
-    operadores_pos  ir ao estado 34
+    termo           go to state 32
+    expressao       go to state 57
+    operadores_pos  go to state 34
 
 
-Estado 39
+State 39
 
     0 $accept: programa $end •
 
-    $padrão  aceitar
+    $default  accept
 
 
-Estado 40
+State 40
 
     3 declaracoes: declaracao declaracoes •
 
-    $padrão  reduzir usando a regra 3 (declaracoes)
+    $default  reduce using rule 3 (declaracoes)
 
 
-Estado 41
+State 41
 
    16 redefinicao_variavel: IDENTIFICADOR $@1 VAI_SER • $@2 expressao $@3 DOT
 
-    $padrão  reduzir usando a regra 14 ($@2)
+    $default  reduce using rule 14 ($@2)
 
-    $@2  ir ao estado 58
+    $@2  go to state 58
 
 
-Estado 42
+State 42
 
    21 declaracao_variavel: TIPO $@4 IDENTIFICADOR • $@5 VAI_SER $@6 expressao $@7 DOT
 
-    $padrão  reduzir usando a regra 18 ($@5)
+    $default  reduce using rule 18 ($@5)
 
-    $@5  ir ao estado 59
+    $@5  go to state 59
 
 
-Estado 43
+State 43
 
    22 declaracao_funcao: NAQUELE_NAIPE IDENTIFICADOR LBRACE • parametros RBRACE COLLON bloco
 
-    IDENTIFICADOR  deslocar, e ir ao estado 60
+    IDENTIFICADOR  shift, and go to state 60
 
-    parametros  ir ao estado 61
-    parametro   ir ao estado 62
+    parametros  go to state 61
+    parametro   go to state 62
 
 
-Estado 44
+State 44
 
    38 expressao: termo AI_CE_JUNTA • expressao
 
-    IDENTIFICADOR  deslocar, e ir ao estado 24
-    NUMERO         deslocar, e ir ao estado 25
-    STRING         deslocar, e ir ao estado 26
-    BOOL           deslocar, e ir ao estado 27
-    CHAR           deslocar, e ir ao estado 28
-    OR_OP          deslocar, e ir ao estado 29
-    AND_OP         deslocar, e ir ao estado 30
-    NOT_OP         deslocar, e ir ao estado 31
+    IDENTIFICADOR  shift, and go to state 24
+    NUMERO         shift, and go to state 25
+    STRING         shift, and go to state 26
+    BOOL           shift, and go to state 27
+    CHAR           shift, and go to state 28
+    OR_OP          shift, and go to state 29
+    AND_OP         shift, and go to state 30
+    NOT_OP         shift, and go to state 31
 
-    termo           ir ao estado 32
-    expressao       ir ao estado 63
-    operadores_pos  ir ao estado 34
+    termo           go to state 32
+    expressao       go to state 63
+    operadores_pos  go to state 34
 
 
-Estado 45
+State 45
 
    39 expressao: termo AI_CE_DIMINUI • expressao
 
-    IDENTIFICADOR  deslocar, e ir ao estado 24
-    NUMERO         deslocar, e ir ao estado 25
-    STRING         deslocar, e ir ao estado 26
-    BOOL           deslocar, e ir ao estado 27
-    CHAR           deslocar, e ir ao estado 28
-    OR_OP          deslocar, e ir ao estado 29
-    AND_OP         deslocar, e ir ao estado 30
-    NOT_OP         deslocar, e ir ao estado 31
+    IDENTIFICADOR  shift, and go to state 24
+    NUMERO         shift, and go to state 25
+    STRING         shift, and go to state 26
+    BOOL           shift, and go to state 27
+    CHAR           shift, and go to state 28
+    OR_OP          shift, and go to state 29
+    AND_OP         shift, and go to state 30
+    NOT_OP         shift, and go to state 31
 
-    termo           ir ao estado 32
-    expressao       ir ao estado 64
-    operadores_pos  ir ao estado 34
+    termo           go to state 32
+    expressao       go to state 64
+    operadores_pos  go to state 34
 
 
-Estado 46
+State 46
 
    40 expressao: termo CE_MULTIPLICA_POR • expressao
 
-    IDENTIFICADOR  deslocar, e ir ao estado 24
-    NUMERO         deslocar, e ir ao estado 25
-    STRING         deslocar, e ir ao estado 26
-    BOOL           deslocar, e ir ao estado 27
-    CHAR           deslocar, e ir ao estado 28
-    OR_OP          deslocar, e ir ao estado 29
-    AND_OP         deslocar, e ir ao estado 30
-    NOT_OP         deslocar, e ir ao estado 31
+    IDENTIFICADOR  shift, and go to state 24
+    NUMERO         shift, and go to state 25
+    STRING         shift, and go to state 26
+    BOOL           shift, and go to state 27
+    CHAR           shift, and go to state 28
+    OR_OP          shift, and go to state 29
+    AND_OP         shift, and go to state 30
+    NOT_OP         shift, and go to state 31
 
-    termo           ir ao estado 32
-    expressao       ir ao estado 65
-    operadores_pos  ir ao estado 34
+    termo           go to state 32
+    expressao       go to state 65
+    operadores_pos  go to state 34
 
 
-Estado 47
+State 47
 
    41 expressao: termo CE_DIVIDE_POR • expressao
 
-    IDENTIFICADOR  deslocar, e ir ao estado 24
-    NUMERO         deslocar, e ir ao estado 25
-    STRING         deslocar, e ir ao estado 26
-    BOOL           deslocar, e ir ao estado 27
-    CHAR           deslocar, e ir ao estado 28
-    OR_OP          deslocar, e ir ao estado 29
-    AND_OP         deslocar, e ir ao estado 30
-    NOT_OP         deslocar, e ir ao estado 31
+    IDENTIFICADOR  shift, and go to state 24
+    NUMERO         shift, and go to state 25
+    STRING         shift, and go to state 26
+    BOOL           shift, and go to state 27
+    CHAR           shift, and go to state 28
+    OR_OP          shift, and go to state 29
+    AND_OP         shift, and go to state 30
+    NOT_OP         shift, and go to state 31
 
-    termo           ir ao estado 32
-    expressao       ir ao estado 66
-    operadores_pos  ir ao estado 34
+    termo           go to state 32
+    expressao       go to state 66
+    operadores_pos  go to state 34
 
 
-Estado 48
+State 48
 
    46 operador: ENGUAL •
 
-    $padrão  reduzir usando a regra 46 (operador)
+    $default  reduce using rule 46 (operador)
 
 
-Estado 49
+State 49
 
    47 operador: NADA_A_VER_COM •
 
-    $padrão  reduzir usando a regra 47 (operador)
+    $default  reduce using rule 47 (operador)
 
 
-Estado 50
+State 50
 
    48 operador: MAIOR_QUE •
 
-    $padrão  reduzir usando a regra 48 (operador)
+    $default  reduce using rule 48 (operador)
 
 
-Estado 51
+State 51
 
    49 operador: MENOR_QUE •
 
-    $padrão  reduzir usando a regra 49 (operador)
+    $default  reduce using rule 49 (operador)
 
 
-Estado 52
+State 52
 
    45 operador: ELEVADO_A •
 
-    $padrão  reduzir usando a regra 45 (operador)
+    $default  reduce using rule 45 (operador)
 
 
-Estado 53
+State 53
 
    43 expressao: termo operador • expressao
 
-    IDENTIFICADOR  deslocar, e ir ao estado 24
-    NUMERO         deslocar, e ir ao estado 25
-    STRING         deslocar, e ir ao estado 26
-    BOOL           deslocar, e ir ao estado 27
-    CHAR           deslocar, e ir ao estado 28
-    OR_OP          deslocar, e ir ao estado 29
-    AND_OP         deslocar, e ir ao estado 30
-    NOT_OP         deslocar, e ir ao estado 31
+    IDENTIFICADOR  shift, and go to state 24
+    NUMERO         shift, and go to state 25
+    STRING         shift, and go to state 26
+    BOOL           shift, and go to state 27
+    CHAR           shift, and go to state 28
+    OR_OP          shift, and go to state 29
+    AND_OP         shift, and go to state 30
+    NOT_OP         shift, and go to state 31
 
-    termo           ir ao estado 32
-    expressao       ir ao estado 67
-    operadores_pos  ir ao estado 34
+    termo           go to state 32
+    expressao       go to state 67
+    operadores_pos  go to state 34
 
 
-Estado 54
+State 54
 
    31 if: FRAGA expressao INTERROGACAO • declaracoes END_COMMAND
    32   | FRAGA expressao INTERROGACAO • declaracoes NAO if
    33   | FRAGA expressao INTERROGACAO • declaracoes NAO INTERROGACAO declaracoes END_COMMAND
 
-    IDENTIFICADOR    deslocar, e ir ao estado 1
-    TIPO             deslocar, e ir ao estado 2
-    NAQUELE_NAIPE    deslocar, e ir ao estado 3
-    FRAGA            deslocar, e ir ao estado 4
-    VAI_FAZENDO_ATE  deslocar, e ir ao estado 5
-    PICA_MULA        deslocar, e ir ao estado 6
-    ARREDA           deslocar, e ir ao estado 7
-    ANOTA            deslocar, e ir ao estado 8
+    IDENTIFICADOR    shift, and go to state 1
+    TIPO             shift, and go to state 2
+    NAQUELE_NAIPE    shift, and go to state 3
+    FRAGA            shift, and go to state 4
+    VAI_FAZENDO_ATE  shift, and go to state 5
+    PICA_MULA        shift, and go to state 6
+    ARREDA           shift, and go to state 7
+    ANOTA            shift, and go to state 8
 
-    declaracoes           ir ao estado 68
-    declaracao            ir ao estado 11
-    redefinicao_variavel  ir ao estado 12
-    declaracao_variavel   ir ao estado 13
-    declaracao_funcao     ir ao estado 14
-    declaracao_estrutura  ir ao estado 15
-    if                    ir ao estado 16
-    while                 ir ao estado 17
-    break                 ir ao estado 18
-    return                ir ao estado 19
-    print                 ir ao estado 20
+    declaracoes           go to state 68
+    declaracao            go to state 11
+    redefinicao_variavel  go to state 12
+    declaracao_variavel   go to state 13
+    declaracao_funcao     go to state 14
+    declaracao_estrutura  go to state 15
+    if                    go to state 16
+    while                 go to state 17
+    break                 go to state 18
+    return                go to state 19
+    print                 go to state 20
 
 
-Estado 55
+State 55
 
    42 expressao: operadores_pos termo • termo
 
-    IDENTIFICADOR  deslocar, e ir ao estado 24
-    NUMERO         deslocar, e ir ao estado 25
-    STRING         deslocar, e ir ao estado 26
-    BOOL           deslocar, e ir ao estado 27
-    CHAR           deslocar, e ir ao estado 28
+    IDENTIFICADOR  shift, and go to state 24
+    NUMERO         shift, and go to state 25
+    STRING         shift, and go to state 26
+    BOOL           shift, and go to state 27
+    CHAR           shift, and go to state 28
 
-    termo  ir ao estado 69
+    termo  go to state 69
 
 
-Estado 56
+State 56
 
    34 while: VAI_FAZENDO_ATE expressao COLLON • declaracoes END_COMMAND
 
-    IDENTIFICADOR    deslocar, e ir ao estado 1
-    TIPO             deslocar, e ir ao estado 2
-    NAQUELE_NAIPE    deslocar, e ir ao estado 3
-    FRAGA            deslocar, e ir ao estado 4
-    VAI_FAZENDO_ATE  deslocar, e ir ao estado 5
-    PICA_MULA        deslocar, e ir ao estado 6
-    ARREDA           deslocar, e ir ao estado 7
-    ANOTA            deslocar, e ir ao estado 8
+    IDENTIFICADOR    shift, and go to state 1
+    TIPO             shift, and go to state 2
+    NAQUELE_NAIPE    shift, and go to state 3
+    FRAGA            shift, and go to state 4
+    VAI_FAZENDO_ATE  shift, and go to state 5
+    PICA_MULA        shift, and go to state 6
+    ARREDA           shift, and go to state 7
+    ANOTA            shift, and go to state 8
 
-    declaracoes           ir ao estado 70
-    declaracao            ir ao estado 11
-    redefinicao_variavel  ir ao estado 12
-    declaracao_variavel   ir ao estado 13
-    declaracao_funcao     ir ao estado 14
-    declaracao_estrutura  ir ao estado 15
-    if                    ir ao estado 16
-    while                 ir ao estado 17
-    break                 ir ao estado 18
-    return                ir ao estado 19
-    print                 ir ao estado 20
+    declaracoes           go to state 70
+    declaracao            go to state 11
+    redefinicao_variavel  go to state 12
+    declaracao_variavel   go to state 13
+    declaracao_funcao     go to state 14
+    declaracao_estrutura  go to state 15
+    if                    go to state 16
+    while                 go to state 17
+    break                 go to state 18
+    return                go to state 19
+    print                 go to state 20
 
 
-Estado 57
+State 57
 
    44 print: ANOTA COLLON expressao • DOT
 
-    DOT  deslocar, e ir ao estado 71
+    DOT  shift, and go to state 71
 
 
-Estado 58
+State 58
 
    16 redefinicao_variavel: IDENTIFICADOR $@1 VAI_SER $@2 • expressao $@3 DOT
 
-    IDENTIFICADOR  deslocar, e ir ao estado 24
-    NUMERO         deslocar, e ir ao estado 25
-    STRING         deslocar, e ir ao estado 26
-    BOOL           deslocar, e ir ao estado 27
-    CHAR           deslocar, e ir ao estado 28
-    OR_OP          deslocar, e ir ao estado 29
-    AND_OP         deslocar, e ir ao estado 30
-    NOT_OP         deslocar, e ir ao estado 31
+    IDENTIFICADOR  shift, and go to state 24
+    NUMERO         shift, and go to state 25
+    STRING         shift, and go to state 26
+    BOOL           shift, and go to state 27
+    CHAR           shift, and go to state 28
+    OR_OP          shift, and go to state 29
+    AND_OP         shift, and go to state 30
+    NOT_OP         shift, and go to state 31
 
-    termo           ir ao estado 32
-    expressao       ir ao estado 72
-    operadores_pos  ir ao estado 34
+    termo           go to state 32
+    expressao       go to state 72
+    operadores_pos  go to state 34
 
 
-Estado 59
+State 59
 
    21 declaracao_variavel: TIPO $@4 IDENTIFICADOR $@5 • VAI_SER $@6 expressao $@7 DOT
 
-    VAI_SER  deslocar, e ir ao estado 73
+    VAI_SER  shift, and go to state 73
 
 
-Estado 60
+State 60
 
    25 parametro: IDENTIFICADOR •
 
-    $padrão  reduzir usando a regra 25 (parametro)
+    $default  reduce using rule 25 (parametro)
 
 
-Estado 61
+State 61
 
    22 declaracao_funcao: NAQUELE_NAIPE IDENTIFICADOR LBRACE parametros • RBRACE COLLON bloco
 
-    RBRACE  deslocar, e ir ao estado 74
+    RBRACE  shift, and go to state 74
 
 
-Estado 62
+State 62
 
    23 parametros: parametro •
    24           | parametro • COMMA parametros
 
-    COMMA  deslocar, e ir ao estado 75
+    COMMA  shift, and go to state 75
 
-    $padrão  reduzir usando a regra 23 (parametros)
+    $default  reduce using rule 23 (parametros)
 
 
-Estado 63
+State 63
 
    38 expressao: termo AI_CE_JUNTA expressao •
 
-    $padrão  reduzir usando a regra 38 (expressao)
+    $default  reduce using rule 38 (expressao)
 
 
-Estado 64
+State 64
 
    39 expressao: termo AI_CE_DIMINUI expressao •
 
-    $padrão  reduzir usando a regra 39 (expressao)
+    $default  reduce using rule 39 (expressao)
 
 
-Estado 65
+State 65
 
    40 expressao: termo CE_MULTIPLICA_POR expressao •
 
-    $padrão  reduzir usando a regra 40 (expressao)
+    $default  reduce using rule 40 (expressao)
 
 
-Estado 66
+State 66
 
    41 expressao: termo CE_DIVIDE_POR expressao •
 
-    $padrão  reduzir usando a regra 41 (expressao)
+    $default  reduce using rule 41 (expressao)
 
 
-Estado 67
+State 67
 
    43 expressao: termo operador expressao •
 
-    $padrão  reduzir usando a regra 43 (expressao)
+    $default  reduce using rule 43 (expressao)
 
 
-Estado 68
+State 68
 
    31 if: FRAGA expressao INTERROGACAO declaracoes • END_COMMAND
    32   | FRAGA expressao INTERROGACAO declaracoes • NAO if
    33   | FRAGA expressao INTERROGACAO declaracoes • NAO INTERROGACAO declaracoes END_COMMAND
 
-    NAO          deslocar, e ir ao estado 76
-    END_COMMAND  deslocar, e ir ao estado 77
+    NAO          shift, and go to state 76
+    END_COMMAND  shift, and go to state 77
 
 
-Estado 69
+State 69
 
    42 expressao: operadores_pos termo termo •
 
-    $padrão  reduzir usando a regra 42 (expressao)
+    $default  reduce using rule 42 (expressao)
 
 
-Estado 70
+State 70
 
    34 while: VAI_FAZENDO_ATE expressao COLLON declaracoes • END_COMMAND
 
-    END_COMMAND  deslocar, e ir ao estado 78
+    END_COMMAND  shift, and go to state 78
 
 
-Estado 71
+State 71
 
    44 print: ANOTA COLLON expressao DOT •
 
-    $padrão  reduzir usando a regra 44 (print)
+    $default  reduce using rule 44 (print)
 
 
-Estado 72
+State 72
 
    16 redefinicao_variavel: IDENTIFICADOR $@1 VAI_SER $@2 expressao • $@3 DOT
 
-    $padrão  reduzir usando a regra 15 ($@3)
+    $default  reduce using rule 15 ($@3)
 
-    $@3  ir ao estado 79
+    $@3  go to state 79
 
 
-Estado 73
+State 73
 
    21 declaracao_variavel: TIPO $@4 IDENTIFICADOR $@5 VAI_SER • $@6 expressao $@7 DOT
 
-    $padrão  reduzir usando a regra 19 ($@6)
+    $default  reduce using rule 19 ($@6)
 
-    $@6  ir ao estado 80
+    $@6  go to state 80
 
 
-Estado 74
+State 74
 
    22 declaracao_funcao: NAQUELE_NAIPE IDENTIFICADOR LBRACE parametros RBRACE • COLLON bloco
 
-    COLLON  deslocar, e ir ao estado 81
+    COLLON  shift, and go to state 81
 
 
-Estado 75
+State 75
 
    24 parametros: parametro COMMA • parametros
 
-    IDENTIFICADOR  deslocar, e ir ao estado 60
+    IDENTIFICADOR  shift, and go to state 60
 
-    parametros  ir ao estado 82
-    parametro   ir ao estado 62
+    parametros  go to state 82
+    parametro   go to state 62
 
 
-Estado 76
+State 76
 
    32 if: FRAGA expressao INTERROGACAO declaracoes NAO • if
    33   | FRAGA expressao INTERROGACAO declaracoes NAO • INTERROGACAO declaracoes END_COMMAND
 
-    FRAGA         deslocar, e ir ao estado 4
-    INTERROGACAO  deslocar, e ir ao estado 83
+    FRAGA         shift, and go to state 4
+    INTERROGACAO  shift, and go to state 83
 
-    if  ir ao estado 84
+    if  go to state 84
 
 
-Estado 77
+State 77
 
    31 if: FRAGA expressao INTERROGACAO declaracoes END_COMMAND •
 
-    $padrão  reduzir usando a regra 31 (if)
+    $default  reduce using rule 31 (if)
 
 
-Estado 78
+State 78
 
    34 while: VAI_FAZENDO_ATE expressao COLLON declaracoes END_COMMAND •
 
-    $padrão  reduzir usando a regra 34 (while)
+    $default  reduce using rule 34 (while)
 
 
-Estado 79
+State 79
 
    16 redefinicao_variavel: IDENTIFICADOR $@1 VAI_SER $@2 expressao $@3 • DOT
 
-    DOT  deslocar, e ir ao estado 85
+    DOT  shift, and go to state 85
 
 
-Estado 80
+State 80
 
    21 declaracao_variavel: TIPO $@4 IDENTIFICADOR $@5 VAI_SER $@6 • expressao $@7 DOT
 
-    IDENTIFICADOR  deslocar, e ir ao estado 24
-    NUMERO         deslocar, e ir ao estado 25
-    STRING         deslocar, e ir ao estado 26
-    BOOL           deslocar, e ir ao estado 27
-    CHAR           deslocar, e ir ao estado 28
-    OR_OP          deslocar, e ir ao estado 29
-    AND_OP         deslocar, e ir ao estado 30
-    NOT_OP         deslocar, e ir ao estado 31
+    IDENTIFICADOR  shift, and go to state 24
+    NUMERO         shift, and go to state 25
+    STRING         shift, and go to state 26
+    BOOL           shift, and go to state 27
+    CHAR           shift, and go to state 28
+    OR_OP          shift, and go to state 29
+    AND_OP         shift, and go to state 30
+    NOT_OP         shift, and go to state 31
 
-    termo           ir ao estado 32
-    expressao       ir ao estado 86
-    operadores_pos  ir ao estado 34
+    termo           go to state 32
+    expressao       go to state 86
+    operadores_pos  go to state 34
 
 
-Estado 81
+State 81
 
    22 declaracao_funcao: NAQUELE_NAIPE IDENTIFICADOR LBRACE parametros RBRACE COLLON • bloco
 
-    IDENTIFICADOR    deslocar, e ir ao estado 1
-    TIPO             deslocar, e ir ao estado 2
-    NAQUELE_NAIPE    deslocar, e ir ao estado 3
-    FRAGA            deslocar, e ir ao estado 4
-    VAI_FAZENDO_ATE  deslocar, e ir ao estado 5
-    PICA_MULA        deslocar, e ir ao estado 6
-    ARREDA           deslocar, e ir ao estado 7
-    ANOTA            deslocar, e ir ao estado 8
-    LBRACE           deslocar, e ir ao estado 87
+    IDENTIFICADOR    shift, and go to state 1
+    TIPO             shift, and go to state 2
+    NAQUELE_NAIPE    shift, and go to state 3
+    FRAGA            shift, and go to state 4
+    VAI_FAZENDO_ATE  shift, and go to state 5
+    PICA_MULA        shift, and go to state 6
+    ARREDA           shift, and go to state 7
+    ANOTA            shift, and go to state 8
+    LBRACE           shift, and go to state 87
 
-    declaracao            ir ao estado 88
-    redefinicao_variavel  ir ao estado 12
-    declaracao_variavel   ir ao estado 13
-    declaracao_funcao     ir ao estado 14
-    declaracao_estrutura  ir ao estado 15
-    if                    ir ao estado 16
-    while                 ir ao estado 17
-    break                 ir ao estado 18
-    return                ir ao estado 19
-    print                 ir ao estado 20
-    bloco                 ir ao estado 89
+    declaracao            go to state 88
+    redefinicao_variavel  go to state 12
+    declaracao_variavel   go to state 13
+    declaracao_funcao     go to state 14
+    declaracao_estrutura  go to state 15
+    if                    go to state 16
+    while                 go to state 17
+    break                 go to state 18
+    return                go to state 19
+    print                 go to state 20
+    bloco                 go to state 89
 
 
-Estado 82
+State 82
 
    24 parametros: parametro COMMA parametros •
 
-    $padrão  reduzir usando a regra 24 (parametros)
+    $default  reduce using rule 24 (parametros)
 
 
-Estado 83
+State 83
 
    33 if: FRAGA expressao INTERROGACAO declaracoes NAO INTERROGACAO • declaracoes END_COMMAND
 
-    IDENTIFICADOR    deslocar, e ir ao estado 1
-    TIPO             deslocar, e ir ao estado 2
-    NAQUELE_NAIPE    deslocar, e ir ao estado 3
-    FRAGA            deslocar, e ir ao estado 4
-    VAI_FAZENDO_ATE  deslocar, e ir ao estado 5
-    PICA_MULA        deslocar, e ir ao estado 6
-    ARREDA           deslocar, e ir ao estado 7
-    ANOTA            deslocar, e ir ao estado 8
+    IDENTIFICADOR    shift, and go to state 1
+    TIPO             shift, and go to state 2
+    NAQUELE_NAIPE    shift, and go to state 3
+    FRAGA            shift, and go to state 4
+    VAI_FAZENDO_ATE  shift, and go to state 5
+    PICA_MULA        shift, and go to state 6
+    ARREDA           shift, and go to state 7
+    ANOTA            shift, and go to state 8
 
-    declaracoes           ir ao estado 90
-    declaracao            ir ao estado 11
-    redefinicao_variavel  ir ao estado 12
-    declaracao_variavel   ir ao estado 13
-    declaracao_funcao     ir ao estado 14
-    declaracao_estrutura  ir ao estado 15
-    if                    ir ao estado 16
-    while                 ir ao estado 17
-    break                 ir ao estado 18
-    return                ir ao estado 19
-    print                 ir ao estado 20
+    declaracoes           go to state 90
+    declaracao            go to state 11
+    redefinicao_variavel  go to state 12
+    declaracao_variavel   go to state 13
+    declaracao_funcao     go to state 14
+    declaracao_estrutura  go to state 15
+    if                    go to state 16
+    while                 go to state 17
+    break                 go to state 18
+    return                go to state 19
+    print                 go to state 20
 
 
-Estado 84
+State 84
 
    32 if: FRAGA expressao INTERROGACAO declaracoes NAO if •
 
-    $padrão  reduzir usando a regra 32 (if)
+    $default  reduce using rule 32 (if)
 
 
-Estado 85
+State 85
 
    16 redefinicao_variavel: IDENTIFICADOR $@1 VAI_SER $@2 expressao $@3 DOT •
 
-    $padrão  reduzir usando a regra 16 (redefinicao_variavel)
+    $default  reduce using rule 16 (redefinicao_variavel)
 
 
-Estado 86
+State 86
 
    21 declaracao_variavel: TIPO $@4 IDENTIFICADOR $@5 VAI_SER $@6 expressao • $@7 DOT
 
-    $padrão  reduzir usando a regra 20 ($@7)
+    $default  reduce using rule 20 ($@7)
 
-    $@7  ir ao estado 91
+    $@7  go to state 91
 
 
-Estado 87
+State 87
 
    53 bloco: LBRACE • declaracoes RBRACE
 
-    IDENTIFICADOR    deslocar, e ir ao estado 1
-    TIPO             deslocar, e ir ao estado 2
-    NAQUELE_NAIPE    deslocar, e ir ao estado 3
-    FRAGA            deslocar, e ir ao estado 4
-    VAI_FAZENDO_ATE  deslocar, e ir ao estado 5
-    PICA_MULA        deslocar, e ir ao estado 6
-    ARREDA           deslocar, e ir ao estado 7
-    ANOTA            deslocar, e ir ao estado 8
+    IDENTIFICADOR    shift, and go to state 1
+    TIPO             shift, and go to state 2
+    NAQUELE_NAIPE    shift, and go to state 3
+    FRAGA            shift, and go to state 4
+    VAI_FAZENDO_ATE  shift, and go to state 5
+    PICA_MULA        shift, and go to state 6
+    ARREDA           shift, and go to state 7
+    ANOTA            shift, and go to state 8
 
-    declaracoes           ir ao estado 92
-    declaracao            ir ao estado 11
-    redefinicao_variavel  ir ao estado 12
-    declaracao_variavel   ir ao estado 13
-    declaracao_funcao     ir ao estado 14
-    declaracao_estrutura  ir ao estado 15
-    if                    ir ao estado 16
-    while                 ir ao estado 17
-    break                 ir ao estado 18
-    return                ir ao estado 19
-    print                 ir ao estado 20
+    declaracoes           go to state 92
+    declaracao            go to state 11
+    redefinicao_variavel  go to state 12
+    declaracao_variavel   go to state 13
+    declaracao_funcao     go to state 14
+    declaracao_estrutura  go to state 15
+    if                    go to state 16
+    while                 go to state 17
+    break                 go to state 18
+    return                go to state 19
+    print                 go to state 20
 
 
-Estado 88
+State 88
 
    54 bloco: declaracao •
 
-    $padrão  reduzir usando a regra 54 (bloco)
+    $default  reduce using rule 54 (bloco)
 
 
-Estado 89
+State 89
 
    22 declaracao_funcao: NAQUELE_NAIPE IDENTIFICADOR LBRACE parametros RBRACE COLLON bloco •
 
-    $padrão  reduzir usando a regra 22 (declaracao_funcao)
+    $default  reduce using rule 22 (declaracao_funcao)
 
 
-Estado 90
+State 90
 
    33 if: FRAGA expressao INTERROGACAO declaracoes NAO INTERROGACAO declaracoes • END_COMMAND
 
-    END_COMMAND  deslocar, e ir ao estado 93
+    END_COMMAND  shift, and go to state 93
 
 
-Estado 91
+State 91
 
    21 declaracao_variavel: TIPO $@4 IDENTIFICADOR $@5 VAI_SER $@6 expressao $@7 • DOT
 
-    DOT  deslocar, e ir ao estado 94
+    DOT  shift, and go to state 94
 
 
-Estado 92
+State 92
 
    53 bloco: LBRACE declaracoes • RBRACE
 
-    RBRACE  deslocar, e ir ao estado 95
+    RBRACE  shift, and go to state 95
 
 
-Estado 93
+State 93
 
    33 if: FRAGA expressao INTERROGACAO declaracoes NAO INTERROGACAO declaracoes END_COMMAND •
 
-    $padrão  reduzir usando a regra 33 (if)
+    $default  reduce using rule 33 (if)
 
 
-Estado 94
+State 94
 
    21 declaracao_variavel: TIPO $@4 IDENTIFICADOR $@5 VAI_SER $@6 expressao $@7 DOT •
 
-    $padrão  reduzir usando a regra 21 (declaracao_variavel)
+    $default  reduce using rule 21 (declaracao_variavel)
 
 
-Estado 95
+State 95
 
    53 bloco: LBRACE declaracoes RBRACE •
 
-    $padrão  reduzir usando a regra 53 (bloco)
+    $default  reduce using rule 53 (bloco)

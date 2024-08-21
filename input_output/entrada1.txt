@@ -1,6 +1,6 @@
 trem inteiro a vai ser 2.
 trem picado b vai ser 2,3.
-trem bololo c vai ser de rocha.
+-> trem bololo c vai ser de rocha.
 
 
 trem inteiro soma vai ser a ai ce junta b. -> a + b

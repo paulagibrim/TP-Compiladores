@@ -81,7 +81,9 @@
     void add(char c);
     void insert_type();
     void insert_content();
+    void get_operation(char *);
     int search(char *);
+    void replaceChar(char *, char, char);
 
     struct dataType {
         char * id_name;
@@ -97,8 +99,10 @@
     extern int lc;  // Linha do lexer
     char name[50];
     char content[50];
+    char last_int[50];
+    char operacao[50];
 
-#line 102 "y.tab.c"
+#line 106 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -225,12 +229,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 50 "parser.y"
+#line 54 "parser.y"
 
     char *str;
     int num;
 
-#line 234 "y.tab.c"
+#line 238 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -704,12 +708,12 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    58,    58,    62,    63,    67,    68,    69,    70,    74,
-      75,    76,    77,    78,    82,    82,    82,    82,    85,    85,
-      85,    85,    85,    89,    93,    94,    98,   104,   105,   107,
-     108,   109,   113,   114,   115,   119,   132,   136,   140,   141,
-     142,   143,   144,   145,   146,   150,   154,   155,   156,   157,
-     158,   161,   162,   163,   168,   170
+       0,    62,    62,    66,    67,    71,    72,    73,    74,    78,
+      79,    80,    81,    82,    86,    86,    86,    86,    89,    89,
+      89,    89,    89,    93,    97,    98,   102,   108,   109,   111,
+     112,   113,   117,   118,   119,   123,   136,   140,   144,   145,
+     146,   147,   148,   149,   150,   154,   158,   159,   160,   161,
+     162,   165,   166,   167,   172,   174
 };
 #endif
 
@@ -1335,81 +1339,105 @@ yyreduce:
   switch (yyn)
     {
   case 10: /* termo: NUMERO  */
-#line 75 "parser.y"
+#line 79 "parser.y"
              {insert_content();}
-#line 1341 "y.tab.c"
+#line 1345 "y.tab.c"
     break;
 
   case 11: /* termo: STRING  */
-#line 76 "parser.y"
+#line 80 "parser.y"
              {insert_content();}
-#line 1347 "y.tab.c"
+#line 1351 "y.tab.c"
     break;
 
   case 12: /* termo: BOOL  */
-#line 77 "parser.y"
+#line 81 "parser.y"
            {insert_content();}
-#line 1353 "y.tab.c"
+#line 1357 "y.tab.c"
     break;
 
   case 13: /* termo: CHAR  */
-#line 78 "parser.y"
+#line 82 "parser.y"
            {insert_content();}
-#line 1359 "y.tab.c"
+#line 1363 "y.tab.c"
     break;
 
   case 14: /* $@1: %empty  */
-#line 82 "parser.y"
+#line 86 "parser.y"
                      {strcpy(name, (yyvsp[0].str));}
-#line 1365 "y.tab.c"
+#line 1369 "y.tab.c"
     break;
 
   case 15: /* $@2: %empty  */
-#line 82 "parser.y"
+#line 86 "parser.y"
                                                 {add('K');}
-#line 1371 "y.tab.c"
+#line 1375 "y.tab.c"
     break;
 
   case 16: /* $@3: %empty  */
-#line 82 "parser.y"
+#line 86 "parser.y"
                                                                       {add('V');}
-#line 1377 "y.tab.c"
+#line 1381 "y.tab.c"
     break;
 
   case 18: /* $@4: %empty  */
-#line 85 "parser.y"
-        {insert_type(type, (yyvsp[0].str));}
-#line 1383 "y.tab.c"
+#line 89 "parser.y"
+         {insert_type();}
+#line 1387 "y.tab.c"
     break;
 
   case 19: /* $@5: %empty  */
-#line 85 "parser.y"
-                                               {strcpy(name, (yyvsp[0].str));}
-#line 1389 "y.tab.c"
+#line 89 "parser.y"
+                                        {strcpy(name, (yyvsp[0].str));}
+#line 1393 "y.tab.c"
     break;
 
   case 20: /* $@6: %empty  */
-#line 85 "parser.y"
-                                                                          {add('K');}
-#line 1395 "y.tab.c"
+#line 89 "parser.y"
+                                                                   {add('K');}
+#line 1399 "y.tab.c"
     break;
 
   case 21: /* $@7: %empty  */
-#line 85 "parser.y"
-                                                                                               {add('V'); }
-#line 1401 "y.tab.c"
+#line 89 "parser.y"
+                                                                                        {add('V'); }
+#line 1405 "y.tab.c"
     break;
 
   case 26: /* parametro: IDENTIFICADOR  */
-#line 98 "parser.y"
+#line 102 "parser.y"
                   {
         add('V');
     }
-#line 1409 "y.tab.c"
+#line 1413 "y.tab.c"
+    break;
+
+  case 39: /* expressao: termo AI_CE_JUNTA expressao  */
+#line 145 "parser.y"
+                                  {get_operation("AI_CE_JUNTA");}
+#line 1419 "y.tab.c"
+    break;
+
+  case 40: /* expressao: termo AI_CE_DIMINUI expressao  */
+#line 146 "parser.y"
+                                    {get_operation("AI_CE_DIMINUI");}
+#line 1425 "y.tab.c"
+    break;
+
+  case 41: /* expressao: termo CE_MULTIPLICA_POR expressao  */
+#line 147 "parser.y"
+                                        {get_operation("CE_MULTIPLICA_POR");}
+#line 1431 "y.tab.c"
+    break;
+
+  case 42: /* expressao: termo CE_DIVIDE_POR expressao  */
+#line 148 "parser.y"
+                                    {get_operation("CE_DIVIDE_POR");}
+#line 1437 "y.tab.c"
     break;
 
 
-#line 1413 "y.tab.c"
+#line 1441 "y.tab.c"
 
       default: break;
     }
@@ -1602,7 +1630,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 173 "parser.y"
+#line 177 "parser.y"
 
 
 int main() {
@@ -1673,6 +1701,7 @@ void add(char c) {
 
 void insert_content() {
   //printf("\nXaleibs: %s\n", yytext);
+  strcpy(last_int, content);
   strcpy(content, yytext);
 }
 
@@ -1686,4 +1715,38 @@ void insert_type_manual(char * string){
 
 void yyerror(const char* msg) {
   fprintf(stderr, "Identificado um erro na linha %i: %s. \nO último token identificado não era o esperado.\n", lc, msg);
+}
+
+void get_operation(char *operator){
+    replaceChar(last_int, ',', '.');
+    replaceChar(content, ',', '.');
+    double final = 0;
+
+    if (operator == "AI_CE_JUNTA"){
+        // conta = atof(last_int) + atof(content)
+        final = atof(last_int) + atof(content);
+    }
+    else if (operator == "AI_CE_DIMINUI"){
+        final = atof(last_int) - atof(content);
+    }
+    else if (operator == "CE_MULTIPLICA_POR"){
+        final = atof(last_int) * atof(content);
+    }
+    else if (operator == "CE_DIVIDE_POR"){
+        final = atof(last_int) / atof(content);
+    }
+
+    sprintf(operacao, "%f", final);
+    replaceChar(operacao, '.', ',');
+
+    strcpy(content, operacao);
+}
+
+void replaceChar(char *str, char oldChar, char newChar) {
+    while (*str != '\0') {  // Percorre a string até o terminador nulo
+        if (*str == oldChar) {
+            *str = newChar;  // Substitui o caractere
+        }
+        str++;  // Avança para o próximo caractere
+    }
 }
