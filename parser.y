@@ -13,6 +13,8 @@
     void insert_content();
     void get_operation(char *);
     int search(char *);
+    char* get_penultimate_variable_type();
+    char* get_variable_content(const char* variable_name);
 
     struct dataType {
         char * id_name;
@@ -37,7 +39,7 @@
 %token STRING BOOL CHAR 
 %token VAI_SER
 %token NAQUELE_NAIPE 
-%token FRAGA NAO INTERROGACAO VAI_FAZENDO_ATE PRA PICA_MULA ARREDA
+%token <str> FRAGA NAO INTERROGACAO VAI_FAZENDO_ATE PRA PICA_MULA ARREDA
 %token ANOTA
 %token AI_CE_JUNTA AI_CE_DIMINUI CE_MULTIPLICA_POR CE_DIVIDE_POR
 %token ENGUAL NADA_A_VER_COM MAIOR_QUE MENOR_QUE ELEVADO_A
@@ -85,7 +87,7 @@ redefinicao_variavel:
 	IDENTIFICADOR{strcpy(name, $1);} VAI_SER{add('K');} expressao {add('V');} DOT;
 
 declaracao_variavel:
-    TIPO {insert_type();} IDENTIFICADOR {strcpy(name, $3);} VAI_SER{add('K');} expressao{add('V'); } DOT
+    TIPO {insert_type();add('K');} IDENTIFICADOR {;strcpy(name, $3);} VAI_SER{add('K');} expressao{add('V'); } DOT
     ;
 
 declaracao_funcao:
@@ -119,7 +121,7 @@ if:
     ;
 
 while:
-    VAI_FAZENDO_ATE expressao COLLON declaracoes END_COMMAND
+    VAI_FAZENDO_ATE {add('K');} expressao COLLON declaracoes END_COMMAND 
     ;
 
 //for:
@@ -176,24 +178,27 @@ bloco:
 %%
 
 int main() {
-  yyparse();
-printf("\n\n");
-printf("\t\t\t\t\t\t\t\t Análise Léxica \n\n");
-printf("\n%-20s %-15s %-15s %-15s %-10s\n", "[SÍMBOLO]", "[TIPO DE DADO]", "[TIPO TOKEN]", "[CONTEÚDO]", "[LINHA]");
-printf("________________________________________________________________________________\n\n");
+    yyparse();
+    printf("\n\n");
+    printf("\t\t\t\t\t\t\t\t Análise Léxica \n\n");
+    printf("\n%-20s %-15s %-15s %-15s %-10s\n", "[SÍMBOLO]", "[TIPO DE DADO]", "[TIPO TOKEN]", "[CONTEÚDO]", "[LINHA]");
+    printf("________________________________________________________________________________\n\n");
 
-for (int i = 0; i < count; i++) {
-    printf("%-20s %-15s %-15s %-15s %-10d\n", symbol_table[i].id_name, symbol_table[i].data_type, symbol_table[i].type, symbol_table[i].content, symbol_table[i].line_no);
-}
+    for (int i = 0; i < count; i++) {
+        printf("%-20s %-15s %-15s %-15s %-10d\n", symbol_table[i].id_name, symbol_table[i].data_type, symbol_table[i].type, symbol_table[i].content, symbol_table[i].line_no);
+    }
 
-for (int i = 0; i < count; i++) {
-    free(symbol_table[i].id_name);
-    free(symbol_table[i].type);
-}
+    printf("\nConteúdo da variavel: %s\n", get_variable_content("y"));
+    printf("\nConteúdo da variavel: %s\n", get_variable_content("palavr"));
 
-printf("\n\n");
+    for (int i = 0; i < count; i++) {
+        free(symbol_table[i].id_name);
+        free(symbol_table[i].type);
+    }
 
-  return 0;
+    printf("\n\n");
+
+    return 0;
 }
 
 int search(char *type) {
@@ -205,6 +210,7 @@ int search(char *type) {
   }
   return 0;
 }
+
 
 void add(char c) {
   q = search(yytext);
@@ -239,6 +245,35 @@ void add(char c) {
       count++;
     }
   }
+}
+
+char* get_penultimate_variable_type() {
+    int found_count = 0;
+    int total_count = 0;
+    char* penultimate_type = NULL;
+
+    for (int i = 0; i < count; i++) {
+        if (strcmp(symbol_table[i].type, "Variable") == 0) {
+            found_count++;
+            if (found_count == 2) {
+                penultimate_type = symbol_table[i].content;
+            } else if (found_count > 2) {
+                penultimate_type = symbol_table[i - 1].content;
+            }
+        }
+    }
+
+    return penultimate_type;
+}
+
+char* get_variable_content(const char* variable_name) {
+    for (int i = 0; i < count; i++) {
+        //printf("%s\n",symbol_table[i].id_name);
+        if (strcmp(symbol_table[i].type, "Variable") == 0 && strcmp(symbol_table[i].id_name, variable_name) == 0) {
+            return symbol_table[i].content;
+        }
+    }
+    return NULL;
 }
 
 void insert_content() {
