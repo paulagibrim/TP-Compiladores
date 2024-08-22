@@ -7,7 +7,3 @@ fraga pelo menos um x y ?
 acabou, quer um cafezin?
 
 -> fraga num eh x ?
-
-
-
-trem inteiro x vai ser 20.
