@@ -7,7 +7,6 @@
     
     void yyerror(const char *s);
     int yylex();
-    //int yywrap();
     void add(char c);
     void insert_type();
     void insert_content();
@@ -86,14 +85,15 @@ termo:
     ;
 
 redefinicao_variavel:
-	IDENTIFICADOR{strcpy(name, $1);} VAI_SER{add('K');} expressao {add('V');} DOT;
+	IDENTIFICADOR{strcpy(name, $1);} VAI_SER{add('K');} expressao {add('V');} DOT
+    ;
 
 declaracao_variavel:
-    TIPO {insert_type();add('K');} IDENTIFICADOR {;strcpy(name, $3);} VAI_SER{add('K');} expressao{add('V'); } DOT
+    TIPO {insert_type();add('K');} IDENTIFICADOR {strcpy(name, $3);} VAI_SER{add('K');} expressao{add('V'); } DOT
     ;
 
 declaracao_funcao:
-    NAQUELE_NAIPE IDENTIFICADOR LBRACE parametros RBRACE COLLON bloco
+    NAQUELE_NAIPE{add('K');} IDENTIFICADOR{strcpy(name, $3);} LBRACE parametros RBRACE COLLON bloco
     ;
 
 parametros:
@@ -140,7 +140,7 @@ break:
     ;
 
 return:
-    ARREDA expressao
+    ARREDA expressao DOT
     ;
 
 expressao:

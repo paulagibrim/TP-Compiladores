@@ -1,6 +1,6 @@
 %{
    #include <stdio.h>
-   #include "y.tab.h"  // Certifique-se de incluir o arquivo correto para as definições do tokens
+   #include "y.tab.h" 
    int lc = 1;     
 %}
 
@@ -66,7 +66,7 @@ end_command "acabou, quer um cafezin?"
 %%
 [\n] { printf("%sLinha:%d|  ", yytext, lc); lc+=1; }
 {ws} { printf("%s", yytext);} 
-{comments} { /* Ignorar comentários */ }
+{comments} { }
 
 {point} { printf("%s", yytext); return DOT; }
 {question} { printf("%s", yytext); return INTERROGACAO; }
