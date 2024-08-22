@@ -6,7 +6,7 @@ fraga pelo menos um x y ?
     anota: "pelo menos um é verdadeiro".
 acabou, quer um cafezin?
 
-fraga num eh x ?
+-> fraga num eh x ?
 
 
 

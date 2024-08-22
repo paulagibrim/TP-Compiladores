@@ -184,11 +184,11 @@ int main(int argc, char **argv) {
     yyparse();
     printf("\n\n");
     printf("\t\t\t\t\t\t\t\t Análise Léxica \n\n");
-    printf("\n%-20s %-15s %-15s %-15s %-10s\n", "[SÍMBOLO]", "[TIPO DE DADO]", "[TIPO TOKEN]", "[CONTEÚDO]", "[LINHA]");
+    printf("\n%-30s %-15s %-15s %-15s %-10s\n", "[SÍMBOLO]", "[TIPO DE DADO]", "[TIPO TOKEN]", "[CONTEÚDO]", "[LINHA]");
     printf("________________________________________________________________________________\n\n");
 
     for (int i = 0; i < count; i++) {
-        printf("%-20s %-15s %-15s %-15s %-10d\n", symbol_table[i].id_name, symbol_table[i].data_type, symbol_table[i].type, symbol_table[i].content, symbol_table[i].line_no);
+        printf("%-30s %-15s %-15s %-15s %-10d\n", symbol_table[i].id_name, symbol_table[i].data_type, symbol_table[i].type, symbol_table[i].content, symbol_table[i].line_no);
     }
 
     for (int i = 0; i < count; i++) {
