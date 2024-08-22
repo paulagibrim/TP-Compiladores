@@ -15,6 +15,7 @@
     int search(char *);
     char* get_penultimate_variable_type();
     char* get_variable_content(const char* variable_name);
+    void print_numbered_source();
 
     struct dataType {
         char * id_name;
@@ -177,7 +178,8 @@ bloco:
 
 %%
 
-int main() {
+int main(int argc, char **argv) {
+    printf("Linha:0|  ");
     yyparse();
     printf("\n\n");
     printf("\t\t\t\t\t\t\t\t Análise Léxica \n\n");
@@ -189,7 +191,7 @@ int main() {
     }
 
     printf("\nConteúdo da variavel: %s\n", get_variable_content("y"));
-    printf("\nConteúdo da variavel: %s\n", get_variable_content("palavr"));
+    printf("%s\n", argv[argc-1]);
 
     for (int i = 0; i < count; i++) {
         free(symbol_table[i].id_name);
@@ -308,4 +310,16 @@ void get_operation(char *operator){
         sprintf(operacao, "%d", atoi(last_int) / atoi(content));
     }
     strcpy(content, operacao);
+}
+
+void print_numbered_source(){
+    char buffer[256];
+
+    printf("Conteúdo do arquivo redirecionado:\n");
+
+    // Ler linhas da entrada padrão (stdin) até o final do arquivo (EOF)
+    while (fgets(buffer, sizeof(buffer), stdin) != NULL) {
+        // Processar ou imprimir cada linha lida
+        printf("%s", buffer);
+    }
 }
