@@ -33,6 +33,7 @@
     char content[50];
     char last_int[50];
     char operacao[50];
+    int error = 0;
 %}
 
 %token <str> IDENTIFICADOR TIPO
@@ -190,14 +191,14 @@ int main(int argc, char **argv) {
         printf("%-20s %-15s %-15s %-15s %-10d\n", symbol_table[i].id_name, symbol_table[i].data_type, symbol_table[i].type, symbol_table[i].content, symbol_table[i].line_no);
     }
 
-    printf("\nConteúdo da variavel: %s\n", get_variable_content("y"));
-    printf("%s\n", argv[argc-1]);
-
     for (int i = 0; i < count; i++) {
         free(symbol_table[i].id_name);
         free(symbol_table[i].type);
     }
-
+    if (!error)
+        printf("\n\n\e[0;32m Programa Sintaticamente Correto.");
+    else
+        printf("\n\n\e[0;31mPrograma Sintaticamente Incorreto.");
     printf("\n\n");
 
     return 0;
@@ -293,7 +294,8 @@ void insert_type_manual(char * string){
 }
 
 void yyerror(const char* msg) {
-  fprintf(stderr, "Identificado um erro na linha %i: %s. \nO último token identificado não era o esperado.\n", lc, msg);
+    error = 1;
+  fprintf(stderr, "\n\e[0;31mErro proximo da linha %i: %s.\n\n\e[0m", lc, msg);
 }
 
 void get_operation(char *operator){
@@ -310,16 +312,4 @@ void get_operation(char *operator){
         sprintf(operacao, "%d", atoi(last_int) / atoi(content));
     }
     strcpy(content, operacao);
-}
-
-void print_numbered_source(){
-    char buffer[256];
-
-    printf("Conteúdo do arquivo redirecionado:\n");
-
-    // Ler linhas da entrada padrão (stdin) até o final do arquivo (EOF)
-    while (fgets(buffer, sizeof(buffer), stdin) != NULL) {
-        // Processar ou imprimir cada linha lida
-        printf("%s", buffer);
-    }
 }
