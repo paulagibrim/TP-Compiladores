@@ -85,26 +85,24 @@ termo:
     ;
 
 redefinicao_variavel:
-	IDENTIFICADOR{strcpy(name, $1);} VAI_SER{add('K');} expressao {add('V');} DOT
+	IDENTIFICADOR{strcpy(name, $1);} VAI_SER{add('K');} expressao{add('V');} DOT{add('K');}
     ;
 
 declaracao_variavel:
-    TIPO {insert_type();add('K');} IDENTIFICADOR {strcpy(name, $3);} VAI_SER{add('K');} expressao{add('V'); } DOT
+    TIPO {insert_type(); add('K');} IDENTIFICADOR {strcpy(name, $3);} VAI_SER{add('K');} expressao{add('V');} DOT{add('K');}
     ;
 
 declaracao_funcao:
-    NAQUELE_NAIPE{add('K');} IDENTIFICADOR{strcpy(name, $3);} LBRACE parametros RBRACE COLLON bloco
+    NAQUELE_NAIPE{add('K');} IDENTIFICADOR{strcpy(name, $3);} LBRACE{add('K');} parametros RBRACE{add('K');} COLLON{add('K');} bloco
     ;
 
 parametros:
     parametro
-    | parametro COMMA parametros
+    | parametro COMMA{add('K');} parametros
     ;
 
 parametro:
-    IDENTIFICADOR {
-        add('V');
-    }
+    IDENTIFICADOR{strcpy(name, $1); add('V');}
     ;
 
 declaracao_estrutura:
