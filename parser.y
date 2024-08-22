@@ -117,13 +117,13 @@ declaracao_estrutura:
     ;
 
 if:
-    FRAGA expressao INTERROGACAO declaracoes END_COMMAND
-	| FRAGA expressao INTERROGACAO declaracoes NAO if
-	| FRAGA expressao INTERROGACAO declaracoes NAO INTERROGACAO declaracoes END_COMMAND
+    FRAGA expressao INTERROGACAO declaracoes END_COMMAND{add('K');}
+	| FRAGA expressao INTERROGACAO declaracoes NAO{add('K');} if
+	| FRAGA expressao INTERROGACAO declaracoes NAO{add('K');} INTERROGACAO{add('K');} declaracoes END_COMMAND{add('K');}
     ;
 
 while:
-    VAI_FAZENDO_ATE {add('K');} expressao COLLON declaracoes END_COMMAND 
+    VAI_FAZENDO_ATE {add('K');} expressao COLLON{add('K');} declaracoes END_COMMAND {add('K');}
     ;
 
 //for:
@@ -136,43 +136,43 @@ while:
 
 
 break:
-    PICA_MULA DOT
+    PICA_MULA{add('K');} DOT{add('K');}
     ;
 
 return:
-    ARREDA expressao DOT
+    ARREDA{add('K');} expressao DOT{add('K');}
     ;
 
 expressao:
     termo
-    | termo AI_CE_JUNTA expressao {get_operation("AI_CE_JUNTA");}
-    | termo AI_CE_DIMINUI expressao {get_operation("AI_CE_DIMINUI");}
-    | termo CE_MULTIPLICA_POR expressao {get_operation("CE_MULTIPLICA_POR");}
-    | termo CE_DIVIDE_POR expressao {get_operation("CE_DIVIDE_POR");}
+    | termo AI_CE_JUNTA{add('K');} expressao {get_operation("AI_CE_JUNTA");}
+    | termo AI_CE_DIMINUI{add('K');} expressao {get_operation("AI_CE_DIMINUI");}
+    | termo CE_MULTIPLICA_POR{add('K');} expressao {get_operation("CE_MULTIPLICA_POR");}
+    | termo CE_DIVIDE_POR{add('K');} expressao {get_operation("CE_DIVIDE_POR");}
 	| operadores_pos termo termo
     | termo operador expressao
     ;
 
 print:
-    ANOTA COLLON expressao DOT
+    ANOTA{add('K');} COLLON{add('K');} expressao DOT{add('K');}
     ;
 
 operador:
-	ELEVADO_A
-    | ENGUAL
-    | NADA_A_VER_COM
-    | MAIOR_QUE
-    | MENOR_QUE
+	ELEVADO_A{add('K');}
+    | ENGUAL{add('K');}
+    | NADA_A_VER_COM{add('K');}
+    | MAIOR_QUE{add('K');}
+    | MENOR_QUE{add('K');}
 	
 operadores_pos:
-	 OR_OP 
-    | AND_OP 
-    | NOT_OP
+	 OR_OP {add('K');}
+    | AND_OP {add('K');}
+    | NOT_OP{add('K');}
     ;
 
 bloco:
     // declaracoes
-	LBRACE declaracoes RBRACE
+	LBRACE{add('K');} declaracoes RBRACE{add('K');}
 	// | INTERROGACAO declaracoes END_COMMAND
     | declaracao
     ;
