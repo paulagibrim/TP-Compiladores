@@ -24,6 +24,11 @@
         int line_no;
     } symbol_table[1000];
 
+    struct var_name {
+        char name[100];
+        struct node* nd;
+    } nd_obj;
+
     int count = 0;
     int q;
     char type[20];
@@ -215,20 +220,21 @@ int search(char *type) {
 
 void add(char c) {
   q = search(yytext);
-  if (!q) {
+  if (c == 'V') {
+      symbol_table[count].id_name = strdup(name);
+      symbol_table[count].data_type = strdup(type);
+      symbol_table[count].content = strdup(content);
+      symbol_table[count].line_no = lc;
+      symbol_table[count].type = strdup("Variable");
+      count++;
+  }
+  else if (!q) {
     if (c == 'K') {
       symbol_table[count].id_name = strdup(yytext);
       symbol_table[count].data_type = strdup("N/A");
       symbol_table[count].content = strdup("N/A");
       symbol_table[count].line_no = lc;
       symbol_table[count].type = strdup("Keyword");
-      count++;
-    } else if (c == 'V') {
-      symbol_table[count].id_name = strdup(name);
-      symbol_table[count].data_type = strdup(type);
-      symbol_table[count].content = strdup(content);
-      symbol_table[count].line_no = lc;
-      symbol_table[count].type = strdup("Variable");
       count++;
     } else if (c == 'C') {
       symbol_table[count].id_name = strdup(yytext);
