@@ -15,6 +15,8 @@
     char* get_penultimate_variable_type();
     char* get_variable_content(const char* variable_name);
     void print_numbered_source();
+    int contains_letter(const char *str);
+    void insert_content_manual(char * string);
 
     struct dataType {
         char * id_name;
@@ -24,25 +26,23 @@
         int line_no;
     } symbol_table[1000];
 
-    struct var_name {
-        char name[100];
-        struct node* nd;
-    } nd_obj;
-
     int count = 0;
     int q;
     char type[20];
     extern int lc;  // Linha do lexer
     char name[50];
     char content[50];
-    char last_int[50];
+    char last_content[50];
     char operacao[50];
-    int error = 0;
+    int syntax_error = 0;
+    int semantic_error = 0;
+    char current_var[50];
+    char last_var[50];
 %}
 
 %token <str> IDENTIFICADOR TIPO
-%token NUMERO 
-%token STRING BOOL CHAR 
+%token <num> NUMERO 
+%token <str> STRING BOOL CHAR 
 %token VAI_SER
 %token NAQUELE_NAIPE 
 %token <str> FRAGA NAO INTERROGACAO VAI_FAZENDO_ATE PRA PICA_MULA ARREDA
@@ -82,7 +82,13 @@ declaracao:
     ;
 
 termo:
-    IDENTIFICADOR
+    IDENTIFICADOR {
+        // se variavel investigada nao estiver na tabela de simbolos
+        if (!get_variable_content($1)){
+            semantic_error = 1;
+            printf("\n\e[0;31mERRO DE SEMANTICA proximo a linha %i: VARIAVEL NAO DECLARADA \"%s\" \e[0m\n", lc, $1);
+
+        }}
     | NUMERO {insert_content();}
     | STRING {insert_content();}
     | BOOL {insert_content();}
@@ -198,10 +204,13 @@ int main(int argc, char **argv) {
         free(symbol_table[i].id_name);
         free(symbol_table[i].type);
     }
-    if (!error)
+    if (!syntax_error)
         printf("\n\n\e[0;32m Programa Sintaticamente Correto.");
     else
-        printf("\n\n\e[0;31mPrograma Sintaticamente Incorreto.");
+        printf("\n\n\e[0;31m Programa Sintaticamente Incorreto.");
+
+    if (semantic_error)
+        printf("\n\e[0;31m Programa Semanticamente Incorreto.");
     printf("\n\n");
 
     return 0;
@@ -228,7 +237,8 @@ void add(char c) {
       symbol_table[count].type = strdup("Variable");
       count++;
   }
-  else if (!q) {
+
+  if (!q) {
     if (c == 'K') {
       symbol_table[count].id_name = strdup(yytext);
       symbol_table[count].data_type = strdup("N/A");
@@ -285,7 +295,7 @@ char* get_variable_content(const char* variable_name) {
 
 void insert_content() {
   //printf("\nXaleibs: %s\n", yytext);
-  strcpy(last_int, content);
+  strcpy(last_content, content);
   strcpy(content, yytext);
 }
 
@@ -297,23 +307,60 @@ void insert_type_manual(char * string){
   strcpy(type, string);
 }
 
+void insert_varname_manual(char * string){
+    if (string){
+            strcpy(current_var, string);
+    }
+    else {
+        // SO ACONTECE CASO VARIAVEL NAO TENHA SIDO DECLARADA
+        semantic_error = 1;
+        printf("\n\e[0;31mErro proximo da linha %i: VARIAVEL NAO DECLARADA[ %s].\n\n\e[0m", lc, current_var);
+    }
+}
+
 void yyerror(const char* msg) {
-    error = 1;
+    syntax_error = 1;
   fprintf(stderr, "\n\e[0;31mErro proximo da linha %i: %s.\n\n\e[0m", lc, msg);
 }
 
 void get_operation(char *operator){
+    int last_content_int = atoi(last_content);
+    int content_int = atoi(content);
+    // as duas variaveis acima retornam 0 caso não haja numeros no array sendo passado para a funcao
+    // mas como e possivel que elas de fato tenham o valor 0, nao da para usa-las para verificar
+    // erros de sintaxe
+    // ALEM DISSO ISSO AQUI SO FUNCIONA PRA INT EM
+
+    // as variaveis abaixo verificam se existe uma letra ou virgula nas variaveis sendo manipuladas
+    int last_is_not_int = contains_letter(last_content);
+    int content_is_not_int = contains_letter(content);
+
+    if (last_is_not_int || content_is_not_int ){
+        printf("\n\e[0;31mERRO DE SEMANTICA proximo a linha %i: tipos incompatíveis para operação \"%s\" [%s] [%s]\e[0m\n", lc, operator, content, last_content);
+        semantic_error = 1;
+        return;
+    }
     if (operator == "AI_CE_JUNTA"){
-        sprintf(operacao, "%d", atoi(last_int) + atoi(content));
+        sprintf(operacao, "%d",  last_content_int + content_int);
     }
     else if (operator == "AI_CE_DIMINUI"){
-        sprintf(operacao, "%d", atoi(last_int) - atoi(content));
+        sprintf(operacao, "%d", last_content_int - content_int);
     }
     else if (operator == "CE_MULTIPLICA_POR"){
-        sprintf(operacao, "%d", atoi(last_int) * atoi(content));
+        sprintf(operacao, "%d", last_content_int * content_int);
     }
     else if (operator == "CE_DIVIDE_POR"){
-        sprintf(operacao, "%d", atoi(last_int) / atoi(content));
+        sprintf(operacao, "%d", last_content_int / content_int);
     }
     strcpy(content, operacao);
+}
+
+int contains_letter(const char *str) {
+    while (*str != '\0') {  // Loop through each character in the string
+        if (isalpha((unsigned char)*str) || *str == ',') {  // Check if the character is a letter
+            return 1;  // Return 1 if a letter is found
+        }
+        str++;
+    }
+    return 0;  // Return 0 if no letters were found (i.e., all characters are numbers)
 }
