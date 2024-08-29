@@ -17,6 +17,7 @@
     void print_numbered_source();
     int contains_letter(const char *str);
     void insert_content_manual(char * string);
+    void change_variable_content(const char* variable_name, char * newval);
 
     struct dataType {
         char * id_name;
@@ -25,6 +26,16 @@
         char * content;
         int line_no;
     } symbol_table[1000];
+
+    struct node* mknode(struct node *left, struct node *right, char *token);
+	struct node *head;
+    
+    struct node { 
+        struct node *left; 
+        struct node *right; 
+        char *token; 
+        char *content;
+    };
 
     int count = 0;
     int q;
@@ -40,18 +51,22 @@
     char last_var[50];
 %}
 
-%token <str> IDENTIFICADOR TIPO
-%token <num> NUMERO 
-%token <str> STRING BOOL CHAR 
-%token VAI_SER
-%token NAQUELE_NAIPE 
-%token <str> FRAGA NAO INTERROGACAO VAI_FAZENDO_ATE PRA PICA_MULA ARREDA
-%token ANOTA
-%token AI_CE_JUNTA AI_CE_DIMINUI CE_MULTIPLICA_POR CE_DIVIDE_POR
-%token ENGUAL NADA_A_VER_COM MAIOR_QUE MENOR_QUE ELEVADO_A
-%token LBRACE RBRACE COLLON COMMA DOT
-%token UNDERSCORE OR_OP AND_OP NOT_OP 
-%token END_COMMAND
+%token <thisProd> IDENTIFICADOR TIPO
+%token <thisProd> NUMERO 
+%token <thisProd> STRING BOOL CHAR 
+%token <thisProd> VAI_SER
+%token <thisProd> NAQUELE_NAIPE 
+%token <thisProd> FRAGA NAO INTERROGACAO VAI_FAZENDO_ATE PRA PICA_MULA ARREDA
+%token <thisProd> ANOTA
+%token <thisProd> AI_CE_JUNTA AI_CE_DIMINUI CE_MULTIPLICA_POR CE_DIVIDE_POR
+%token <thisProd> ENGUAL NADA_A_VER_COM MAIOR_QUE MENOR_QUE ELEVADO_A
+%token <thisProd> LBRACE RBRACE COLLON COMMA DOT
+%token <thisProd> UNDERSCORE OR_OP AND_OP NOT_OP 
+%token <thisProd> END_COMMAND
+
+%type <thisProd> programa declaracoes declaracao 
+%type <thisProd> declaracao_variavel redefinicao_variavel declaracao_funcao declaracao_estrutura parametro parametros
+%type <thisProd> if while break print return
 
 %left AI_CE_JUNTA AI_CE_DIMINUI
 %left CE_MULTIPLICA_POR CE_DIVIDE_POR
@@ -61,16 +76,26 @@
 %union {
     char *str;
     int num;
+    struct prod { 
+		char name[100]; 
+		struct node* nd;
+	} thisProd; 
 }
 
 %%
 
 programa:
-    declaracoes
+    declaracoes {
+        $$.nd = mknode(NULL,NULL, "[PROGRAMA]"); head=$$.nd; 
+        //printf("\n1.%s\n", $2);
+        printf("\n%s\n", $$.nd->token);
+    }
     ;
 
 declaracoes:
-    declaracao
+    declaracao {$$.nd = mknode(NULL, NULL, "[DECLARACAO]");
+    printf("\n%s\n", $1.nd->token);
+    }
     | declaracao declaracoes
     ;
 
@@ -96,7 +121,7 @@ termo:
     ;
 
 redefinicao_variavel:
-	IDENTIFICADOR{strcpy(name, $1);} VAI_SER{add('K');} expressao{add('V');} DOT{add('K');}
+	IDENTIFICADOR{strcpy(name, $1);} VAI_SER{add('K');} expressao DOT{add('K');}
     ;
 
 declaracao_variavel:
@@ -126,8 +151,8 @@ declaracao_estrutura:
     ;
 
 if:
-    FRAGA expressao INTERROGACAO declaracoes END_COMMAND{add('K');}
-	| FRAGA expressao INTERROGACAO declaracoes NAO{add('K');} if
+    FRAGA expressao INTERROGACAO declaracoes END_COMMAND {add('K');}
+	| FRAGA expressao INTERROGACAO declaracoes NAO{add('K');}
 	| FRAGA expressao INTERROGACAO declaracoes NAO{add('K');} INTERROGACAO{add('K');} declaracoes END_COMMAND{add('K');}
     ;
 
@@ -206,10 +231,13 @@ int main(int argc, char **argv) {
     }
     if (!syntax_error)
         printf("\n\n\e[0;32m Programa Sintaticamente Correto.");
-    else
+    else{
         printf("\n\n\e[0;31m Programa Sintaticamente Incorreto.");
-
-    if (semantic_error)
+        return 0;
+    }
+    if (!semantic_error)
+        printf("\n\e[0;32m Programa Semanticamente Correto.");
+    else
         printf("\n\e[0;31m Programa Semanticamente Incorreto.");
     printf("\n\n");
 
@@ -293,6 +321,15 @@ char* get_variable_content(const char* variable_name) {
     return NULL;
 }
 
+void change_variable_content(const char* variable_name, char * newval) {
+    for (int i = 0; i < count; i++) {
+        //printf("%s\n",symbol_table[i].id_name);
+        if (strcmp(symbol_table[i].type, "Variable") == 0 && strcmp(symbol_table[i].id_name, variable_name) == 0) {
+            symbol_table[i].content = newval;
+        }
+    }
+}
+
 void insert_content() {
   //printf("\nXaleibs: %s\n", yytext);
   strcpy(last_content, content);
@@ -342,6 +379,7 @@ void get_operation(char *operator){
     }
     if (operator == "AI_CE_JUNTA"){
         sprintf(operacao, "%d",  last_content_int + content_int);
+        change_variable_content(name, operacao);
     }
     else if (operator == "AI_CE_DIMINUI"){
         sprintf(operacao, "%d", last_content_int - content_int);
@@ -363,4 +401,14 @@ int contains_letter(const char *str) {
         str++;
     }
     return 0;  // Return 0 if no letters were found (i.e., all characters are numbers)
+}
+
+struct node* mknode(struct node *left, struct node *right, char *token) {	
+	struct node *newnode = (struct node *)malloc(sizeof(struct node));
+	char *newstr = (char *)malloc(strlen(token)+1);
+	strcpy(newstr, token);
+	newnode->left = left;
+	newnode->right = right;
+	newnode->token = newstr;
+	return(newnode);
 }
