@@ -87,14 +87,12 @@
 programa:
     declaracoes {
         $$.nd = mknode(NULL,NULL, "[PROGRAMA]"); head=$$.nd; 
-        //printf("\n1.%s\n", $2);
-        printf("\n%s\n", $$.nd->token);
+        
     }
     ;
 
 declaracoes:
-    declaracao {$$.nd = mknode(NULL, NULL, "[DECLARACAO]");
-    printf("\n%s\n", $1.nd->token);
+    declaracao {$$.nd = mknode(NULL, NULL, "[DECLARACAO]"); printf("\n%s\n",$$.nd->token);
     }
     | declaracao declaracoes
     ;
@@ -109,9 +107,9 @@ declaracao:
 termo:
     IDENTIFICADOR {
         // se variavel investigada nao estiver na tabela de simbolos
-        if (!get_variable_content($1)){
+        if (!get_variable_content($1.name)){
             semantic_error = 1;
-            printf("\n\e[0;31mERRO DE SEMANTICA proximo a linha %i: VARIAVEL NAO DECLARADA \"%s\" \e[0m\n", lc, $1);
+            printf("\n\e[0;31mERRO DE SEMANTICA proximo a linha %i: VARIAVEL NAO DECLARADA \"%s\" \e[0m\n", lc, $1.name);
 
         }}
     | NUMERO {insert_content();}
@@ -121,15 +119,15 @@ termo:
     ;
 
 redefinicao_variavel:
-	IDENTIFICADOR{strcpy(name, $1);} VAI_SER{add('K');} expressao DOT{add('K');}
+	IDENTIFICADOR{strcpy(name, $1.name);} VAI_SER{add('K');} expressao DOT{add('K');}
     ;
 
 declaracao_variavel:
-    TIPO {insert_type(); add('K');} IDENTIFICADOR {strcpy(name, $3);} VAI_SER{add('K');} expressao{add('V');} DOT{add('K');}
+    TIPO {insert_type(); add('K');} IDENTIFICADOR {strcpy(name, $3.name);} VAI_SER{add('K');} expressao{add('V');} DOT{add('K');}
     ;
 
 declaracao_funcao:
-    NAQUELE_NAIPE{add('K');} IDENTIFICADOR{strcpy(name, $3);} LBRACE{add('K');} parametros RBRACE{add('K');} COLLON{add('K');} bloco
+    NAQUELE_NAIPE{add('K');} IDENTIFICADOR{strcpy(name, $3.name);} LBRACE{add('K');} parametros RBRACE{add('K');} COLLON{add('K');} bloco
     ;
 
 parametros:
@@ -138,7 +136,7 @@ parametros:
     ;
 
 parametro:
-    IDENTIFICADOR{strcpy(name, $1); add('V');}
+    IDENTIFICADOR{strcpy(name, $1.name); add('V');}
     ;
 
 declaracao_estrutura:

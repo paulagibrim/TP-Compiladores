@@ -77,11 +77,11 @@ end_command "acabou, quer um cafezin?"
 {collon} {printf("%s", yytext); return COLLON; }
 
 {int_type} { printf("%s", yytext); return TIPO; }
-{int} { printf("%s", yytext); yylval.str = strdup(yytext); return NUMERO; }
+{int} { printf("%s", yytext); strcpy(yylval.thisProd.name,(yytext)); return NUMERO; }
 {float_type} { printf("%s", yytext); return TIPO; }
-{float} { printf("%s", yytext); yylval.str = strdup(yytext); return NUMERO; }
+{float} { printf("%s", yytext); strcpy(yylval.thisProd.name,(yytext)); return NUMERO; }
 {string_type} { printf("%s", yytext); return TIPO; }
-{string} { printf("%s", yytext); yylval.str = strdup(yytext); return STRING; }
+{string} { printf("%s", yytext); strcpy(yylval.thisProd.name,(yytext)); return STRING; }
 {bool_type} { printf("%s", yytext); return TIPO; }
 {bool_true} { printf("%s", yytext); return BOOL; }
 {bool_false} { printf("%s", yytext); return BOOL; }
@@ -115,7 +115,7 @@ end_command "acabou, quer um cafezin?"
 
 {print_name} { printf("%s", yytext); return ANOTA; }
 
-{id} { printf("%s", yytext); yylval.str = strdup(yytext); return IDENTIFICADOR; }
+{id} { printf("%s", yytext); strcpy(yylval.thisProd.name,(yytext)); return IDENTIFICADOR; }
 
 . { printf("%d: Token desconhecido: %s\n", lc, yytext); }
 
