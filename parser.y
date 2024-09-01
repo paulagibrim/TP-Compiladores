@@ -18,6 +18,10 @@
     int contains_letter(const char *str);
     void insert_content_manual(char * string);
     void change_variable_content(const char* variable_name, char * newval);
+    void printtree(struct node*);
+    void draw_tree_hor2(struct node *tree, int depth, char *path, int right);
+    void draw_tree_hor(struct node *tree);
+
 
     struct dataType {
         char * id_name;
@@ -86,13 +90,13 @@
 
 programa:
     declaracoes {
-        $$.nd = mknode(NULL,NULL, "[PROGRAMA]"); head=$$.nd; 
-        
+        $$.nd = mknode(NULL,$1.nd, "[PROGRAMA]"); head=$$.nd; 
+        printf("\n%s\n", $1.name);
     }
     ;
 
 declaracoes:
-    declaracao {$$.nd = mknode(NULL, NULL, "[DECLARACAO]"); printf("\n%s\n",$$.nd->token);
+    declaracao {$$.nd = mknode(NULL, NULL, "[DECLARACOES]");
     }
     | declaracao declaracoes
     ;
@@ -106,16 +110,19 @@ declaracao:
 
 termo:
     IDENTIFICADOR {
-        // se variavel investigada nao estiver na tabela de simbolos
-        if (!get_variable_content($1.name)){
-            semantic_error = 1;
-            printf("\n\e[0;31mERRO DE SEMANTICA proximo a linha %i: VARIAVEL NAO DECLARADA \"%s\" \e[0m\n", lc, $1.name);
+            // se variavel investigada nao estiver na tabela de simbolos
+            if (!get_variable_content($1.name)){
+                semantic_error = 1;
+                printf("\n\e[0;31mERRO DE SEMANTICA proximo a linha %i: VARIAVEL NAO DECLARADA \"%s\" \e[0m\n", lc, $1.name);
 
-        }}
-    | NUMERO {insert_content();}
-    | STRING {insert_content();}
-    | BOOL {insert_content();}
-    | CHAR {insert_content();}
+            } else {
+                $1.nd = mknode(NULL, NULL, $1.name);
+            }
+        }
+    | NUMERO {insert_content();  $1.nd = mknode(NULL, NULL, "[INT]");}
+    | STRING {insert_content();  $1.nd = mknode(NULL, NULL, "[STRING]");}
+    | BOOL {insert_content();  $1.nd = mknode(NULL, NULL, "[BOOL]");}
+    | CHAR {insert_content();  $1.nd = mknode(NULL, NULL, "[CHAR]");}
     ;
 
 redefinicao_variavel:
@@ -227,6 +234,9 @@ int main(int argc, char **argv) {
         free(symbol_table[i].id_name);
         free(symbol_table[i].type);
     }
+
+    printtree(head); 
+
     if (!syntax_error)
         printf("\n\n\e[0;32m Programa Sintaticamente Correto.");
     else{
@@ -399,6 +409,98 @@ int contains_letter(const char *str) {
         str++;
     }
     return 0;  // Return 0 if no letters were found (i.e., all characters are numbers)
+}
+
+void printtree(struct node* tree) {
+	printf("\n\n Arvore Sintatica: Impressa em ordem: \n\n");
+	draw_tree_hor(tree);   
+	printf("\n\n");
+}
+
+void draw_tree_hor2(struct node *tree, int depth, char *path, int right)
+{
+    // stopping condition
+    if (tree== NULL)
+        return;
+
+    // increase spacing
+    depth++;
+
+    // start with right node
+    draw_tree_hor2(tree->right, depth, path, 1);
+
+    if(depth > 1)
+    {
+        // set | draw map
+        path[depth-2] = 0;
+
+        if(right)
+            path[depth-2] = 1;
+    }
+
+    if(tree->left)
+        path[depth-1] = 1;
+
+    // print root after spacing
+    printf("\n");
+
+    for(int i=0; i<depth-1; i++)
+    {
+      	if(i == depth-2)
+        	printf("+");
+     	else if(path[i])
+        	printf("|");
+      	else
+        	printf(" ");
+
+      	for(int j=1; j < 3; j++)
+      	if(i < depth-2)
+        	printf(" ");
+      	else
+        	printf("-");
+    }
+
+	switch(tree->token[0]){
+		case '-':
+		case '0':
+		case '1':
+		case '2':
+		case '3':
+		case '4':
+		case '5':
+		case '6':
+		case '7':
+		case '8':
+		case '9':
+			printf("> %s\n",tree->token);
+			break;
+		default:
+			printf("%s\n", tree->token);
+			break;
+	}
+    // vertical spacers below
+    for(int i=0; i<depth; i++)
+    {
+      	if(path[i])
+        	printf("|");
+      	else
+          	printf(" ");
+
+      	for(int j=1; j < 3; j++)
+          	printf(" ");
+    }
+
+    // go to left node
+    draw_tree_hor2(tree->left, depth, path, 0);
+}
+
+void draw_tree_hor(struct node *tree)
+{
+    // should check if we don't exceed this somehow..
+    char path[255] = {};
+
+    //initial depth is 0
+    draw_tree_hor2(tree, 0, path, 0);
 }
 
 struct node* mknode(struct node *left, struct node *right, char *token) {	
