@@ -56,6 +56,15 @@
     struct node * temp;
 %}
 
+%union {
+    char *str;
+    int num;
+    struct prod { 
+		char name[100]; 
+		struct node* nd;
+	} thisProd; 
+}
+
 %token <thisProd> IDENTIFICADOR TIPO
 %token <thisProd> NUMERO 
 %token <thisProd> STRING BOOL CHAR 
