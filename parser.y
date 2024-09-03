@@ -21,7 +21,7 @@
     void printtree(struct node*);
     void draw_tree_hor2(struct node *tree, int depth, char *path, int right);
     void draw_tree_hor(struct node *tree);
-
+    int contains_letter_not_comma(const char *str);
 
     struct dataType {
         char * id_name;
@@ -131,7 +131,28 @@ redefinicao_variavel:
     ;
 
 declaracao_variavel:
-    TIPO {insert_type(); add('K');} IDENTIFICADOR {strcpy(name, $3.name); $3.nd = mknode(NULL, NULL, $3.name); temp = $3.nd;} VAI_SER{add('K');} expressao{add('V');} DOT{add('K');}
+    TIPO {insert_type(); add('K');} IDENTIFICADOR {
+            strcpy(name, $3.name);
+            $3.nd = mknode(NULL, NULL, $3.name);
+            temp = $3.nd;} VAI_SER{add('K');
+            
+        } expressao {
+            int res = contains_letter(content);
+            int res2 = contains_letter_not_comma(content);
+            if (!strcmp(type,"trem inteiro")){
+                if (res){
+                    semantic_error = 1;
+                    printf("\n\e[0;31mErro proximo da linha %i: TIPO INCOMPATÍVEL [%s] [%s].\n\n\e[0m", lc, type, content);}
+                }
+            else if (!strcmp(type,"trem picado")){
+                if (res2){
+                    semantic_error = 1;
+                    printf("\n\e[0;31mErro proximo da linha %i: TIPO INCOMPATÍVEL [%s] [%s].\n\n\e[0m", lc, type, content);}
+            }
+            
+
+            add('V');
+            } DOT{add('K');}
     ;
 
 declaracao_funcao:
@@ -405,6 +426,16 @@ void get_operation(char *operator){
 int contains_letter(const char *str) {
     while (*str != '\0') {  // Loop through each character in the string
         if (isalpha((unsigned char)*str) || *str == ',') {  // Check if the character is a letter
+            return 1;  // Return 1 if a letter is found
+        }
+        str++;
+    }
+    return 0;  // Return 0 if no letters were found (i.e., all characters are numbers)
+}
+
+int contains_letter_not_comma(const char *str) {
+    while (*str != '\0') {  // Loop through each character in the string
+        if (isalpha((unsigned char)*str)) {  // Check if the character is a letter
             return 1;  // Return 1 if a letter is found
         }
         str++;
