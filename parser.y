@@ -53,6 +53,7 @@
     int semantic_error = 0;
     char current_var[50];
     char last_var[50];
+    struct node * temp;
 %}
 
 %token <thisProd> IDENTIFICADOR TIPO
@@ -90,13 +91,13 @@
 
 programa:
     declaracoes {
-        $$.nd = mknode(NULL,$1.nd, "[PROGRAMA]"); head=$$.nd; 
-        printf("\n%s\n", $1.name);
+        $$.nd = mknode(NULL,temp, "[PROGRAMA]"); head=$$.nd; 
+        //printf("\n%s\n", $1.name);
     }
     ;
 
 declaracoes:
-    declaracao {$$.nd = mknode(NULL, NULL, "[DECLARACOES]");
+    declaracao {temp = mknode(NULL, temp, "[DECLARACOES]");
     }
     | declaracao declaracoes
     ;
@@ -130,7 +131,7 @@ redefinicao_variavel:
     ;
 
 declaracao_variavel:
-    TIPO {insert_type(); add('K');} IDENTIFICADOR {strcpy(name, $3.name);} VAI_SER{add('K');} expressao{add('V');} DOT{add('K');}
+    TIPO {insert_type(); add('K');} IDENTIFICADOR {strcpy(name, $3.name); $3.nd = mknode(NULL, NULL, $3.name); temp = $3.nd;} VAI_SER{add('K');} expressao{add('V');} DOT{add('K');}
     ;
 
 declaracao_funcao:
