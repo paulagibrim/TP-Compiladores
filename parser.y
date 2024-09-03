@@ -53,7 +53,6 @@
     int semantic_error = 0;
     char current_var[50];
     char last_var[50];
-    struct node * temp;
 %}
 
 %token <thisProd> IDENTIFICADOR TIPO
@@ -91,15 +90,19 @@
 
 programa:
     declaracoes {
-        $$.nd = mknode(NULL,temp, "[PROGRAMA]"); head=$$.nd; 
-        //printf("\n%s\n", $1.name);
+        $$.nd = mknode(NULL,$1.nd, "[PROGRAMA]"); 
+        head=$$.nd; 
+        printf("\n%s\n", $1.name);
     }
     ;
 
 declaracoes:
-    declaracao {temp = mknode(NULL, temp, "[DECLARACOES]");
+    declaracao {
+      $$.nd = mknode(NULL, NULL, "[DECLARACOES]");
     }
-    | declaracao declaracoes
+    | declaracao declaracoes{
+      $$.nd = mknode($1.nd, $2.nd, "[DECLARACOES]");
+    }
     ;
 
 declaracao:
@@ -108,7 +111,7 @@ declaracao:
     | declaracao_estrutura
 	| redefinicao_variavel
     ;
-
+    
 termo:
     IDENTIFICADOR {
             // se variavel investigada nao estiver na tabela de simbolos
@@ -131,7 +134,7 @@ redefinicao_variavel:
     ;
 
 declaracao_variavel:
-    TIPO {insert_type(); add('K');} IDENTIFICADOR {strcpy(name, $3.name); $3.nd = mknode(NULL, NULL, $3.name); temp = $3.nd;} VAI_SER{add('K');} expressao{add('V');} DOT{add('K');}
+    TIPO {insert_type(); add('K');} IDENTIFICADOR {strcpy(name, $3.name);} VAI_SER{add('K');} expressao{add('V');} DOT{add('K');}
     ;
 
 declaracao_funcao:
@@ -418,81 +421,30 @@ void printtree(struct node* tree) {
 	printf("\n\n");
 }
 
-void draw_tree_hor2(struct node *tree, int depth, char *path, int right)
-{
-    // stopping condition
-    if (tree== NULL)
-        return;
+void draw_tree_hor2(struct node *tree, int depth, char *path, int right) {
+    if (tree == NULL) return;
 
-    // increase spacing
-    depth++;
-
-    // start with right node
-    draw_tree_hor2(tree->right, depth, path, 1);
-
-    if(depth > 1)
-    {
-        // set | draw map
-        path[depth-2] = 0;
-
-        if(right)
-            path[depth-2] = 1;
+    // Visita o nó atual primeiro (pré-ordem)
+    for (int i = 0; i < depth; i++) {
+        if (path[i] == 1) printf("|   ");
+        else printf("    ");
     }
 
-    if(tree->left)
-        path[depth-1] = 1;
+    if (right == 1) printf("+---");
+    else if (right == 0) printf("+---");
 
-    // print root after spacing
-    printf("\n");
+    printf("%s\n", tree->token);
 
-    for(int i=0; i<depth-1; i++)
-    {
-      	if(i == depth-2)
-        	printf("+");
-     	else if(path[i])
-        	printf("|");
-      	else
-        	printf(" ");
+    // Marca que este caminho já foi visitado
+    if (depth > 0) path[depth - 1] = 0;
 
-      	for(int j=1; j < 3; j++)
-      	if(i < depth-2)
-        	printf(" ");
-      	else
-        	printf("-");
-    }
+    // Primeiro, visita a subárvore direita
+    path[depth] = 1;
+    draw_tree_hor2(tree->right, depth + 1, path, 1);
 
-	switch(tree->token[0]){
-		case '-':
-		case '0':
-		case '1':
-		case '2':
-		case '3':
-		case '4':
-		case '5':
-		case '6':
-		case '7':
-		case '8':
-		case '9':
-			printf("> %s\n",tree->token);
-			break;
-		default:
-			printf("%s\n", tree->token);
-			break;
-	}
-    // vertical spacers below
-    for(int i=0; i<depth; i++)
-    {
-      	if(path[i])
-        	printf("|");
-      	else
-          	printf(" ");
-
-      	for(int j=1; j < 3; j++)
-          	printf(" ");
-    }
-
-    // go to left node
-    draw_tree_hor2(tree->left, depth, path, 0);
+    // Em seguida, visita a subárvore esquerda
+    path[depth] = 0;
+    draw_tree_hor2(tree->left, depth + 1, path, 0);
 }
 
 void draw_tree_hor(struct node *tree)
