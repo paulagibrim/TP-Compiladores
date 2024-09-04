@@ -16,7 +16,6 @@ question    "?"
 left_brace  "{"
 right_brace "}"
 comma       ","
-underscore  "_"
 collon      ":"
 
 digit       [0-9]
@@ -51,14 +50,13 @@ power_op    "elevado a"
 if          "fraga"
 else        "nao?"
 while       "vai fazeno ate"
-for         "pra"
 
 def        "naquele naipe"
 
 upper_letter    [A-Z]
 lower_letter    [a-z]
 letter          {upper_letter}|{lower_letter}
-id              {letter}({letter}|{digit}|{underscore})*
+id              {letter}({letter}|{digit}|"_")*
 
 print_name  "anota"
 end_command "acabou, quer um cafezin?"
@@ -73,7 +71,6 @@ end_command "acabou, quer um cafezin?"
 {left_brace} {printf("%s", yytext); return LBRACE; }
 {right_brace} {printf("%s", yytext); return RBRACE; }
 {comma} {printf("%s", yytext); return COMMA; }
-{underscore} {printf("%s", yytext); return UNDERSCORE; }
 {collon} {printf("%s", yytext); return COLLON; }
 
 {int_type} { printf("%s", yytext); return TIPO; }
@@ -111,7 +108,7 @@ end_command "acabou, quer um cafezin?"
 {if} { printf("%s", yytext); return FRAGA; }
 {else} { printf("%s", yytext); return NAO; }
 {while} { printf("%s", yytext); return VAI_FAZENDO_ATE; }
-{for} { printf("%s", yytext); return PRA; }
+
 
 {print_name} { printf("%s", yytext); return ANOTA; }
 

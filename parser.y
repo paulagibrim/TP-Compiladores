@@ -72,12 +72,12 @@
 %token <thisProd> STRING BOOL CHAR 
 %token <thisProd> VAI_SER
 %token <thisProd> NAQUELE_NAIPE 
-%token <thisProd> FRAGA NAO INTERROGACAO VAI_FAZENDO_ATE PRA PICA_MULA ARREDA
+%token <thisProd> FRAGA NAO INTERROGACAO VAI_FAZENDO_ATE PICA_MULA ARREDA
 %token <thisProd> ANOTA
 %token <thisProd> AI_CE_JUNTA AI_CE_DIMINUI CE_MULTIPLICA_POR CE_DIVIDE_POR
 %token <thisProd> ENGUAL NADA_A_VER_COM MAIOR_QUE MENOR_QUE ELEVADO_A
 %token <thisProd> LBRACE RBRACE COLLON COMMA DOT
-%token <thisProd> UNDERSCORE OR_OP AND_OP NOT_OP 
+%token <thisProd> OR_OP AND_OP NOT_OP 
 %token <thisProd> END_COMMAND
 
 %type <thisProd> programa declaracoes declaracao 

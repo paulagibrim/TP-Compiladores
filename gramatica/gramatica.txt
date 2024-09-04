@@ -8,11 +8,11 @@
                | <declaracao_estrutura> 
                | <redefinicao_variavel>
 
-<declaracao_variavel> ::= <tipo> <identificador> "vai_ser" <expressao> "."
+<declaracao_variavel> ::= <tipo> <identificador> "vai ser" <expressao> "."
 
-<redefinicao_variavel> ::= <identificador> "vai_ser" <expressao> "."
+<redefinicao_variavel> ::= <identificador> "vai ser" <expressao> "."
 
-<declaracao_funcao> ::= "naquele_naipe" <identificador> "{" <parametros> "}" ":" <bloco>
+<declaracao_funcao> ::= "naquele naipe" <identificador> "{" <parametros> "}" ":" <bloco>
 
 <parametros> ::= <parametro> 
                | <parametro> "," <parametros>
@@ -26,22 +26,22 @@
                          | <return>
 
 <if> ::= "fraga" <expressao> "?" <declaracoes> "acabou, quer um cafezin?"
-       | "fraga" <expressao> "?" <declaracoes> "nao" "?"
-       | "fraga" <expressao> "?" <declaracoes> "nao" "?" <declaracoes> "acabou, quer um cafezin?"
+       | "fraga" <expressao> "?" <declaracoes> "nao?"
+       | "fraga" <expressao> "?" <declaracoes> "nao?" <declaracoes> "acabou, quer um cafezin?"
 
-<while> ::= "vai_fazendo_ate" <expressao> ":" <declaracoes> "acabou, quer um cafezin?"
+<while> ::= "vai fazendo ate" <expressao> ":" <declaracoes> "acabou, quer um cafezin?"
 
 <for> ::= "pra" "{" <declaracao_variavel> "." <expressao> "." <expressao> "}" ":" <declaracoes> "acabou, quer um cafezin?"
 
-<break> ::= "pica_mula" "."
+<break> ::= "pica mula" "."
 
 <return> ::= "arreda" <expressao> "."
 
 <expressao> ::= <termo> 
-              | <termo> "ai_ce_junta" <expressao> 
-              | <termo> "ai_ce_diminui" <expressao> 
-              | <termo> "ce_multiplica_por" <expressao> 
-              | <termo> "ce_divide_por" <expressao> 
+              | <termo> "ai ce junta" <expressao> 
+              | <termo> "ai ce diminui" <expressao> 
+              | <termo> "ce multiplica por" <expressao> 
+              | <termo> "ce divide por" <expressao> 
               | <operadores_pos> <termo> <termo> 
               | <termo> <operador> <expressao>
 
@@ -53,26 +53,26 @@
           | <bool> 
           | <char>
 
-<operador> ::= "elevado_a" 
+<operador> ::= "elevado a" 
              | "engual" 
-             | "nada_a_ver_com" 
-             | "maior_que" 
-             | "menor_que"
+             | "nada a ver com" 
+             | "maior que" 
+             | "menor que"
 
 <operadores_pos> ::= "OR_OP" 
                    | "AND_OP" 
                    | "NOT_OP"
 
-<tipo> ::= "trem_inteiro" 
-         | "trem_picado" 
-         | "trem_escrito" 
-         | "trem_bololo" 
-         | "nada_nao"
+<tipo> ::= "trem inteiro" 
+         | "trem picado" 
+         | "trem escrito" 
+         | "trem bololo" 
+         | "nada nao"
 
 <bloco> ::= "{" <declaracoes> "}"
 
 <identificador> ::= [a-zA-Z_][a-zA-Z0-9_]*
 <numero> ::= [0-9]+
 <string> ::= <char>+
-<bool> ::= "de_rocha" | "mintira"
+<bool> ::= "de rocha" | "mintira"
 <char> ::= [a-zA-Z]

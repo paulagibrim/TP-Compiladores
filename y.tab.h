@@ -66,29 +66,27 @@ extern int yydebug;
     NAO = 267,                     /* NAO  */
     INTERROGACAO = 268,            /* INTERROGACAO  */
     VAI_FAZENDO_ATE = 269,         /* VAI_FAZENDO_ATE  */
-    PRA = 270,                     /* PRA  */
-    PICA_MULA = 271,               /* PICA_MULA  */
-    ARREDA = 272,                  /* ARREDA  */
-    ANOTA = 273,                   /* ANOTA  */
-    AI_CE_JUNTA = 274,             /* AI_CE_JUNTA  */
-    AI_CE_DIMINUI = 275,           /* AI_CE_DIMINUI  */
-    CE_MULTIPLICA_POR = 276,       /* CE_MULTIPLICA_POR  */
-    CE_DIVIDE_POR = 277,           /* CE_DIVIDE_POR  */
-    ENGUAL = 278,                  /* ENGUAL  */
-    NADA_A_VER_COM = 279,          /* NADA_A_VER_COM  */
-    MAIOR_QUE = 280,               /* MAIOR_QUE  */
-    MENOR_QUE = 281,               /* MENOR_QUE  */
-    ELEVADO_A = 282,               /* ELEVADO_A  */
-    LBRACE = 283,                  /* LBRACE  */
-    RBRACE = 284,                  /* RBRACE  */
-    COLLON = 285,                  /* COLLON  */
-    COMMA = 286,                   /* COMMA  */
-    DOT = 287,                     /* DOT  */
-    UNDERSCORE = 288,              /* UNDERSCORE  */
-    OR_OP = 289,                   /* OR_OP  */
-    AND_OP = 290,                  /* AND_OP  */
-    NOT_OP = 291,                  /* NOT_OP  */
-    END_COMMAND = 292              /* END_COMMAND  */
+    PICA_MULA = 270,               /* PICA_MULA  */
+    ARREDA = 271,                  /* ARREDA  */
+    ANOTA = 272,                   /* ANOTA  */
+    AI_CE_JUNTA = 273,             /* AI_CE_JUNTA  */
+    AI_CE_DIMINUI = 274,           /* AI_CE_DIMINUI  */
+    CE_MULTIPLICA_POR = 275,       /* CE_MULTIPLICA_POR  */
+    CE_DIVIDE_POR = 276,           /* CE_DIVIDE_POR  */
+    ENGUAL = 277,                  /* ENGUAL  */
+    NADA_A_VER_COM = 278,          /* NADA_A_VER_COM  */
+    MAIOR_QUE = 279,               /* MAIOR_QUE  */
+    MENOR_QUE = 280,               /* MENOR_QUE  */
+    ELEVADO_A = 281,               /* ELEVADO_A  */
+    LBRACE = 282,                  /* LBRACE  */
+    RBRACE = 283,                  /* RBRACE  */
+    COLLON = 284,                  /* COLLON  */
+    COMMA = 285,                   /* COMMA  */
+    DOT = 286,                     /* DOT  */
+    OR_OP = 287,                   /* OR_OP  */
+    AND_OP = 288,                  /* AND_OP  */
+    NOT_OP = 289,                  /* NOT_OP  */
+    END_COMMAND = 290              /* END_COMMAND  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -109,35 +107,33 @@ extern int yydebug;
 #define NAO 267
 #define INTERROGACAO 268
 #define VAI_FAZENDO_ATE 269
-#define PRA 270
-#define PICA_MULA 271
-#define ARREDA 272
-#define ANOTA 273
-#define AI_CE_JUNTA 274
-#define AI_CE_DIMINUI 275
-#define CE_MULTIPLICA_POR 276
-#define CE_DIVIDE_POR 277
-#define ENGUAL 278
-#define NADA_A_VER_COM 279
-#define MAIOR_QUE 280
-#define MENOR_QUE 281
-#define ELEVADO_A 282
-#define LBRACE 283
-#define RBRACE 284
-#define COLLON 285
-#define COMMA 286
-#define DOT 287
-#define UNDERSCORE 288
-#define OR_OP 289
-#define AND_OP 290
-#define NOT_OP 291
-#define END_COMMAND 292
+#define PICA_MULA 270
+#define ARREDA 271
+#define ANOTA 272
+#define AI_CE_JUNTA 273
+#define AI_CE_DIMINUI 274
+#define CE_MULTIPLICA_POR 275
+#define CE_DIVIDE_POR 276
+#define ENGUAL 277
+#define NADA_A_VER_COM 278
+#define MAIOR_QUE 279
+#define MENOR_QUE 280
+#define ELEVADO_A 281
+#define LBRACE 282
+#define RBRACE 283
+#define COLLON 284
+#define COMMA 285
+#define DOT 286
+#define OR_OP 287
+#define AND_OP 288
+#define NOT_OP 289
+#define END_COMMAND 290
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 83 "parser.y"
+#line 61 "parser.y"
 
     char *str;
     int num;
@@ -146,7 +142,7 @@ union YYSTYPE
 		struct node* nd;
 	} thisProd; 
 
-#line 150 "y.tab.h"
+#line 146 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
