@@ -1,0 +1,31 @@
+trem inteiro a vai ser 1.
+trem inteiro b vai ser 5.
+trem inteiro c vai ser 6.
+
+-> trem inteiro b vai ser 12.  -> tá add de novo um novo item, nao atualizando o que tinha
+
+-> calcular delta = b*b - 4*a*c
+trem picado aux1 vai ser b ce multiplica por b.
+trem picado aux2 vai ser 4 ce multiplica por a.
+trem picado aux3 vai ser aux2 ce multiplica por c.
+trem picado delta vai ser aux1 ai ce diminui aux3.
+
+-> trem picado delta vai ser b ce multiplica por b ai ce diminui 4 ce multiplica por a ce multiplica por c.
+
+-> calcula valores de x
+trem picado elevado vai ser 1 ce divide por 2.
+trem picado trem_elevado vai ser delta elevado a elevado.
+trem picado x_baixo vai ser 2 ce multiplica por a.
+
+trem picado x1_cima vai ser 0 ai ce diminui b. 
+trem picado x1_cima_2 vai ser x1_cima ai ce junta trem_elevado.
+trem picado x1 vai ser x1_cima_2 ce divide por x_baixo.
+
+trem picado x2_cima vai ser 0 ai ce diminui b.
+trem picado x2_cima_2 vai ser x2_cima ai ce junta trem_elevado.
+trem picado x2 vai ser x2_cima_2 ce divide por x_baixo.
+
+anota: "x1: ".
+anota: x1 .
+anota: " e x2: ".
+anota: x2 .
