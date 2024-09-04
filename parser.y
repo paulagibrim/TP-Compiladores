@@ -11,6 +11,8 @@
     void insert_type();
     void insert_content();
     void get_operation(char *);
+    void get_operation2(char *);
+    void replaceChar(char *str, char oldChar, char newChar);
     int search(char *);
     char* get_penultimate_variable_type();
     char* get_variable_content(const char* variable_name);
@@ -56,15 +58,6 @@
     struct node * temp;
 %}
 
-%union {
-    char *str;
-    int num;
-    struct prod { 
-		char name[100]; 
-		struct node* nd;
-	} thisProd; 
-}
-
 %token <thisProd> IDENTIFICADOR TIPO
 %token <thisProd> NUMERO 
 %token <thisProd> STRING BOOL CHAR 
@@ -87,6 +80,14 @@
 %nonassoc ENGUAL NADA_A_VER_COM
 %nonassoc MAIOR_QUE MENOR_QUE
 
+%union {
+    char *str;
+    int num;
+    struct prod { 
+		char name[100]; 
+		struct node* nd;
+	} thisProd; 
+}
 
 %%
 
@@ -392,36 +393,42 @@ void yyerror(const char* msg) {
 }
 
 void get_operation(char *operator){
-    int last_content_int = atoi(last_content);
-    int content_int = atoi(content);
-    // as duas variaveis acima retornam 0 caso não haja numeros no array sendo passado para a funcao
-    // mas como e possivel que elas de fato tenham o valor 0, nao da para usa-las para verificar
-    // erros de sintaxe
-    // ALEM DISSO ISSO AQUI SO FUNCIONA PRA INT EM
-
-    // as variaveis abaixo verificam se existe uma letra ou virgula nas variaveis sendo manipuladas
-    int last_is_not_int = contains_letter(last_content);
-    int content_is_not_int = contains_letter(content);
-
-    if (last_is_not_int || content_is_not_int ){
-        printf("\n\e[0;31mERRO DE SEMANTICA proximo a linha %i: tipos incompatíveis para operação \"%s\" [%s] [%s]\e[0m\n", lc, operator, content, last_content);
-        semantic_error = 1;
-        return;
+    if (contains_letter_not_comma(last_content) || contains_letter_not_comma(content)){
+            printf("\n\e[0;31mERRO DE SEMANTICA proximo a linha %i: tipos incompatíveis para operação \"%s\" [%s] [%s]\e[0m\n", lc, operator, content, last_content);
+            semantic_error = 1;
+            return;
     }
+    replaceChar(last_content, ',', '.');
+    replaceChar(content, ',', '.');
+    double final = 0;
+
     if (operator == "AI_CE_JUNTA"){
-        sprintf(operacao, "%d",  last_content_int + content_int);
-        change_variable_content(name, operacao);
+        // conta = atof(last_int) + atof(content)
+        final = atof(last_content) + atof(content);
     }
     else if (operator == "AI_CE_DIMINUI"){
-        sprintf(operacao, "%d", last_content_int - content_int);
+        final = atof(last_content) - atof(content);
     }
     else if (operator == "CE_MULTIPLICA_POR"){
-        sprintf(operacao, "%d", last_content_int * content_int);
+        final = atof(last_content) * atof(content);
     }
     else if (operator == "CE_DIVIDE_POR"){
-        sprintf(operacao, "%d", last_content_int / content_int);
+        final = atof(last_content) / atof(content);
     }
+
+    sprintf(operacao, "%f", final);
+    replaceChar(operacao, '.', ',');
+
     strcpy(content, operacao);
+}
+
+void replaceChar(char *str, char oldChar, char newChar) {
+    while (*str != '\0') {  // Percorre a string até o terminador nulo
+        if (*str == oldChar) {
+            *str = newChar;  // Substitui o caractere
+        }
+        str++;  // Avança para o próximo caractere
+    }
 }
 
 int contains_letter(const char *str) {
