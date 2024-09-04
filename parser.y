@@ -139,20 +139,12 @@ declaracao_variavel:
             temp = $3.nd;} VAI_SER{add('K');
             
         } expressao {
-            int res = contains_letter(content);
-            int res2 = contains_letter_not_comma(content);
+            int res = contains_letter_not_comma(content);
             if (!strcmp(type,"trem inteiro")){
                 if (res){
                     semantic_error = 1;
                     printf("\n\e[0;31mErro proximo da linha %i: TIPO INCOMPATÍVEL [%s] [%s].\n\n\e[0m", lc, type, content);}
                 }
-            else if (!strcmp(type,"trem picado")){
-                if (res2){
-                    semantic_error = 1;
-                    printf("\n\e[0;31mErro proximo da linha %i: TIPO INCOMPATÍVEL [%s] [%s].\n\n\e[0m", lc, type, content);}
-            }
-            
-
             add('V');
             } DOT{add('K');}
     ;
