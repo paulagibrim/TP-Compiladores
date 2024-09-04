@@ -58,7 +58,6 @@
     struct node * temp;
 %}
 
-
 %union {
     char *str;
     int num;
@@ -89,7 +88,6 @@
 %left CE_MULTIPLICA_POR CE_DIVIDE_POR
 %nonassoc ENGUAL NADA_A_VER_COM
 %nonassoc MAIOR_QUE MENOR_QUE
-
 
 %%
 
