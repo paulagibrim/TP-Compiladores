@@ -99,16 +99,17 @@ programa:
     ;
 
 declaracoes:
-    declaracao {temp = mknode(NULL, temp, "[DECLARACOES]");
+    declaracao {
+        temp = mknode(temp, NULL, "[DECLARACAO]");
     }
-    | declaracao declaracoes
+    | declaracao {} declaracoes {temp = mknode(temp, $1.nd, "[DECLARACOES]");}
     ;
 
 declaracao:
-    declaracao_variavel
-    | declaracao_funcao
-    | declaracao_estrutura
-	| redefinicao_variavel
+    declaracao_variavel {temp = mknode(temp, mknode(NULL, NULL, content), "[DECLARACAO VARIAVEL]");}
+    | declaracao_funcao {temp = mknode(temp, NULL, "[DECLARACAO FUNCAO]");}
+    | declaracao_estrutura {temp = mknode(temp, NULL, "[DECLARACAO ESTRUTURA]");}
+	| redefinicao_variavel {temp = mknode(temp, mknode(NULL, NULL, content), "[REDEF VARIAVEL]");}
     ;
 
 termo:
@@ -136,7 +137,8 @@ declaracao_variavel:
     TIPO {insert_type(); add('K');} IDENTIFICADOR {
             strcpy(name, $3.name);
             $3.nd = mknode(NULL, NULL, $3.name);
-            temp = $3.nd;} VAI_SER{add('K');
+            temp = $3.nd;} 
+            VAI_SER{add('K');
             
         } expressao {
             int res = contains_letter_not_comma(content);
@@ -163,12 +165,12 @@ parametro:
     ;
 
 declaracao_estrutura:
-    if
-    | while
+    if {temp = mknode(temp, NULL, "[DECLARACAO IF]");}
+    | while {temp = mknode(temp, NULL, "[DECLARACAO WHILE]");}
 //    | for
-    | break
-    | print
-    | return
+    | break {temp = mknode(temp, NULL, "[DECLARACAO BREAK]");}
+    | print {temp = mknode(temp, NULL, "[DECLARACAO PRINT]");}
+    | return {temp = mknode(temp, NULL, "[DECLARACAO RETURN]");}
     ;
 
 if:
