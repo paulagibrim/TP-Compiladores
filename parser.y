@@ -100,9 +100,9 @@ programa:
 
 declaracoes:
     declaracao {
-        temp = mknode(temp, NULL, "[DECLARACAO]");
+        temp = mknode(temp, mknode(NULL, NULL, "[DECLARACOES]"), "[DECLARACOES]");
     }
-    | declaracao {} declaracoes {temp = mknode(temp, $1.nd, "[DECLARACOES]");}
+    | declaracao {temp = mknode(temp, NULL, "[DECLARACAO]");} declaracoes {temp = mknode(temp, mknode(NULL, NULL, "[DECLARACOES]"), "[DECLARACOES]");}
     ;
 
 declaracao:
@@ -130,7 +130,7 @@ termo:
     ;
 
 redefinicao_variavel:
-	IDENTIFICADOR{strcpy(name, $1.name);} VAI_SER{add('K');} expressao DOT{add('K');}
+	IDENTIFICADOR{strcpy(name, $1.name); change_variable_content(name,content);} VAI_SER{add('K');} expressao DOT{add('K');}
     ;
 
 declaracao_variavel:
