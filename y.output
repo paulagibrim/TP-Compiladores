@@ -28,9 +28,9 @@ Grammar
 
    14 $@2: ε
 
-   15 $@3: ε
+   15 redefinicao_variavel: IDENTIFICADOR $@1 VAI_SER $@2 expressao DOT
 
-   16 redefinicao_variavel: IDENTIFICADOR $@1 VAI_SER $@2 expressao $@3 DOT
+   16 $@3: ε
 
    17 $@4: ε
 
@@ -38,9 +38,9 @@ Grammar
 
    19 $@6: ε
 
-   20 $@7: ε
+   20 declaracao_variavel: TIPO $@3 IDENTIFICADOR $@4 VAI_SER $@5 expressao $@6 DOT
 
-   21 declaracao_variavel: TIPO $@4 IDENTIFICADOR $@5 VAI_SER $@6 expressao $@7 DOT
+   21 $@7: ε
 
    22 $@8: ε
 
@@ -50,275 +50,264 @@ Grammar
 
    25 $@11: ε
 
-   26 $@12: ε
+   26 declaracao_funcao: NAQUELE_NAIPE $@7 IDENTIFICADOR $@8 LBRACE $@9 parametros RBRACE $@10 COLLON $@11 bloco
 
-   27 declaracao_funcao: NAQUELE_NAIPE $@8 IDENTIFICADOR $@9 LBRACE $@10 parametros RBRACE $@11 COLLON $@12 bloco
+   27 parametros: parametro
 
-   28 parametros: parametro
+   28 $@12: ε
 
-   29 $@13: ε
+   29 parametros: parametro COMMA $@12 parametros
 
-   30 parametros: parametro COMMA $@13 parametros
+   30 parametro: IDENTIFICADOR
 
-   31 parametro: IDENTIFICADOR
+   31 declaracao_estrutura: if
+   32                     | while
+   33                     | break
+   34                     | print
+   35                     | return
 
-   32 declaracao_estrutura: if
-   33                     | while
-   34                     | break
-   35                     | print
-   36                     | return
+   36 if: FRAGA expressao INTERROGACAO declaracoes END_COMMAND
+   37   | FRAGA expressao INTERROGACAO declaracoes NAO
 
-   37 if: FRAGA expressao INTERROGACAO declaracoes END_COMMAND
+   38 $@13: ε
 
-   38 $@14: ε
+   39 $@14: ε
 
-   39 if: FRAGA expressao INTERROGACAO declaracoes NAO $@14 if
+   40 if: FRAGA expressao INTERROGACAO declaracoes NAO $@13 INTERROGACAO $@14 declaracoes END_COMMAND
 
-   40 $@15: ε
+   41 $@15: ε
 
-   41 $@16: ε
+   42 $@16: ε
 
-   42 if: FRAGA expressao INTERROGACAO declaracoes NAO $@15 INTERROGACAO $@16 declaracoes END_COMMAND
+   43 while: VAI_FAZENDO_ATE $@15 expressao COLLON $@16 declaracoes END_COMMAND
 
-   43 $@17: ε
+   44 $@17: ε
 
-   44 $@18: ε
+   45 break: PICA_MULA $@17 DOT
 
-   45 while: VAI_FAZENDO_ATE $@17 expressao COLLON $@18 declaracoes END_COMMAND
+   46 $@18: ε
 
-   46 $@19: ε
+   47 return: ARREDA $@18 expressao DOT
 
-   47 break: PICA_MULA $@19 DOT
+   48 expressao: termo
 
-   48 $@20: ε
+   49 $@19: ε
 
-   49 return: ARREDA $@20 expressao DOT
+   50 expressao: termo AI_CE_JUNTA $@19 expressao
 
-   50 expressao: termo
+   51 $@20: ε
 
-   51 $@21: ε
+   52 expressao: termo AI_CE_DIMINUI $@20 expressao
 
-   52 expressao: termo AI_CE_JUNTA $@21 expressao
+   53 $@21: ε
 
-   53 $@22: ε
+   54 expressao: termo CE_MULTIPLICA_POR $@21 expressao
 
-   54 expressao: termo AI_CE_DIMINUI $@22 expressao
+   55 $@22: ε
 
-   55 $@23: ε
+   56 expressao: termo CE_DIVIDE_POR $@22 expressao
+   57          | operadores_pos termo termo
+   58          | termo operador expressao
 
-   56 expressao: termo CE_MULTIPLICA_POR $@23 expressao
+   59 $@23: ε
 
-   57 $@24: ε
+   60 $@24: ε
 
-   58 expressao: termo CE_DIVIDE_POR $@24 expressao
-   59          | operadores_pos termo termo
-   60          | termo operador expressao
+   61 print: ANOTA $@23 COLLON $@24 expressao DOT
 
-   61 $@25: ε
+   62 operador: ELEVADO_A
+   63         | ENGUAL
+   64         | NADA_A_VER_COM
+   65         | MAIOR_QUE
+   66         | MENOR_QUE
 
-   62 $@26: ε
+   67 operadores_pos: OR_OP
+   68               | AND_OP
+   69               | NOT_OP
 
-   63 print: ANOTA $@25 COLLON $@26 expressao DOT
+   70 $@25: ε
 
-   64 operador: ELEVADO_A
-   65         | ENGUAL
-   66         | NADA_A_VER_COM
-   67         | MAIOR_QUE
-   68         | MENOR_QUE
-
-   69 operadores_pos: OR_OP
-   70               | AND_OP
-   71               | NOT_OP
-
-   72 $@27: ε
-
-   73 bloco: LBRACE $@27 declaracoes RBRACE
-   74      | declaracao
+   71 bloco: LBRACE $@25 declaracoes RBRACE
+   72      | declaracao
 
 
 Terminals, with rules where they appear
 
     $end (0) 0
     error (256)
-    IDENTIFICADOR <str> (258) 8 16 21 27 31
-    TIPO <str> (259) 21
-    NUMERO (260) 9
-    STRING (261) 10
-    BOOL (262) 11
-    CHAR (263) 12
-    VAI_SER (264) 16 21
-    NAQUELE_NAIPE (265) 27
-    FRAGA <str> (266) 37 39 42
-    NAO <str> (267) 39 42
-    INTERROGACAO <str> (268) 37 39 42
-    VAI_FAZENDO_ATE <str> (269) 45
-    PRA <str> (270)
-    PICA_MULA <str> (271) 47
-    ARREDA <str> (272) 49
-    ANOTA (273) 63
-    AI_CE_JUNTA (274) 52
-    AI_CE_DIMINUI (275) 54
-    CE_MULTIPLICA_POR (276) 56
-    CE_DIVIDE_POR (277) 58
-    ENGUAL (278) 65
-    NADA_A_VER_COM (279) 66
-    MAIOR_QUE (280) 67
-    MENOR_QUE (281) 68
-    ELEVADO_A (282) 64
-    LBRACE (283) 27 73
-    RBRACE (284) 27 73
-    COLLON (285) 27 45 63
-    COMMA (286) 30
-    DOT (287) 16 21 47 49 63
-    UNDERSCORE (288)
-    OR_OP (289) 69
-    AND_OP (290) 70
-    NOT_OP (291) 71
-    END_COMMAND (292) 37 42 45
+    IDENTIFICADOR <thisProd> (258) 8 15 20 26 30
+    TIPO <thisProd> (259) 20
+    NUMERO <thisProd> (260) 9
+    STRING <thisProd> (261) 10
+    BOOL <thisProd> (262) 11
+    CHAR <thisProd> (263) 12
+    VAI_SER <thisProd> (264) 15 20
+    NAQUELE_NAIPE <thisProd> (265) 26
+    FRAGA <thisProd> (266) 36 37 40
+    NAO <thisProd> (267) 37 40
+    INTERROGACAO <thisProd> (268) 36 37 40
+    VAI_FAZENDO_ATE <thisProd> (269) 43
+    PRA <thisProd> (270)
+    PICA_MULA <thisProd> (271) 45
+    ARREDA <thisProd> (272) 47
+    ANOTA <thisProd> (273) 61
+    AI_CE_JUNTA <thisProd> (274) 50
+    AI_CE_DIMINUI <thisProd> (275) 52
+    CE_MULTIPLICA_POR <thisProd> (276) 54
+    CE_DIVIDE_POR <thisProd> (277) 56
+    ENGUAL <thisProd> (278) 63
+    NADA_A_VER_COM <thisProd> (279) 64
+    MAIOR_QUE <thisProd> (280) 65
+    MENOR_QUE <thisProd> (281) 66
+    ELEVADO_A <thisProd> (282) 62
+    LBRACE <thisProd> (283) 26 71
+    RBRACE <thisProd> (284) 26 71
+    COLLON <thisProd> (285) 26 43 61
+    COMMA <thisProd> (286) 29
+    DOT <thisProd> (287) 15 20 45 47 61
+    UNDERSCORE <thisProd> (288)
+    OR_OP <thisProd> (289) 67
+    AND_OP <thisProd> (290) 68
+    NOT_OP <thisProd> (291) 69
+    END_COMMAND <thisProd> (292) 36 40 43
 
 
 Nonterminals, with rules where they appear
 
     $accept (38)
         on left: 0
-    programa (39)
+    programa <thisProd> (39)
         on left: 1
         on right: 0
-    declaracoes (40)
+    declaracoes <thisProd> (40)
         on left: 2 3
-        on right: 1 3 37 39 42 45 73
-    declaracao (41)
+        on right: 1 3 36 37 40 43 71
+    declaracao <thisProd> (41)
         on left: 4 5 6 7
-        on right: 2 3 74
+        on right: 2 3 72
     termo (42)
         on left: 8 9 10 11 12
-        on right: 50 52 54 56 58 59 60
-    redefinicao_variavel (43)
-        on left: 16
+        on right: 48 50 52 54 56 57 58
+    redefinicao_variavel <thisProd> (43)
+        on left: 15
         on right: 7
     $@1 (44)
         on left: 13
-        on right: 16
+        on right: 15
     $@2 (45)
         on left: 14
-        on right: 16
-    $@3 (46)
-        on left: 15
-        on right: 16
-    declaracao_variavel (47)
-        on left: 21
+        on right: 15
+    declaracao_variavel <thisProd> (46)
+        on left: 20
         on right: 4
+    $@3 (47)
+        on left: 16
+        on right: 20
     $@4 (48)
         on left: 17
-        on right: 21
+        on right: 20
     $@5 (49)
         on left: 18
-        on right: 21
+        on right: 20
     $@6 (50)
         on left: 19
-        on right: 21
-    $@7 (51)
-        on left: 20
-        on right: 21
-    declaracao_funcao (52)
-        on left: 27
+        on right: 20
+    declaracao_funcao <thisProd> (51)
+        on left: 26
         on right: 5
+    $@7 (52)
+        on left: 21
+        on right: 26
     $@8 (53)
         on left: 22
-        on right: 27
+        on right: 26
     $@9 (54)
         on left: 23
-        on right: 27
+        on right: 26
     $@10 (55)
         on left: 24
-        on right: 27
+        on right: 26
     $@11 (56)
         on left: 25
-        on right: 27
-    $@12 (57)
-        on left: 26
-        on right: 27
-    parametros (58)
-        on left: 28 30
-        on right: 27 30
-    $@13 (59)
-        on left: 29
-        on right: 30
-    parametro (60)
-        on left: 31
-        on right: 28 30
-    declaracao_estrutura (61)
-        on left: 32 33 34 35 36
+        on right: 26
+    parametros <thisProd> (57)
+        on left: 27 29
+        on right: 26 29
+    $@12 (58)
+        on left: 28
+        on right: 29
+    parametro <thisProd> (59)
+        on left: 30
+        on right: 27 29
+    declaracao_estrutura <thisProd> (60)
+        on left: 31 32 33 34 35
         on right: 6
-    if (62)
-        on left: 37 39 42
-        on right: 32 39
-    $@14 (63)
+    if <thisProd> (61)
+        on left: 36 37 40
+        on right: 31
+    $@13 (62)
         on left: 38
-        on right: 39
-    $@15 (64)
-        on left: 40
-        on right: 42
-    $@16 (65)
+        on right: 40
+    $@14 (63)
+        on left: 39
+        on right: 40
+    while <thisProd> (64)
+        on left: 43
+        on right: 32
+    $@15 (65)
         on left: 41
-        on right: 42
-    while (66)
+        on right: 43
+    $@16 (66)
+        on left: 42
+        on right: 43
+    break <thisProd> (67)
         on left: 45
         on right: 33
-    $@17 (67)
-        on left: 43
-        on right: 45
-    $@18 (68)
+    $@17 (68)
         on left: 44
         on right: 45
-    break (69)
+    return <thisProd> (69)
         on left: 47
-        on right: 34
-    $@19 (70)
+        on right: 35
+    $@18 (70)
         on left: 46
         on right: 47
-    return (71)
+    expressao (71)
+        on left: 48 50 52 54 56 57 58
+        on right: 15 20 36 37 40 43 47 50 52 54 56 58 61
+    $@19 (72)
         on left: 49
-        on right: 36
-    $@20 (72)
-        on left: 48
-        on right: 49
-    expressao (73)
-        on left: 50 52 54 56 58 59 60
-        on right: 16 21 37 39 42 45 49 52 54 56 58 60 63
-    $@21 (74)
+        on right: 50
+    $@20 (73)
         on left: 51
         on right: 52
-    $@22 (75)
+    $@21 (74)
         on left: 53
         on right: 54
-    $@23 (76)
+    $@22 (75)
         on left: 55
         on right: 56
-    $@24 (77)
-        on left: 57
-        on right: 58
-    print (78)
-        on left: 63
-        on right: 35
-    $@25 (79)
+    print <thisProd> (76)
         on left: 61
-        on right: 63
-    $@26 (80)
-        on left: 62
-        on right: 63
-    operador (81)
-        on left: 64 65 66 67 68
-        on right: 60
-    operadores_pos (82)
-        on left: 69 70 71
-        on right: 59
-    bloco (83)
-        on left: 73 74
-        on right: 27
-    $@27 (84)
-        on left: 72
-        on right: 73
+        on right: 34
+    $@23 (77)
+        on left: 59
+        on right: 61
+    $@24 (78)
+        on left: 60
+        on right: 61
+    operador (79)
+        on left: 62 63 64 65 66
+        on right: 58
+    operadores_pos (80)
+        on left: 67 68 69
+        on right: 57
+    bloco (81)
+        on left: 71 72
+        on right: 26
+    $@25 (82)
+        on left: 70
+        on right: 71
 
 
 State 0
@@ -350,7 +339,7 @@ State 0
 
 State 1
 
-   16 redefinicao_variavel: IDENTIFICADOR • $@1 VAI_SER $@2 expressao $@3 DOT
+   15 redefinicao_variavel: IDENTIFICADOR • $@1 VAI_SER $@2 expressao DOT
 
     $default  reduce using rule 13 ($@1)
 
@@ -359,27 +348,27 @@ State 1
 
 State 2
 
-   21 declaracao_variavel: TIPO • $@4 IDENTIFICADOR $@5 VAI_SER $@6 expressao $@7 DOT
+   20 declaracao_variavel: TIPO • $@3 IDENTIFICADOR $@4 VAI_SER $@5 expressao $@6 DOT
 
-    $default  reduce using rule 17 ($@4)
+    $default  reduce using rule 16 ($@3)
 
-    $@4  go to state 22
+    $@3  go to state 22
 
 
 State 3
 
-   27 declaracao_funcao: NAQUELE_NAIPE • $@8 IDENTIFICADOR $@9 LBRACE $@10 parametros RBRACE $@11 COLLON $@12 bloco
+   26 declaracao_funcao: NAQUELE_NAIPE • $@7 IDENTIFICADOR $@8 LBRACE $@9 parametros RBRACE $@10 COLLON $@11 bloco
 
-    $default  reduce using rule 22 ($@8)
+    $default  reduce using rule 21 ($@7)
 
-    $@8  go to state 23
+    $@7  go to state 23
 
 
 State 4
 
-   37 if: FRAGA • expressao INTERROGACAO declaracoes END_COMMAND
-   39   | FRAGA • expressao INTERROGACAO declaracoes NAO $@14 if
-   42   | FRAGA • expressao INTERROGACAO declaracoes NAO $@15 INTERROGACAO $@16 declaracoes END_COMMAND
+   36 if: FRAGA • expressao INTERROGACAO declaracoes END_COMMAND
+   37   | FRAGA • expressao INTERROGACAO declaracoes NAO
+   40   | FRAGA • expressao INTERROGACAO declaracoes NAO $@13 INTERROGACAO $@14 declaracoes END_COMMAND
 
     IDENTIFICADOR  shift, and go to state 24
     NUMERO         shift, and go to state 25
@@ -397,38 +386,38 @@ State 4
 
 State 5
 
-   45 while: VAI_FAZENDO_ATE • $@17 expressao COLLON $@18 declaracoes END_COMMAND
+   43 while: VAI_FAZENDO_ATE • $@15 expressao COLLON $@16 declaracoes END_COMMAND
 
-    $default  reduce using rule 43 ($@17)
+    $default  reduce using rule 41 ($@15)
 
-    $@17  go to state 35
+    $@15  go to state 35
 
 
 State 6
 
-   47 break: PICA_MULA • $@19 DOT
+   45 break: PICA_MULA • $@17 DOT
 
-    $default  reduce using rule 46 ($@19)
+    $default  reduce using rule 44 ($@17)
 
-    $@19  go to state 36
+    $@17  go to state 36
 
 
 State 7
 
-   49 return: ARREDA • $@20 expressao DOT
+   47 return: ARREDA • $@18 expressao DOT
 
-    $default  reduce using rule 48 ($@20)
+    $default  reduce using rule 46 ($@18)
 
-    $@20  go to state 37
+    $@18  go to state 37
 
 
 State 8
 
-   63 print: ANOTA • $@25 COLLON $@26 expressao DOT
+   61 print: ANOTA • $@23 COLLON $@24 expressao DOT
 
-    $default  reduce using rule 61 ($@25)
+    $default  reduce using rule 59 ($@23)
 
-    $@25  go to state 38
+    $@23  go to state 38
 
 
 State 9
@@ -504,56 +493,56 @@ State 15
 
 State 16
 
-   32 declaracao_estrutura: if •
+   31 declaracao_estrutura: if •
 
-    $default  reduce using rule 32 (declaracao_estrutura)
+    $default  reduce using rule 31 (declaracao_estrutura)
 
 
 State 17
 
-   33 declaracao_estrutura: while •
+   32 declaracao_estrutura: while •
 
-    $default  reduce using rule 33 (declaracao_estrutura)
+    $default  reduce using rule 32 (declaracao_estrutura)
 
 
 State 18
 
-   34 declaracao_estrutura: break •
+   33 declaracao_estrutura: break •
 
-    $default  reduce using rule 34 (declaracao_estrutura)
+    $default  reduce using rule 33 (declaracao_estrutura)
 
 
 State 19
 
-   36 declaracao_estrutura: return •
-
-    $default  reduce using rule 36 (declaracao_estrutura)
-
-
-State 20
-
-   35 declaracao_estrutura: print •
+   35 declaracao_estrutura: return •
 
     $default  reduce using rule 35 (declaracao_estrutura)
 
 
+State 20
+
+   34 declaracao_estrutura: print •
+
+    $default  reduce using rule 34 (declaracao_estrutura)
+
+
 State 21
 
-   16 redefinicao_variavel: IDENTIFICADOR $@1 • VAI_SER $@2 expressao $@3 DOT
+   15 redefinicao_variavel: IDENTIFICADOR $@1 • VAI_SER $@2 expressao DOT
 
     VAI_SER  shift, and go to state 41
 
 
 State 22
 
-   21 declaracao_variavel: TIPO $@4 • IDENTIFICADOR $@5 VAI_SER $@6 expressao $@7 DOT
+   20 declaracao_variavel: TIPO $@3 • IDENTIFICADOR $@4 VAI_SER $@5 expressao $@6 DOT
 
     IDENTIFICADOR  shift, and go to state 42
 
 
 State 23
 
-   27 declaracao_funcao: NAQUELE_NAIPE $@8 • IDENTIFICADOR $@9 LBRACE $@10 parametros RBRACE $@11 COLLON $@12 bloco
+   26 declaracao_funcao: NAQUELE_NAIPE $@7 • IDENTIFICADOR $@8 LBRACE $@9 parametros RBRACE $@10 COLLON $@11 bloco
 
     IDENTIFICADOR  shift, and go to state 43
 
@@ -595,33 +584,33 @@ State 28
 
 State 29
 
-   69 operadores_pos: OR_OP •
+   67 operadores_pos: OR_OP •
 
-    $default  reduce using rule 69 (operadores_pos)
+    $default  reduce using rule 67 (operadores_pos)
 
 
 State 30
 
-   70 operadores_pos: AND_OP •
+   68 operadores_pos: AND_OP •
 
-    $default  reduce using rule 70 (operadores_pos)
+    $default  reduce using rule 68 (operadores_pos)
 
 
 State 31
 
-   71 operadores_pos: NOT_OP •
+   69 operadores_pos: NOT_OP •
 
-    $default  reduce using rule 71 (operadores_pos)
+    $default  reduce using rule 69 (operadores_pos)
 
 
 State 32
 
-   50 expressao: termo •
-   52          | termo • AI_CE_JUNTA $@21 expressao
-   54          | termo • AI_CE_DIMINUI $@22 expressao
-   56          | termo • CE_MULTIPLICA_POR $@23 expressao
-   58          | termo • CE_DIVIDE_POR $@24 expressao
-   60          | termo • operador expressao
+   48 expressao: termo •
+   50          | termo • AI_CE_JUNTA $@19 expressao
+   52          | termo • AI_CE_DIMINUI $@20 expressao
+   54          | termo • CE_MULTIPLICA_POR $@21 expressao
+   56          | termo • CE_DIVIDE_POR $@22 expressao
+   58          | termo • operador expressao
 
     AI_CE_JUNTA        shift, and go to state 44
     AI_CE_DIMINUI      shift, and go to state 45
@@ -633,23 +622,23 @@ State 32
     MENOR_QUE          shift, and go to state 51
     ELEVADO_A          shift, and go to state 52
 
-    $default  reduce using rule 50 (expressao)
+    $default  reduce using rule 48 (expressao)
 
     operador  go to state 53
 
 
 State 33
 
-   37 if: FRAGA expressao • INTERROGACAO declaracoes END_COMMAND
-   39   | FRAGA expressao • INTERROGACAO declaracoes NAO $@14 if
-   42   | FRAGA expressao • INTERROGACAO declaracoes NAO $@15 INTERROGACAO $@16 declaracoes END_COMMAND
+   36 if: FRAGA expressao • INTERROGACAO declaracoes END_COMMAND
+   37   | FRAGA expressao • INTERROGACAO declaracoes NAO
+   40   | FRAGA expressao • INTERROGACAO declaracoes NAO $@13 INTERROGACAO $@14 declaracoes END_COMMAND
 
     INTERROGACAO  shift, and go to state 54
 
 
 State 34
 
-   59 expressao: operadores_pos • termo termo
+   57 expressao: operadores_pos • termo termo
 
     IDENTIFICADOR  shift, and go to state 24
     NUMERO         shift, and go to state 25
@@ -662,7 +651,7 @@ State 34
 
 State 35
 
-   45 while: VAI_FAZENDO_ATE $@17 • expressao COLLON $@18 declaracoes END_COMMAND
+   43 while: VAI_FAZENDO_ATE $@15 • expressao COLLON $@16 declaracoes END_COMMAND
 
     IDENTIFICADOR  shift, and go to state 24
     NUMERO         shift, and go to state 25
@@ -680,14 +669,14 @@ State 35
 
 State 36
 
-   47 break: PICA_MULA $@19 • DOT
+   45 break: PICA_MULA $@17 • DOT
 
     DOT  shift, and go to state 57
 
 
 State 37
 
-   49 return: ARREDA $@20 • expressao DOT
+   47 return: ARREDA $@18 • expressao DOT
 
     IDENTIFICADOR  shift, and go to state 24
     NUMERO         shift, and go to state 25
@@ -705,7 +694,7 @@ State 37
 
 State 38
 
-   63 print: ANOTA $@25 • COLLON $@26 expressao DOT
+   61 print: ANOTA $@23 • COLLON $@24 expressao DOT
 
     COLLON  shift, and go to state 59
 
@@ -726,7 +715,7 @@ State 40
 
 State 41
 
-   16 redefinicao_variavel: IDENTIFICADOR $@1 VAI_SER • $@2 expressao $@3 DOT
+   15 redefinicao_variavel: IDENTIFICADOR $@1 VAI_SER • $@2 expressao DOT
 
     $default  reduce using rule 14 ($@2)
 
@@ -735,96 +724,96 @@ State 41
 
 State 42
 
-   21 declaracao_variavel: TIPO $@4 IDENTIFICADOR • $@5 VAI_SER $@6 expressao $@7 DOT
+   20 declaracao_variavel: TIPO $@3 IDENTIFICADOR • $@4 VAI_SER $@5 expressao $@6 DOT
 
-    $default  reduce using rule 18 ($@5)
+    $default  reduce using rule 17 ($@4)
 
-    $@5  go to state 61
+    $@4  go to state 61
 
 
 State 43
 
-   27 declaracao_funcao: NAQUELE_NAIPE $@8 IDENTIFICADOR • $@9 LBRACE $@10 parametros RBRACE $@11 COLLON $@12 bloco
+   26 declaracao_funcao: NAQUELE_NAIPE $@7 IDENTIFICADOR • $@8 LBRACE $@9 parametros RBRACE $@10 COLLON $@11 bloco
 
-    $default  reduce using rule 23 ($@9)
+    $default  reduce using rule 22 ($@8)
 
-    $@9  go to state 62
+    $@8  go to state 62
 
 
 State 44
 
-   52 expressao: termo AI_CE_JUNTA • $@21 expressao
+   50 expressao: termo AI_CE_JUNTA • $@19 expressao
 
-    $default  reduce using rule 51 ($@21)
+    $default  reduce using rule 49 ($@19)
 
-    $@21  go to state 63
+    $@19  go to state 63
 
 
 State 45
 
-   54 expressao: termo AI_CE_DIMINUI • $@22 expressao
+   52 expressao: termo AI_CE_DIMINUI • $@20 expressao
 
-    $default  reduce using rule 53 ($@22)
+    $default  reduce using rule 51 ($@20)
 
-    $@22  go to state 64
+    $@20  go to state 64
 
 
 State 46
 
-   56 expressao: termo CE_MULTIPLICA_POR • $@23 expressao
+   54 expressao: termo CE_MULTIPLICA_POR • $@21 expressao
 
-    $default  reduce using rule 55 ($@23)
+    $default  reduce using rule 53 ($@21)
 
-    $@23  go to state 65
+    $@21  go to state 65
 
 
 State 47
 
-   58 expressao: termo CE_DIVIDE_POR • $@24 expressao
+   56 expressao: termo CE_DIVIDE_POR • $@22 expressao
 
-    $default  reduce using rule 57 ($@24)
+    $default  reduce using rule 55 ($@22)
 
-    $@24  go to state 66
+    $@22  go to state 66
 
 
 State 48
 
-   65 operador: ENGUAL •
+   63 operador: ENGUAL •
 
-    $default  reduce using rule 65 (operador)
+    $default  reduce using rule 63 (operador)
 
 
 State 49
 
-   66 operador: NADA_A_VER_COM •
-
-    $default  reduce using rule 66 (operador)
-
-
-State 50
-
-   67 operador: MAIOR_QUE •
-
-    $default  reduce using rule 67 (operador)
-
-
-State 51
-
-   68 operador: MENOR_QUE •
-
-    $default  reduce using rule 68 (operador)
-
-
-State 52
-
-   64 operador: ELEVADO_A •
+   64 operador: NADA_A_VER_COM •
 
     $default  reduce using rule 64 (operador)
 
 
+State 50
+
+   65 operador: MAIOR_QUE •
+
+    $default  reduce using rule 65 (operador)
+
+
+State 51
+
+   66 operador: MENOR_QUE •
+
+    $default  reduce using rule 66 (operador)
+
+
+State 52
+
+   62 operador: ELEVADO_A •
+
+    $default  reduce using rule 62 (operador)
+
+
 State 53
 
-   60 expressao: termo operador • expressao
+   58 expressao: termo operador • expressao
 
     IDENTIFICADOR  shift, and go to state 24
     NUMERO         shift, and go to state 25
@@ -842,9 +831,9 @@ State 53
 
 State 54
 
-   37 if: FRAGA expressao INTERROGACAO • declaracoes END_COMMAND
-   39   | FRAGA expressao INTERROGACAO • declaracoes NAO $@14 if
-   42   | FRAGA expressao INTERROGACAO • declaracoes NAO $@15 INTERROGACAO $@16 declaracoes END_COMMAND
+   36 if: FRAGA expressao INTERROGACAO • declaracoes END_COMMAND
+   37   | FRAGA expressao INTERROGACAO • declaracoes NAO
+   40   | FRAGA expressao INTERROGACAO • declaracoes NAO $@13 INTERROGACAO $@14 declaracoes END_COMMAND
 
     IDENTIFICADOR    shift, and go to state 1
     TIPO             shift, and go to state 2
@@ -870,7 +859,7 @@ State 54
 
 State 55
 
-   59 expressao: operadores_pos termo • termo
+   57 expressao: operadores_pos termo • termo
 
     IDENTIFICADOR  shift, and go to state 24
     NUMERO         shift, and go to state 25
@@ -883,37 +872,37 @@ State 55
 
 State 56
 
-   45 while: VAI_FAZENDO_ATE $@17 expressao • COLLON $@18 declaracoes END_COMMAND
+   43 while: VAI_FAZENDO_ATE $@15 expressao • COLLON $@16 declaracoes END_COMMAND
 
     COLLON  shift, and go to state 70
 
 
 State 57
 
-   47 break: PICA_MULA $@19 DOT •
+   45 break: PICA_MULA $@17 DOT •
 
-    $default  reduce using rule 47 (break)
+    $default  reduce using rule 45 (break)
 
 
 State 58
 
-   49 return: ARREDA $@20 expressao • DOT
+   47 return: ARREDA $@18 expressao • DOT
 
     DOT  shift, and go to state 71
 
 
 State 59
 
-   63 print: ANOTA $@25 COLLON • $@26 expressao DOT
+   61 print: ANOTA $@23 COLLON • $@24 expressao DOT
 
-    $default  reduce using rule 62 ($@26)
+    $default  reduce using rule 60 ($@24)
 
-    $@26  go to state 72
+    $@24  go to state 72
 
 
 State 60
 
-   16 redefinicao_variavel: IDENTIFICADOR $@1 VAI_SER $@2 • expressao $@3 DOT
+   15 redefinicao_variavel: IDENTIFICADOR $@1 VAI_SER $@2 • expressao DOT
 
     IDENTIFICADOR  shift, and go to state 24
     NUMERO         shift, and go to state 25
@@ -931,21 +920,21 @@ State 60
 
 State 61
 
-   21 declaracao_variavel: TIPO $@4 IDENTIFICADOR $@5 • VAI_SER $@6 expressao $@7 DOT
+   20 declaracao_variavel: TIPO $@3 IDENTIFICADOR $@4 • VAI_SER $@5 expressao $@6 DOT
 
     VAI_SER  shift, and go to state 74
 
 
 State 62
 
-   27 declaracao_funcao: NAQUELE_NAIPE $@8 IDENTIFICADOR $@9 • LBRACE $@10 parametros RBRACE $@11 COLLON $@12 bloco
+   26 declaracao_funcao: NAQUELE_NAIPE $@7 IDENTIFICADOR $@8 • LBRACE $@9 parametros RBRACE $@10 COLLON $@11 bloco
 
     LBRACE  shift, and go to state 75
 
 
 State 63
 
-   52 expressao: termo AI_CE_JUNTA $@21 • expressao
+   50 expressao: termo AI_CE_JUNTA $@19 • expressao
 
     IDENTIFICADOR  shift, and go to state 24
     NUMERO         shift, and go to state 25
@@ -963,7 +952,7 @@ State 63
 
 State 64
 
-   54 expressao: termo AI_CE_DIMINUI $@22 • expressao
+   52 expressao: termo AI_CE_DIMINUI $@20 • expressao
 
     IDENTIFICADOR  shift, and go to state 24
     NUMERO         shift, and go to state 25
@@ -981,7 +970,7 @@ State 64
 
 State 65
 
-   56 expressao: termo CE_MULTIPLICA_POR $@23 • expressao
+   54 expressao: termo CE_MULTIPLICA_POR $@21 • expressao
 
     IDENTIFICADOR  shift, and go to state 24
     NUMERO         shift, and go to state 25
@@ -999,7 +988,7 @@ State 65
 
 State 66
 
-   58 expressao: termo CE_DIVIDE_POR $@24 • expressao
+   56 expressao: termo CE_DIVIDE_POR $@22 • expressao
 
     IDENTIFICADOR  shift, and go to state 24
     NUMERO         shift, and go to state 25
@@ -1017,16 +1006,16 @@ State 66
 
 State 67
 
-   60 expressao: termo operador expressao •
+   58 expressao: termo operador expressao •
 
-    $default  reduce using rule 60 (expressao)
+    $default  reduce using rule 58 (expressao)
 
 
 State 68
 
-   37 if: FRAGA expressao INTERROGACAO declaracoes • END_COMMAND
-   39   | FRAGA expressao INTERROGACAO declaracoes • NAO $@14 if
-   42   | FRAGA expressao INTERROGACAO declaracoes • NAO $@15 INTERROGACAO $@16 declaracoes END_COMMAND
+   36 if: FRAGA expressao INTERROGACAO declaracoes • END_COMMAND
+   37   | FRAGA expressao INTERROGACAO declaracoes • NAO
+   40   | FRAGA expressao INTERROGACAO declaracoes • NAO $@13 INTERROGACAO $@14 declaracoes END_COMMAND
 
     NAO          shift, and go to state 80
     END_COMMAND  shift, and go to state 81
@@ -1034,30 +1023,30 @@ State 68
 
 State 69
 
-   59 expressao: operadores_pos termo termo •
+   57 expressao: operadores_pos termo termo •
 
-    $default  reduce using rule 59 (expressao)
+    $default  reduce using rule 57 (expressao)
 
 
 State 70
 
-   45 while: VAI_FAZENDO_ATE $@17 expressao COLLON • $@18 declaracoes END_COMMAND
+   43 while: VAI_FAZENDO_ATE $@15 expressao COLLON • $@16 declaracoes END_COMMAND
 
-    $default  reduce using rule 44 ($@18)
+    $default  reduce using rule 42 ($@16)
 
-    $@18  go to state 82
+    $@16  go to state 82
 
 
 State 71
 
-   49 return: ARREDA $@20 expressao DOT •
+   47 return: ARREDA $@18 expressao DOT •
 
-    $default  reduce using rule 49 (return)
+    $default  reduce using rule 47 (return)
 
 
 State 72
 
-   63 print: ANOTA $@25 COLLON $@26 • expressao DOT
+   61 print: ANOTA $@23 COLLON $@24 • expressao DOT
 
     IDENTIFICADOR  shift, and go to state 24
     NUMERO         shift, and go to state 25
@@ -1075,81 +1064,78 @@ State 72
 
 State 73
 
-   16 redefinicao_variavel: IDENTIFICADOR $@1 VAI_SER $@2 expressao • $@3 DOT
+   15 redefinicao_variavel: IDENTIFICADOR $@1 VAI_SER $@2 expressao • DOT
 
-    $default  reduce using rule 15 ($@3)
-
-    $@3  go to state 84
+    DOT  shift, and go to state 84
 
 
 State 74
 
-   21 declaracao_variavel: TIPO $@4 IDENTIFICADOR $@5 VAI_SER • $@6 expressao $@7 DOT
+   20 declaracao_variavel: TIPO $@3 IDENTIFICADOR $@4 VAI_SER • $@5 expressao $@6 DOT
 
-    $default  reduce using rule 19 ($@6)
+    $default  reduce using rule 18 ($@5)
 
-    $@6  go to state 85
+    $@5  go to state 85
 
 
 State 75
 
-   27 declaracao_funcao: NAQUELE_NAIPE $@8 IDENTIFICADOR $@9 LBRACE • $@10 parametros RBRACE $@11 COLLON $@12 bloco
+   26 declaracao_funcao: NAQUELE_NAIPE $@7 IDENTIFICADOR $@8 LBRACE • $@9 parametros RBRACE $@10 COLLON $@11 bloco
 
-    $default  reduce using rule 24 ($@10)
+    $default  reduce using rule 23 ($@9)
 
-    $@10  go to state 86
+    $@9  go to state 86
 
 
 State 76
 
-   52 expressao: termo AI_CE_JUNTA $@21 expressao •
+   50 expressao: termo AI_CE_JUNTA $@19 expressao •
 
-    $default  reduce using rule 52 (expressao)
+    $default  reduce using rule 50 (expressao)
 
 
 State 77
 
-   54 expressao: termo AI_CE_DIMINUI $@22 expressao •
+   52 expressao: termo AI_CE_DIMINUI $@20 expressao •
 
-    $default  reduce using rule 54 (expressao)
+    $default  reduce using rule 52 (expressao)
 
 
 State 78
 
-   56 expressao: termo CE_MULTIPLICA_POR $@23 expressao •
+   54 expressao: termo CE_MULTIPLICA_POR $@21 expressao •
 
-    $default  reduce using rule 56 (expressao)
+    $default  reduce using rule 54 (expressao)
 
 
 State 79
 
-   58 expressao: termo CE_DIVIDE_POR $@24 expressao •
+   56 expressao: termo CE_DIVIDE_POR $@22 expressao •
 
-    $default  reduce using rule 58 (expressao)
+    $default  reduce using rule 56 (expressao)
 
 
 State 80
 
-   39 if: FRAGA expressao INTERROGACAO declaracoes NAO • $@14 if
-   42   | FRAGA expressao INTERROGACAO declaracoes NAO • $@15 INTERROGACAO $@16 declaracoes END_COMMAND
+   37 if: FRAGA expressao INTERROGACAO declaracoes NAO •
+   40   | FRAGA expressao INTERROGACAO declaracoes NAO • $@13 INTERROGACAO $@14 declaracoes END_COMMAND
 
-    INTERROGACAO  reduce using rule 40 ($@15)
-    $default      reduce using rule 38 ($@14)
+    INTERROGACAO  reduce using rule 38 ($@13)
+    $default      reduce using rule 37 (if)
 
-    $@14  go to state 87
-    $@15  go to state 88
+    $@13  go to state 87
 
 
 State 81
 
-   37 if: FRAGA expressao INTERROGACAO declaracoes END_COMMAND •
+   36 if: FRAGA expressao INTERROGACAO declaracoes END_COMMAND •
 
-    $default  reduce using rule 37 (if)
+    $default  reduce using rule 36 (if)
 
 
 State 82
 
-   45 while: VAI_FAZENDO_ATE $@17 expressao COLLON $@18 • declaracoes END_COMMAND
+   43 while: VAI_FAZENDO_ATE $@15 expressao COLLON $@16 • declaracoes END_COMMAND
 
     IDENTIFICADOR    shift, and go to state 1
     TIPO             shift, and go to state 2
@@ -1160,7 +1146,7 @@ State 82
     ARREDA           shift, and go to state 7
     ANOTA            shift, and go to state 8
 
-    declaracoes           go to state 89
+    declaracoes           go to state 88
     declaracao            go to state 11
     redefinicao_variavel  go to state 12
     declaracao_variavel   go to state 13
@@ -1175,21 +1161,21 @@ State 82
 
 State 83
 
-   63 print: ANOTA $@25 COLLON $@26 expressao • DOT
+   61 print: ANOTA $@23 COLLON $@24 expressao • DOT
 
-    DOT  shift, and go to state 90
+    DOT  shift, and go to state 89
 
 
 State 84
 
-   16 redefinicao_variavel: IDENTIFICADOR $@1 VAI_SER $@2 expressao $@3 • DOT
+   15 redefinicao_variavel: IDENTIFICADOR $@1 VAI_SER $@2 expressao DOT •
 
-    DOT  shift, and go to state 91
+    $default  reduce using rule 15 (redefinicao_variavel)
 
 
 State 85
 
-   21 declaracao_variavel: TIPO $@4 IDENTIFICADOR $@5 VAI_SER $@6 • expressao $@7 DOT
+   20 declaracao_variavel: TIPO $@3 IDENTIFICADOR $@4 VAI_SER $@5 • expressao $@6 DOT
 
     IDENTIFICADOR  shift, and go to state 24
     NUMERO         shift, and go to state 25
@@ -1201,221 +1187,198 @@ State 85
     NOT_OP         shift, and go to state 31
 
     termo           go to state 32
-    expressao       go to state 92
+    expressao       go to state 90
     operadores_pos  go to state 34
 
 
 State 86
 
-   27 declaracao_funcao: NAQUELE_NAIPE $@8 IDENTIFICADOR $@9 LBRACE $@10 • parametros RBRACE $@11 COLLON $@12 bloco
+   26 declaracao_funcao: NAQUELE_NAIPE $@7 IDENTIFICADOR $@8 LBRACE $@9 • parametros RBRACE $@10 COLLON $@11 bloco
 
-    IDENTIFICADOR  shift, and go to state 93
+    IDENTIFICADOR  shift, and go to state 91
 
-    parametros  go to state 94
-    parametro   go to state 95
+    parametros  go to state 92
+    parametro   go to state 93
 
 
 State 87
 
-   39 if: FRAGA expressao INTERROGACAO declaracoes NAO $@14 • if
+   40 if: FRAGA expressao INTERROGACAO declaracoes NAO $@13 • INTERROGACAO $@14 declaracoes END_COMMAND
 
-    FRAGA  shift, and go to state 4
-
-    if  go to state 96
+    INTERROGACAO  shift, and go to state 94
 
 
 State 88
 
-   42 if: FRAGA expressao INTERROGACAO declaracoes NAO $@15 • INTERROGACAO $@16 declaracoes END_COMMAND
+   43 while: VAI_FAZENDO_ATE $@15 expressao COLLON $@16 declaracoes • END_COMMAND
 
-    INTERROGACAO  shift, and go to state 97
+    END_COMMAND  shift, and go to state 95
 
 
 State 89
 
-   45 while: VAI_FAZENDO_ATE $@17 expressao COLLON $@18 declaracoes • END_COMMAND
+   61 print: ANOTA $@23 COLLON $@24 expressao DOT •
 
-    END_COMMAND  shift, and go to state 98
+    $default  reduce using rule 61 (print)
 
 
 State 90
 
-   63 print: ANOTA $@25 COLLON $@26 expressao DOT •
+   20 declaracao_variavel: TIPO $@3 IDENTIFICADOR $@4 VAI_SER $@5 expressao • $@6 DOT
 
-    $default  reduce using rule 63 (print)
+    $default  reduce using rule 19 ($@6)
+
+    $@6  go to state 96
 
 
 State 91
 
-   16 redefinicao_variavel: IDENTIFICADOR $@1 VAI_SER $@2 expressao $@3 DOT •
+   30 parametro: IDENTIFICADOR •
 
-    $default  reduce using rule 16 (redefinicao_variavel)
+    $default  reduce using rule 30 (parametro)
 
 
 State 92
 
-   21 declaracao_variavel: TIPO $@4 IDENTIFICADOR $@5 VAI_SER $@6 expressao • $@7 DOT
+   26 declaracao_funcao: NAQUELE_NAIPE $@7 IDENTIFICADOR $@8 LBRACE $@9 parametros • RBRACE $@10 COLLON $@11 bloco
 
-    $default  reduce using rule 20 ($@7)
-
-    $@7  go to state 99
+    RBRACE  shift, and go to state 97
 
 
 State 93
 
-   31 parametro: IDENTIFICADOR •
+   27 parametros: parametro •
+   29           | parametro • COMMA $@12 parametros
 
-    $default  reduce using rule 31 (parametro)
+    COMMA  shift, and go to state 98
+
+    $default  reduce using rule 27 (parametros)
 
 
 State 94
 
-   27 declaracao_funcao: NAQUELE_NAIPE $@8 IDENTIFICADOR $@9 LBRACE $@10 parametros • RBRACE $@11 COLLON $@12 bloco
+   40 if: FRAGA expressao INTERROGACAO declaracoes NAO $@13 INTERROGACAO • $@14 declaracoes END_COMMAND
 
-    RBRACE  shift, and go to state 100
+    $default  reduce using rule 39 ($@14)
+
+    $@14  go to state 99
 
 
 State 95
 
-   28 parametros: parametro •
-   30           | parametro • COMMA $@13 parametros
+   43 while: VAI_FAZENDO_ATE $@15 expressao COLLON $@16 declaracoes END_COMMAND •
 
-    COMMA  shift, and go to state 101
-
-    $default  reduce using rule 28 (parametros)
+    $default  reduce using rule 43 (while)
 
 
 State 96
 
-   39 if: FRAGA expressao INTERROGACAO declaracoes NAO $@14 if •
+   20 declaracao_variavel: TIPO $@3 IDENTIFICADOR $@4 VAI_SER $@5 expressao $@6 • DOT
 
-    $default  reduce using rule 39 (if)
+    DOT  shift, and go to state 100
 
 
 State 97
 
-   42 if: FRAGA expressao INTERROGACAO declaracoes NAO $@15 INTERROGACAO • $@16 declaracoes END_COMMAND
+   26 declaracao_funcao: NAQUELE_NAIPE $@7 IDENTIFICADOR $@8 LBRACE $@9 parametros RBRACE • $@10 COLLON $@11 bloco
 
-    $default  reduce using rule 41 ($@16)
+    $default  reduce using rule 24 ($@10)
 
-    $@16  go to state 102
+    $@10  go to state 101
 
 
 State 98
 
-   45 while: VAI_FAZENDO_ATE $@17 expressao COLLON $@18 declaracoes END_COMMAND •
+   29 parametros: parametro COMMA • $@12 parametros
 
-    $default  reduce using rule 45 (while)
+    $default  reduce using rule 28 ($@12)
+
+    $@12  go to state 102
 
 
 State 99
 
-   21 declaracao_variavel: TIPO $@4 IDENTIFICADOR $@5 VAI_SER $@6 expressao $@7 • DOT
+   40 if: FRAGA expressao INTERROGACAO declaracoes NAO $@13 INTERROGACAO $@14 • declaracoes END_COMMAND
 
-    DOT  shift, and go to state 103
+    IDENTIFICADOR    shift, and go to state 1
+    TIPO             shift, and go to state 2
+    NAQUELE_NAIPE    shift, and go to state 3
+    FRAGA            shift, and go to state 4
+    VAI_FAZENDO_ATE  shift, and go to state 5
+    PICA_MULA        shift, and go to state 6
+    ARREDA           shift, and go to state 7
+    ANOTA            shift, and go to state 8
+
+    declaracoes           go to state 103
+    declaracao            go to state 11
+    redefinicao_variavel  go to state 12
+    declaracao_variavel   go to state 13
+    declaracao_funcao     go to state 14
+    declaracao_estrutura  go to state 15
+    if                    go to state 16
+    while                 go to state 17
+    break                 go to state 18
+    return                go to state 19
+    print                 go to state 20
 
 
 State 100
 
-   27 declaracao_funcao: NAQUELE_NAIPE $@8 IDENTIFICADOR $@9 LBRACE $@10 parametros RBRACE • $@11 COLLON $@12 bloco
+   20 declaracao_variavel: TIPO $@3 IDENTIFICADOR $@4 VAI_SER $@5 expressao $@6 DOT •
 
-    $default  reduce using rule 25 ($@11)
-
-    $@11  go to state 104
+    $default  reduce using rule 20 (declaracao_variavel)
 
 
 State 101
 
-   30 parametros: parametro COMMA • $@13 parametros
+   26 declaracao_funcao: NAQUELE_NAIPE $@7 IDENTIFICADOR $@8 LBRACE $@9 parametros RBRACE $@10 • COLLON $@11 bloco
 
-    $default  reduce using rule 29 ($@13)
-
-    $@13  go to state 105
+    COLLON  shift, and go to state 104
 
 
 State 102
 
-   42 if: FRAGA expressao INTERROGACAO declaracoes NAO $@15 INTERROGACAO $@16 • declaracoes END_COMMAND
+   29 parametros: parametro COMMA $@12 • parametros
 
-    IDENTIFICADOR    shift, and go to state 1
-    TIPO             shift, and go to state 2
-    NAQUELE_NAIPE    shift, and go to state 3
-    FRAGA            shift, and go to state 4
-    VAI_FAZENDO_ATE  shift, and go to state 5
-    PICA_MULA        shift, and go to state 6
-    ARREDA           shift, and go to state 7
-    ANOTA            shift, and go to state 8
+    IDENTIFICADOR  shift, and go to state 91
 
-    declaracoes           go to state 106
-    declaracao            go to state 11
-    redefinicao_variavel  go to state 12
-    declaracao_variavel   go to state 13
-    declaracao_funcao     go to state 14
-    declaracao_estrutura  go to state 15
-    if                    go to state 16
-    while                 go to state 17
-    break                 go to state 18
-    return                go to state 19
-    print                 go to state 20
+    parametros  go to state 105
+    parametro   go to state 93
 
 
 State 103
 
-   21 declaracao_variavel: TIPO $@4 IDENTIFICADOR $@5 VAI_SER $@6 expressao $@7 DOT •
+   40 if: FRAGA expressao INTERROGACAO declaracoes NAO $@13 INTERROGACAO $@14 declaracoes • END_COMMAND
 
-    $default  reduce using rule 21 (declaracao_variavel)
+    END_COMMAND  shift, and go to state 106
 
 
 State 104
 
-   27 declaracao_funcao: NAQUELE_NAIPE $@8 IDENTIFICADOR $@9 LBRACE $@10 parametros RBRACE $@11 • COLLON $@12 bloco
+   26 declaracao_funcao: NAQUELE_NAIPE $@7 IDENTIFICADOR $@8 LBRACE $@9 parametros RBRACE $@10 COLLON • $@11 bloco
 
-    COLLON  shift, and go to state 107
+    $default  reduce using rule 25 ($@11)
+
+    $@11  go to state 107
 
 
 State 105
 
-   30 parametros: parametro COMMA $@13 • parametros
+   29 parametros: parametro COMMA $@12 parametros •
 
-    IDENTIFICADOR  shift, and go to state 93
-
-    parametros  go to state 108
-    parametro   go to state 95
+    $default  reduce using rule 29 (parametros)
 
 
 State 106
 
-   42 if: FRAGA expressao INTERROGACAO declaracoes NAO $@15 INTERROGACAO $@16 declaracoes • END_COMMAND
+   40 if: FRAGA expressao INTERROGACAO declaracoes NAO $@13 INTERROGACAO $@14 declaracoes END_COMMAND •
 
-    END_COMMAND  shift, and go to state 109
+    $default  reduce using rule 40 (if)
 
 
 State 107
 
-   27 declaracao_funcao: NAQUELE_NAIPE $@8 IDENTIFICADOR $@9 LBRACE $@10 parametros RBRACE $@11 COLLON • $@12 bloco
-
-    $default  reduce using rule 26 ($@12)
-
-    $@12  go to state 110
-
-
-State 108
-
-   30 parametros: parametro COMMA $@13 parametros •
-
-    $default  reduce using rule 30 (parametros)
-
-
-State 109
-
-   42 if: FRAGA expressao INTERROGACAO declaracoes NAO $@15 INTERROGACAO $@16 declaracoes END_COMMAND •
-
-    $default  reduce using rule 42 (if)
-
-
-State 110
-
-   27 declaracao_funcao: NAQUELE_NAIPE $@8 IDENTIFICADOR $@9 LBRACE $@10 parametros RBRACE $@11 COLLON $@12 • bloco
+   26 declaracao_funcao: NAQUELE_NAIPE $@7 IDENTIFICADOR $@8 LBRACE $@9 parametros RBRACE $@10 COLLON $@11 • bloco
 
     IDENTIFICADOR    shift, and go to state 1
     TIPO             shift, and go to state 2
@@ -1425,9 +1388,9 @@ State 110
     PICA_MULA        shift, and go to state 6
     ARREDA           shift, and go to state 7
     ANOTA            shift, and go to state 8
-    LBRACE           shift, and go to state 111
+    LBRACE           shift, and go to state 108
 
-    declaracao            go to state 112
+    declaracao            go to state 109
     redefinicao_variavel  go to state 12
     declaracao_variavel   go to state 13
     declaracao_funcao     go to state 14
@@ -1437,35 +1400,35 @@ State 110
     break                 go to state 18
     return                go to state 19
     print                 go to state 20
-    bloco                 go to state 113
+    bloco                 go to state 110
+
+
+State 108
+
+   71 bloco: LBRACE • $@25 declaracoes RBRACE
+
+    $default  reduce using rule 70 ($@25)
+
+    $@25  go to state 111
+
+
+State 109
+
+   72 bloco: declaracao •
+
+    $default  reduce using rule 72 (bloco)
+
+
+State 110
+
+   26 declaracao_funcao: NAQUELE_NAIPE $@7 IDENTIFICADOR $@8 LBRACE $@9 parametros RBRACE $@10 COLLON $@11 bloco •
+
+    $default  reduce using rule 26 (declaracao_funcao)
 
 
 State 111
 
-   73 bloco: LBRACE • $@27 declaracoes RBRACE
-
-    $default  reduce using rule 72 ($@27)
-
-    $@27  go to state 114
-
-
-State 112
-
-   74 bloco: declaracao •
-
-    $default  reduce using rule 74 (bloco)
-
-
-State 113
-
-   27 declaracao_funcao: NAQUELE_NAIPE $@8 IDENTIFICADOR $@9 LBRACE $@10 parametros RBRACE $@11 COLLON $@12 bloco •
-
-    $default  reduce using rule 27 (declaracao_funcao)
-
-
-State 114
-
-   73 bloco: LBRACE $@27 • declaracoes RBRACE
+   71 bloco: LBRACE $@25 • declaracoes RBRACE
 
     IDENTIFICADOR    shift, and go to state 1
     TIPO             shift, and go to state 2
@@ -1476,7 +1439,7 @@ State 114
     ARREDA           shift, and go to state 7
     ANOTA            shift, and go to state 8
 
-    declaracoes           go to state 115
+    declaracoes           go to state 112
     declaracao            go to state 11
     redefinicao_variavel  go to state 12
     declaracao_variavel   go to state 13
@@ -1489,15 +1452,15 @@ State 114
     print                 go to state 20
 
 
-State 115
+State 112
 
-   73 bloco: LBRACE $@27 declaracoes • RBRACE
+   71 bloco: LBRACE $@25 declaracoes • RBRACE
 
-    RBRACE  shift, and go to state 116
+    RBRACE  shift, and go to state 113
 
 
-State 116
+State 113
 
-   73 bloco: LBRACE $@27 declaracoes RBRACE •
+   71 bloco: LBRACE $@25 declaracoes RBRACE •
 
-    $default  reduce using rule 73 (bloco)
+    $default  reduce using rule 71 (bloco)

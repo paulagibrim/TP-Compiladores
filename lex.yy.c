@@ -940,7 +940,7 @@ YY_RULE_SETUP
 case 12:
 YY_RULE_SETUP
 #line 80 "lexer.l"
-{ printf("%s", yytext); yylval.str = strdup(yytext); return NUMERO; }
+{ printf("%s", yytext); strcpy(yylval.thisProd.name,(yytext)); return NUMERO; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
@@ -950,7 +950,7 @@ YY_RULE_SETUP
 case 14:
 YY_RULE_SETUP
 #line 82 "lexer.l"
-{ printf("%s", yytext); yylval.str = strdup(yytext); return NUMERO; }
+{ printf("%s", yytext); strcpy(yylval.thisProd.name,(yytext)); return NUMERO; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
@@ -961,7 +961,7 @@ case 16:
 /* rule 16 can match eol */
 YY_RULE_SETUP
 #line 84 "lexer.l"
-{ printf("%s", yytext); yylval.str = strdup(yytext); return STRING; }
+{ printf("%s", yytext); strcpy(yylval.thisProd.name,(yytext)); return STRING; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
@@ -1096,7 +1096,7 @@ YY_RULE_SETUP
 case 43:
 YY_RULE_SETUP
 #line 118 "lexer.l"
-{ printf("%s", yytext); yylval.str = strdup(yytext); return IDENTIFICADOR; }
+{ printf("%s", yytext); strcpy(yylval.thisProd.name,(yytext)); return IDENTIFICADOR; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
